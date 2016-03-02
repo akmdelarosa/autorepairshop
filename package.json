@@ -1,0 +1,17 @@
+{
+  "name": "autorepairshop",
+  "version": "0.0.0",
+  "description": "Auto Repair Shop Web Application",
+  "main": "app.js",
+  "author": {
+    "name": "Angel Dela Rosa",
+    "email": "akmdelarosa@gmail.com"
+  },
+  "dependencies": {
+    "ejs": "^2.4.1",
+    "express": "3.4.4",
+    "jade": "*",
+    "mysql": "^2.10.2",
+    "stylus": "*"
+  }
+}

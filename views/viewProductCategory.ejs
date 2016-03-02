@@ -1,0 +1,20 @@
+﻿<% include layout %>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  <br />
+  <div data-ng-app="productCategoryModule"
+       data-ng-controller="viewProductCategoryController">
+
+    <div class="container">
+      <% include productCategoryGrid %>
+    </div>
+  </div>
+</div>
+
+<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../../javascripts/app/productCategory/productCategoryModule.js"></script>
+<script src="../../javascripts/app/productCategory/productCategoryService.js"></script>
+<script src="../../javascripts/app/productCategory/viewProductCategoryController.js"></script>

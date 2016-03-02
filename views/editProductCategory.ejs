@@ -1,0 +1,65 @@
+﻿<% include layout %>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+
+  <div class="panel-body">
+    <div class="container"
+         data-ng-cloak
+         data-ng-app="productCategoryModule"
+         data-ng-controller="productCategoryController">
+
+      <form class="navbar-form navbar-left" role="search"
+            method="POST"
+            name="formProductCategory">
+
+        <div class="row">
+          <div class="form-group">
+            <label for="productCategory">Product Category Name</label>
+            &nbsp;&nbsp;
+
+            <input type="text"
+                   class="form-control"
+                   placeholder="Please Enter Product Category"
+                   name="productCategory"
+                   id="productCategory"
+                   ng-model="productCategory.categoryName"
+                   style="width:100%"
+                   required />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="categoryDetails">Product Category Details</label>
+            <textarea class="form-control"
+                      placeholder="Product Category Details"
+                      name="productDetails"
+                      id="productDetails"
+                      rows="5"
+                      cols="30"
+                      ng-model="productCategory.categoryDetails"
+                      style="width:100%"
+                      required></textarea>
+          </div>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div class="row">
+          <div class="form-group" style="padding-left40%">
+            <button type="button" class="btn btn-primary"
+                    ng-click="createProductCategory(productCategory)">
+              Edit Product Category
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
