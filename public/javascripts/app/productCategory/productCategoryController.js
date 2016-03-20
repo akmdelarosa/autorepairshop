@@ -9,11 +9,33 @@ function productCategoryController($scope, $timeout, productCategoryService) {
     categoryDetails : ""
   };
 
+  function displayMessage() {
+      $scope.message.containsSuccessfulMessage  = true;
+      $scope.message.successfulMessage = 'Category added successfully';
+  }
+  
+  function clearMessage() {
+      $scope.message.containsSuccessfulMessage  = false;
+      $scope.message.successfulMessage = "";
+  }
+  
+  function clearProductCategory() {
+      $scope.productCategory.categoryName = "";
+      $scope.productCategory.categoryDetails = "";
+  }
+  
   $scope.createProductCategory = function (productCategory) {
+      console.log(productCategory);
     productCategoryService.createProductCategory(productCategory)
     .success(function (data) {
-      alert("data posted successfully");
-      /*$timeout(function () {}, 3000);*/
+      if (data.status && data.status == 'successful') {
+          displayMessage();
+          $timeout( function afterTimeOut() {
+              clearMessage();
+              clearProductCategory();
+          }, 5000);
+          
+      }
     });
   }
 }

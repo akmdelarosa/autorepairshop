@@ -8,6 +8,7 @@ function productCategoryService($http) {
     createProductCategory: function (productCategory) {
       return $http.post('/createProductCategory',
         {
+            
           categoryName: productCategory.categoryName,
           details: productCategory.categoryDetails
         }

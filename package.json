@@ -3,15 +3,36 @@
   "version": "0.0.0",
   "description": "Auto Repair Shop Web Application",
   "main": "app.js",
-  "author": {
-    "name": "Angel Dela Rosa",
-    "email": "akmdelarosa@gmail.com"
-  },
+  "author": "Angel Dela Rosa <akmdelarosa@gmail.com>",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.1",
     "ejs": "^2.4.1",
     "express": "3.4.4",
-    "jade": "*",
+    "express-session": "^1.13.0",
+    "express-validator": "^2.20.2",
     "mysql": "^2.10.2",
+    "mysql-model": "git://github.com/michalkow/node-mysql-model.git",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "stylus": "*"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akmdelarosa/autorepairshop.git"
+  },
+  "keywords": [
+    "autorepairshop"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akmdelarosa/autorepairshop/issues"
+  },
+  "homepage": "https://github.com/akmdelarosa/autorepairshop#readme"
 }

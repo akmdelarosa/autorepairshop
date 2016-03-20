@@ -1,8 +1,12 @@
 ﻿<% include layout %>
-
+<div class="container">
 <div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title"><%=title %></h3>
+    <% if (typeof user != "undefined" && user.email) { %>
+        <strong>email</strong>: <%= user.email %><br>
+    <% } %>
+    
   </div>
   <br />
   <div data-ng-app="productCategoryModule"
@@ -12,6 +16,7 @@
       <% include productCategoryGrid %>
     </div>
   </div>
+</div>
 </div>
 
 <script src="../bower_components/angular/angular.min.js"></script>

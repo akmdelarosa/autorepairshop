@@ -6,21 +6,21 @@
       host: 'localhost',
       user: 'angel',
       password : '',
-      database : 'productmanagement'
+      database : 'product_test'
     },
     
     qa : {
       host: 'localhost',
       user: 'root',
       password : 'passsword',
-      database : 'productmanagement'
+      database : 'product_test'
     },
     
     prod : {
       host: 'localhost',
       user: 'root',
       password : 'passsword',
-      database : 'productmanagement'
+      database : 'product_test'
     }
     
   }

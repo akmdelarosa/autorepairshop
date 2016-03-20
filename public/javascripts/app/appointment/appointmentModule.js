@@ -1,0 +1,1 @@
+﻿var appointmentModule = angular.module("appointmentModule", []);

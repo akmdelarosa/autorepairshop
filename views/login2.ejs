@@ -1,0 +1,73 @@
+<% include layout %>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+
+  <div class="panel-body">
+    <div class="container" 
+         data-ng-cloak
+         data-ng-app="passportModule"
+         data-ng-controller="passportController">
+
+      <form
+            class="navbar-form navbar-left" role="search"
+            method="POST"
+            name="formLogin">
+        
+        <div class="row">
+          <div class="form-group">
+            <label for="email">Email</label>
+            &nbsp;&nbsp;
+
+            <input type="email"
+                   class="form-control"
+                   placeholder="Please Enter your Email"
+                   name="email"
+                   id="email"
+                   ng-model="user.email"
+
+                   style="width:100%"
+                   required
+                   />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password"
+                      class="form-control"
+                      placeholder="Password"
+                      name="password"
+                      id="password"
+                      ng-model="user.password"
+                      style="width:100%"
+                      required 
+                      />
+          </div>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div class="row">
+          <div class="form-group" style="padding-left40%">
+            <button type="button" class="btn btn-primary"
+                    ng-click="login(user)">
+              Login
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+
+<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../../javascripts/app/passport/passportModule.js"></script>
+<script src="../../javascripts/app/passport/passportService.js"></script>
+<script src="../../javascripts/app/passport/passportController.js"></script>

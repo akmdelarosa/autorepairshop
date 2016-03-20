@@ -1,4 +1,4 @@
-﻿function productCategoryRouteConfig(app) { 
+function appointmentRouteConfig(app) { 
 
     this.app = app;
     this.routeTable = [];
@@ -6,7 +6,7 @@
 }
 
 
-productCategoryRouteConfig.prototype.init = function () { 
+appointmentRouteConfig.prototype.init = function () { 
 
     var self = this;
 
@@ -17,7 +17,7 @@ productCategoryRouteConfig.prototype.init = function () {
 }
 
 
-productCategoryRouteConfig.prototype.processRoutes = function () { 
+appointmentRouteConfig.prototype.processRoutes = function () { 
 
     var self = this;
 
@@ -43,17 +43,17 @@ productCategoryRouteConfig.prototype.processRoutes = function () {
 }
 
 
-productCategoryRouteConfig.prototype.addRoutes = function () {
+appointmentRouteConfig.prototype.addRoutes = function () {
 
     var self = this;
 
     self.routeTable.push({
     
         requestType : 'get',
-        requestUrl : '/createProductCategory',
+        requestUrl : '/appointment/createAppointment',
         callbackFunction : function (request, response) { 
         
-            response.render('createProductCategory', { title : "Create Product Category" });
+            response.render('appointment/createAppointment', { title : "Appointment" });
         }
     });
     
@@ -61,9 +61,10 @@ productCategoryRouteConfig.prototype.addRoutes = function () {
     self.routeTable.push({
         
         requestType : 'post',
-        requestUrl : '/createProductCategory',
+        requestUrl : '/appointment/createAppointment',
         callbackFunction : function (request, response) {
             
+            /*
             var productCategoryModel = require('../server/model/productCategoryModel.js');
             
             
@@ -75,7 +76,7 @@ productCategoryRouteConfig.prototype.addRoutes = function () {
                 response.json(status); 
 
                 console.log(status);
-            });
+            });*/
             
         }
     });
@@ -84,57 +85,36 @@ productCategoryRouteConfig.prototype.addRoutes = function () {
     self.routeTable.push({
         
         requestType : 'get',
-        requestUrl : '/viewProductCategory',
+        requestUrl : '/appointment/viewAppointment/:userId',
         callbackFunction : function (request, response) {
-            var userReq = false;
-            if(request.isAuthenticated()) {
-                userReq = request.user;
-            }
             
-            response.render('viewProductCategory', { title : "View Product Category" , user : userReq });
+            response.render('viewAppointment', { title : "View Your Appoinments" });
         }
     });
 
     self.routeTable.push({
         
         requestType : 'get',
-        requestUrl : '/getAllProductCategory',
+        requestUrl : '/appointment/getAllAppointments',
         callbackFunction : function (request, response) {
-            
+            /*
             var productCategoryModel = require('../server/model/productCategoryModel.js');
             productCategoryModel.productCategoryModel.getAllProductCategory (
                 function (productCategories) {
                     console.log(productCategories);
                     response.json({ productCategories : productCategories });
             });
-            
+            */
         }
     });
 
     self.routeTable.push({
         
         requestType : 'get',
-        requestUrl : '/editProductCategory/:productCategoryId',
+        requestUrl : '/appointment/editAppointment/:appointmentId',
         callbackFunction : function (request, response) {
             
-            response.render('editProductCategory', { title : "Edit Product Category" });
-        }
-    });
-
-
-    self.routeTable.push({
-        
-        requestType : 'get',
-        requestUrl : '/getProductCategoryById/:productCategoryId',
-        callbackFunction : function (request, response) {
-            
-            var productCategoryModel = require('../server/model/productCategoryModel.js');
-            productCategoryModel.productCategoryModel.getProductCategoryById(request.params.productCategoryId, 
-                function (productCategories) {
-                    console.log(productCategories);
-                    response.json({ productCategories : productCategories });
-                });
-            
+            response.render('editAppointment', { title : "Edit Appointment" });
         }
     });
 
@@ -142,9 +122,9 @@ productCategoryRouteConfig.prototype.addRoutes = function () {
     self.routeTable.push({
         
         requestType : 'post',
-        requestUrl : '/updateProductCategory',
+        requestUrl : '/appointment/updateAppointment',
         callbackFunction : function (request, response) {
-            
+            /*
             console.log(request.body.categoryName);
 
             var productCategoryModel = require('../server/model/productCategoryModel.js');
@@ -152,7 +132,7 @@ productCategoryRouteConfig.prototype.addRoutes = function () {
                 function (status) {
                 console.log(status);
                 response.json(status);
-            });
+            });*/
         }
     });
 
@@ -160,9 +140,9 @@ productCategoryRouteConfig.prototype.addRoutes = function () {
     self.routeTable.push({
         
         requestType : 'delete',
-        requestUrl : '/deleteProductCategoryById/:productCategoryId',
+        requestUrl : '/appointment/cancelAppointment/:appointmentId',
         callbackFunction : function (request, response) {
-            
+            /*
             console.log(request.params.productCategoryId);
             
             var productCategoryModel = require('../server/model/productCategoryModel.js');
@@ -170,7 +150,7 @@ productCategoryRouteConfig.prototype.addRoutes = function () {
                 function (status) {
                 console.log(status);
                 response.json(status);
-            });
+            });*/
         }
 
     });
@@ -182,4 +162,4 @@ productCategoryRouteConfig.prototype.addRoutes = function () {
 
 }
 
-module.exports = productCategoryRouteConfig;
+module.exports = appointmentRouteConfig;

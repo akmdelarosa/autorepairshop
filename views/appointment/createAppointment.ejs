@@ -1,0 +1,74 @@
+<% include ../layout %>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+
+  <div class="panel-body">
+    <div class="container" 
+         data-ng-cloak
+         data-ng-app="appointmentModule"
+         data-ng-controller="appointmentController">
+
+      <form
+            class="navbar-form navbar-left" role="search"
+            method="POST"
+            name="formAppointment">
+        
+        <div class="row">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            &nbsp;&nbsp;
+
+            <input type="text"
+                   class="form-control"
+                   placeholder="Please Enter Your First Name"
+                   name="firstName"
+                   id="firstName"
+                   ng-model="appointment.firstName"
+
+                   style="width:100%"
+                   required
+                   />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="categoryDetails">Product Category Details</label>
+            <textarea
+                      class="form-control"
+                      placeholder="Product Category Details"
+                      name="productDetails"
+                      id="productDetails"
+                      rows="5"
+                      cols="30"
+                      ng-model="productCategory.categoryDetails"
+                      style="width:100%"
+                      required></textarea>
+          </div>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div class="row">
+          <div class="form-group" style="padding-left40%">
+            <button type="button" class="btn btn-primary"
+                    ng-click="createProductCategory(productCategory)">
+              Create Product Category
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+
+<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../../javascripts/app/appointment/appointmentModule.js"></script>
+<script src="../../javascripts/app/appointment/appointmenrService.js"></script>
+<script src="../../javascripts/app/appointment/appointmentController.js"></script>

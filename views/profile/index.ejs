@@ -1,0 +1,41 @@
+<% include ../layout %>
+
+<div class="container">
+
+     <!-- show any messages that come back with authentication -->
+    <% if (typeof message != "undefined" && message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+    
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Welcome <%= user.first_name %></h1>
+        <a href="/profile/edit" class="btn btn-default btn-sm">Edit</a>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-2">
+            Picture Here
+        </div>
+        <div class="col-sm-10">
+            <div class="well">
+                <h3><span class="fa fa-user"></span>User Info</h3>
+
+                    <p>
+                        <strong>id</strong>: <%= user.id %><br>
+                        <strong>email</strong>: <%= user.email %><br>
+                        <strong>password</strong>: <%= user.password %>
+                    </p>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+    <% include partials/serviceHistory %>
+    </div>
+    
+
+</div>
