@@ -1,0 +1,1 @@
+﻿var profileModule = angular.module("profileModule", []);

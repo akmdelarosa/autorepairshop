@@ -86,12 +86,8 @@ productCategoryRouteConfig.prototype.addRoutes = function () {
         requestType : 'get',
         requestUrl : '/viewProductCategory',
         callbackFunction : function (request, response) {
-            var userReq = false;
-            if(request.isAuthenticated()) {
-                userReq = request.user;
-            }
             
-            response.render('viewProductCategory', { title : "View Product Category" , user : userReq });
+            response.render('viewProductCategory', { title : "View Product Category" });
         }
     });
 

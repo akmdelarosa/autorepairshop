@@ -1,5 +1,4 @@
-﻿'use strict';
-/**
+﻿/**
  * Module dependencies.
  */
 
@@ -13,7 +12,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 var validator = require('express-validator');
+var moment = require('moment');
+moment().format();
 require('./config/passport')(passport);
+
 //var passport = require('passport');
 
 //var passport = require('./config/passport');
@@ -30,6 +32,7 @@ app.use(validator());
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
+app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -73,6 +76,14 @@ new productCategoryRoute(app);
 var passportRoute = require('./routes/passportRouteConfig.js');
 new passportRoute(app,passport);
 
+var profileRoute = require('./routes/profileRouteConfig.js');
+new profileRoute(app);
+
+var appointmentRoute = require('./routes/appointmentRouteConfig.js');
+new appointmentRoute(app);
+
+var vehicleRoute = require('./routes/vehicleRouteConfig.js');
+new vehicleRoute(app);
 // login routes ======================================================================
 //require('./routes/loginRouteConfig.js')(app, passport); // load our routes and pass in our app and fully configured passport
 

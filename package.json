@@ -2,7 +2,7 @@
   "name": "autorepairshop",
   "version": "0.0.0",
   "description": "Auto Repair Shop Web Application",
-  "main": "app.js",
+  "main": "server.js",
   "author": "Angel Dela Rosa <akmdelarosa@gmail.com>",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -12,14 +12,17 @@
     "ejs": "^2.4.1",
     "express": "3.4.4",
     "express-session": "^1.13.0",
-    "express-validator": "^2.20.2",
+    "express-validator": "^2.20.3",
+    "moment": "^2.12.0",
     "mysql": "^2.10.2",
     "mysql-model": "git://github.com/michalkow/node-mysql-model.git",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "stylus": "*"
+    "stylus": "^0.54.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

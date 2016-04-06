@@ -1,6 +1,18 @@
 angular.module("appointmentModule")
 .controller("appointmentController", appointmentController);
 
+appointmentModule.directive('input', function ($parse) {
+  return {
+    restrict: 'E',
+    require: '?ngModel',
+    link: function (scope, element, attrs) {
+      if (attrs.ngModel && attrs.value) {
+        $parse(attrs.ngModel).assign(scope, attrs.value);
+      }
+    }
+  };
+});
+
 appointmentController.$inject = ['$scope','$timeout', 'appointmentService'];
 
 function appointmentController($scope, $timeout, appointmentService) {

@@ -27,7 +27,11 @@ passportRouteConfig.prototype.processRoutes = function () {
         if (route.requestType == 'get') {
             
             console.log(route);
-            self.app.get(route.requestUrl, route.callbackFunction);
+            if(route.requestUrl =='/logout') {
+                self.app.get(route.requestUrl, isLoggedIn, route.callbackFunction);
+            } else {
+                self.app.get(route.requestUrl, route.callbackFunction);
+            }
         }
         else if (route.requestType == 'post') {
         
@@ -65,7 +69,7 @@ passportRouteConfig.prototype.addRoutes = function () {
         callbackFunction : function (request, response) {
           if (request.isAuthenticated()) {
             request.flash('warning', 'You are already signed in.');
-            request.redirect(request.get('referer'));
+            response.redirect(request.get('referer'));
           }
         
           // render the page and pass in any flash data if it exists
@@ -110,44 +114,9 @@ passportRouteConfig.prototype.addRoutes = function () {
     self.routeTable.push({
         
         requestType : 'get',
-        requestUrl : '/profile/index',
-        callbackFunction : isLoggedIn, function(request, response) {
-          response.render('profile/index.ejs', {
-            user : request.user, // get the user out of session and pass to template
-            message : request.flash('warning'),
-            title : 'Home'
-          });
-        }
-    });
-
-
-    self.routeTable.push({
-        
-        requestType : 'get',
-        requestUrl : '/profile/edit',
-        callbackFunction : isLoggedIn, function(request, response) {
-          response.render('profile/edit.ejs', {
-            user : request.user, // get the user out of session and pass to template
-            title: 'Edit User Profile',
-            message : request.flash('warning')
-          });
-        }
-
-    });
-    
-    self.routeTable.push({
-        /*
-        // =====================================
-    // LOGOUT ==============================
-    // =====================================
-    app.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/');
-    });*/
-        requestType : 'get',
         requestUrl : '/logout',
         callbackFunction : function(request, response) {
-          response.logout();
+          request.logout();
           response.redirect('/');
         }
     })
@@ -158,8 +127,9 @@ passportRouteConfig.prototype.addRoutes = function () {
 function isLoggedIn(req, res, next) {
 
     // if user is authenticated in the session, carry on 
-    if (req.isAuthenticated())
+    if (req.isAuthenticated()) {
         return next();
+    }
 
     // if they aren't redirect them to the home page
     res.redirect('/');

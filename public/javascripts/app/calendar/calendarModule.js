@@ -1,0 +1,1 @@
+angular.module('calendarModule', ['mwl.calendar', 'ngAnimate', 'ui.bootstrap']);

@@ -52,8 +52,12 @@ appointmentRouteConfig.prototype.addRoutes = function () {
         requestType : 'get',
         requestUrl : '/appointment/createAppointment',
         callbackFunction : function (request, response) { 
-        
-            response.render('appointment/createAppointment', { title : "Appointment" });
+            var user = [];
+            if (request.isAuthenticated()) {
+                user = request.user;
+            }
+            console.log(user);
+            response.render('appointment/createAppointment', { title : "Appointment" , user : request.user, message : request.flash('message')});
         }
     });
     
@@ -63,6 +67,12 @@ appointmentRouteConfig.prototype.addRoutes = function () {
         requestType : 'post',
         requestUrl : '/appointment/createAppointment',
         callbackFunction : function (request, response) {
+            var user = [];
+            if (request.isAuthenticated()) {
+                user = request.user;
+            }
+            console.log(user);
+            response.render('appointment/createAppointment', { title : "Appointment" , user : request.user});
             
             /*
             var productCategoryModel = require('../server/model/productCategoryModel.js');
@@ -85,10 +95,10 @@ appointmentRouteConfig.prototype.addRoutes = function () {
     self.routeTable.push({
         
         requestType : 'get',
-        requestUrl : '/appointment/viewAppointment/:userId',
+        requestUrl : '/appointment/viewAppointment',
         callbackFunction : function (request, response) {
             
-            response.render('viewAppointment', { title : "View Your Appoinments" });
+            response.render('appointment/viewAppointment', { title : "Schedule Your Appoinments" , user : request.user });
         }
     });
 
@@ -97,6 +107,22 @@ appointmentRouteConfig.prototype.addRoutes = function () {
         requestType : 'get',
         requestUrl : '/appointment/getAllAppointments',
         callbackFunction : function (request, response) {
+            //var slots = [];
+            //var appointments = [];
+
+            var appointmentSlotsModel = require('../server/model/appointmentSlotsModel.js');
+            appointmentSlotsModel.appointmentSlotsModel.getAllAppointmentSlots (
+                function (slots) {
+                    console.log(slots);
+                    response.json({ slots : slots });
+                    /*response.render('appointment/showAllAppointments', 
+                        { title : "Schedule Your Appoinment" , 
+                        slots : slots, 
+                        user : request.user});
+            */
+            });
+
+
             /*
             var productCategoryModel = require('../server/model/productCategoryModel.js');
             productCategoryModel.productCategoryModel.getAllProductCategory (
@@ -105,8 +131,10 @@ appointmentRouteConfig.prototype.addRoutes = function () {
                     response.json({ productCategories : productCategories });
             });
             */
+            //response.render('showAppointment', { title : "Schedule Your Appoinment" , appointments : appointments, user : request.user});
         }
     });
+
 
     self.routeTable.push({
         
@@ -115,6 +143,44 @@ appointmentRouteConfig.prototype.addRoutes = function () {
         callbackFunction : function (request, response) {
             
             response.render('editAppointment', { title : "Edit Appointment" });
+        }
+    });
+
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/appointment/scheduleAppointment',
+        callbackFunction : function (request, response) {
+            
+            response.render('appointment/scheduleAppointment', { title : "Schedule Appointment", user : request.user });
+        }
+    });
+
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/appointment/getAvailableAppointmentDates',
+        callbackFunction : function (request, response) {
+            //var slots = [];
+            //var appointments = [];
+
+            var appointmentSlotsModel = require('../server/model/appointmentSlotsModel.js');
+            appointmentSlotsModel.appointmentSlotsModel.getAvailableAppointmentDates (
+                function (available_dates) {
+                    console.log(available_dates);
+                    response.json({ available_dates : available_dates });
+            });
+
+
+            /*
+            var productCategoryModel = require('../server/model/productCategoryModel.js');
+            productCategoryModel.productCategoryModel.getAllProductCategory (
+                function (productCategories) {
+                    console.log(productCategories);
+                    response.json({ productCategories : productCategories });
+            });
+            */
+            //response.render('showAppointment', { title : "Schedule Your Appoinment" , appointments : appointments, user : request.user});
         }
     });
 

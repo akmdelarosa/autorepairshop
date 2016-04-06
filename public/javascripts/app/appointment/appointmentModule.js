@@ -1,1 +1,1 @@
-﻿var appointmentModule = angular.module("appointmentModule", []);
+﻿angular.module("appointmentModule", ['mwl.calendar', 'ui.bootstrap']);

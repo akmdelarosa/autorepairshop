@@ -1,54 +1,113 @@
 <% include ../layout %>
 
 <div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    <a href="/profile/index" class="btn btn-default btn-sm">Back To Profile</a>
+  </div>
+  <div class="clear"></div>
   <div class="panel-heading">
     <h3 class="panel-title"><%=title %></h3>
-    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
   </div>
+  
 
   <div class="panel-body">
-    <!-- show any messages that come back with authentication -->
-    <% if (typeof message != "undefined" && message.length > 0) { %>
-        <div class="alert alert-danger"><%= message %></div>
-    <% } %>
-    
-    <div class="container"
+      
+      
+      <div class="container"
          data-ng-cloak
-         data-ng-app="productCategoryModule"
-         data-ng-controller="productCategoryController">
+         data-ng-app="profileModule"
+         data-ng-controller="profileController">
+          <!-- show any messages that come back with authentication -->
+        <% if (typeof message != "undefined" && message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+        <% } %>
+        <div class="alert alert-success" ng-show="message" ng-cloak>{{message}}</div>
+        <div class="alert alert-danger" ng-show="error" ng-cloak>{{error}}</div>
 
       <form class="navbar-form navbar-left" role="search"
             method="POST"
-            name="formProductCategory">
+            name="formProfile">
 
         <div class="row">
-          <div class="form-group">
-            <label for="productCategory">Product Category Name</label>
+          <div class="form-group" show-errors>
+            <label for="first_name">First Name</label>
             &nbsp;&nbsp;
 
             <input type="text"
                    class="form-control"
-                   placeholder="Please Enter Product Category"
-                   name="productCategory"
-                   id="productCategory"
-                   ng-model="productCategory.categoryName"
+                   value= "<%= user.first_name %>"
+                   name="first_name"
+                   id="first_name"
+                   ng-model="user.first_name"
                    style="width:100%"
                    required />
+            <p ng-show="formProfile.first_name.$invalid && !formProfile.first_name.$pristine" class="help-block">Enter a valid first name.</p>
           </div>
         </div>
-
+        
         <div class="row">
           <div class="form-group">
-            <label for="categoryDetails">Product Category Details</label>
-            <textarea class="form-control"
-                      placeholder="Product Category Details"
-                      name="productDetails"
-                      id="productDetails"
-                      rows="5"
-                      cols="30"
-                      ng-model="productCategory.categoryDetails"
+            <label for="last_name">Last Name</label>
+            &nbsp;&nbsp;
+
+            <input type="text"
+                   class="form-control"
+                   value= "<%= user.last_name %>"
+                   name="last_name"
+                   id="last_name"
+                   ng-model="user.last_name"
+                   style="width:100%"
+                   required />
+            <p ng-show="formProfile.last_name.$invalid && !formProfile.last_name.$pristine" class="help-block">Enter a valid last name.</p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" 
+            class="form-control"
+                      name="email"
+                      id="email"
+                      value= "<%= user.email %>"
+                      ng-model="user.email"
                       style="width:100%"
-                      required></textarea>
+                      required />
+              <p ng-show="formProfile.email.$invalid && !formProfile.email.$pristine" class="help-block">Enter a valid email.</p>
+
+
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="form-group">
+            
+            <label for="phone_number">Phone</label>
+            &nbsp;&nbsp;
+
+            <input type="tel" 
+                   class="form-control" 
+                   ng-minlength="10" 
+                   ng-maxlength="10"  
+                   value= "<%= user.phone_number %>"
+                   name="phone_number"
+                   id="phone_number"
+                   ng-model="user.phone_number"
+                   style="width:100%"
+                   ng-minlength="10" 
+                   ng-maxlength="10"
+                   required />
+             <p class="help-block" 
+                   ng-show="formProfile.phone_number.$error.required || formProfile.phone_number.$error.number">
+                Valid phone number is required
+            </p>
+            <p 
+                   class="help-block" 
+                   ng-show="(formProfile.phone_number.$error.minlength || formProfile.phone_number.$error.maxlength) 
+                                && formProfile.phone_number.$dirty">
+                Phone number should be 10 digits
+            </p>
           </div>
         </div>
 
@@ -57,15 +116,20 @@
         <div class="row">
           <div class="form-group" style="padding-left40%">
             <button type="button" class="btn btn-primary"
-                    ng-click="createProductCategory(productCategory)">
-              Edit Product Category
+                    ng-click="editProfile(user)" ng-disabled="formProfile.$invalid">
+              Save
             </button>
           </div>
         </div>
 
       </form>
 
+      </div>
     </div>
-
   </div>
 </div>
+<script>console.log("<%= message %>");</script>
+<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../../javascripts/app/profile/profileModule.js"></script>
+<script src="../../javascripts/app/profile/profileService.js"></script>
+<script src="../../javascripts/app/profile/profileController.js"></script>

@@ -176,22 +176,22 @@ var userModel = {
   
   ,
   
-  updateUser: function (first_name, last_name, email, password, phone_number, callback) {
+  updateUser: function (userUpdates, id, callback) {
     
     
     var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-    var queryStatement = "UPDATE  users SET first_name= ? ,  last_name = ?, email = ? , password = ?, phone_number =? WHERE id = ?";
+
+    var queryStatement = "UPDATE  users SET ? WHERE id = ?";
     
     if (connection) {
       
-      connection.query(queryStatement, [first_name, ,last_name, email, password, phone_number] , function (err, rows, fields) {
+      connection.query(queryStatement, [userUpdates, {id : id}] , function (err, rows, fields) {
         if (err) { throw err; }
-        console.log(rows);
         
         if (rows) {
           
           
-          callback({ status : 'successful' });
+          callback({ status : 'successful'});
         }
       });
       

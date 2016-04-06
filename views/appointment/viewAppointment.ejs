@@ -1,0 +1,51 @@
+<% include ../layout %>
+
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <% if (user) { %>
+    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    <% } %>
+    <a href="/appointment/index" class="btn btn-default btn-sm">Back To Appointment</a>
+  </div>
+  <div class="clear"></div>
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+
+  <div class="panel-body" data-ng-app="appointmentModule">
+
+    <div class="container" data-ng-cloak
+           data-ng-controller="viewAppointmentController">
+
+      <div class="row">
+        <% include appointmentGrid %>
+      </div>
+    </div>
+
+    <br />
+    <div class="container" data-ng-cloak
+           data-ng-controller="calendarController as vm">
+        <% include calendarControls %>
+      <div class="row" style="background-color: white;">        
+        <mwl-calendar
+          events="vm.events"
+          view="vm.calendarView"
+          view-date="vm.viewDate">
+        </mwl-calendar>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link href="../../bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
+<script src="../../bower_components/moment/min/moment.min.js" type="text/javascript"></script>
+<script src="../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+<script src="../../bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js" type="text/javascript"></script>
+<script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+
+<script src="../../javascripts/app/appointment/appointmentModule.js" type="text/javascript"></script>
+<script src="../../javascripts/app/appointment/appointmentService.js" type="text/javascript"></script>
+<script src="../../javascripts/app/appointment/viewAppointmentController.js" type="text/javascript"></script>
+<script src="../../javascripts/app/calendar/helpers.js" type="text/javascript"></script>
+<script src="../../javascripts/app/calendar/calendarController.js" type="text/javascript"></script>

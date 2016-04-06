@@ -1,6 +1,12 @@
 <% include ../layout %>
 
-<div class="container">
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+  <div class="panel-body">
+    <div class="container">
 
      <!-- show any messages that come back with authentication -->
     <% if (typeof message != "undefined" && message.length > 0) { %>
@@ -16,13 +22,9 @@
     <div class="row">
 
         <!-- LOCAL INFORMATION -->
-        <div class="col-sm-2">
-            Picture Here
-        </div>
-        <div class="col-sm-10">
+        <div class="col-sm-12">
             <div class="well">
-                <h3><span class="fa fa-user"></span>User Info</h3>
-
+                <h3><span class="fa fa-user"></span>User Info <a href="/profile/edit" class="btn btn-default btn-sm">Edit</a></h3>
                     <p>
                         <strong>id</strong>: <%= user.id %><br>
                         <strong>email</strong>: <%= user.email %><br>
@@ -37,5 +39,7 @@
     <% include partials/serviceHistory %>
     </div>
     
+     </div>
+   </div>
 
 </div>
