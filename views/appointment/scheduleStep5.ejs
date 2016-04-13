@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row">
+    <h2>Appointment Details</h2><br />
+    <p class="alert alert-danger" ng-show="!appointment.year || !appointment.make || !appointment.model || !appointment.first_name || !appointment.last_name || !appointment.email || !appointment.services.length>0 || !appointment.phone_number || !appointment.date || !appointment.time" class="help-block">Please fill out all the required information.</p>
+    <div class="row">
+      <div class="col-sm-12">
+        <p>Thank you for scheduling an appointment with Angel's Auto Repair Shop. Please confirm your appointment details below and click schedule when you're done.</p><br />
+        <div class="well">
+
+          <p><strong>Name: </strong>{{appointment.first_name}} {{appointment.last_name}}</p>
+          <p><strong>Email: </strong>{{appointment.email}}</p>
+          <p><strong>Phone: </strong>{{appointment.phone_number}}</p>
+
+          <br />
+
+          <p><strong>Year: </strong>{{appointment.year}}</p>
+          <p><strong>Make: </strong>{{appointment.make}}</p>
+          <p><strong>Model: </strong>{{appointment.model}}</p>
+
+          <br />
+
+          <p><strong>Date: </strong>{{appointment.date}}</p>
+          <p><strong>Time: </strong>{{appointment.time}}</p>
+
+          <br />
+
+          <p><strong>Requested services:</strong></p>
+          <ul>
+            <li ng-repeat="selectedService in appointment.services">{{selectedService.name}}</li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    <!--
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="well">
+          <p><strong>Year: </strong>{{appointment.year}}</p>
+          <p><strong>Make: </strong>{{appointment.make}}</p>
+          <p><strong>Model: </strong>{{appointment.model}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="well">
+            <p><strong>Date: </strong>{{appointment.date}}</p>
+            <p><strong>Time: </strong>{{appointment.time}}</p>
+          </div>
+        </div>
+      </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="well">
+          <p><strong>Services selected:</strong></p>
+          <ul>
+            <li ng-repeat="selectedService in appointment.services">{{selectedService.name}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>-->
+
+  </div>
+  <div class="row">
+    <button class="btn btn-success" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" ng-disabled="!appointment.year || !appointment.make || !appointment.model || !appointment.first_name || !appointment.last_name || !appointment.email || !appointment.services || !appointment.phone_number || !appointment.date || !appointment.time" ng-click="finish()">Schedule</button>
+  </div>
+</div><!-- end of appointment details-->

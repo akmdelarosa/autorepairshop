@@ -50,8 +50,10 @@ var appointmentSlotsModel = {
                               GROUP BY date , time
                               HAVING cnt IS NULL OR cnt < slots) js
                               ORDER BY date";
-    8/
-    var queryStatement = "SELECT DISTINCT date FROM appointment_slots ORDER BY date";
+                              */
+      var queryStatement = "SELECT DISTINCT date FROM (SELECT s.date, s.time, s.slots, a.cnt FROM appointment_slots s LEFT JOIN (SELECT date, time, COUNT(id) cnt FROM appointments WHERE deleted = 0 GROUP BY date , time) a ON a.date = s.date AND a.time = s.time WHERE s.date >= NOW() AND s.date < NOW() + INTERVAL 3 MONTH GROUP BY date , time HAVING cnt IS NULL OR cnt < slots) js ORDER BY date";
+    
+    //var queryStatement = "SELECT DISTINCT date FROM appointment_slots ORDER BY date";
     
     if (connection) {
       
@@ -69,6 +71,51 @@ var appointmentSlotsModel = {
     }
   }
   
+  ,
+
+  getAvailableTimeSlotsForDate : function (date, callback) {
+    
+    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+    /*
+    var queryStatement = "SELECT DISTINCT
+                              time
+                          FROM
+                              (SELECT 
+                                  s.date, s.time, s.slots, a.cnt
+                              FROM
+                                  appointment_slots s
+                              LEFT JOIN (SELECT 
+                                  date, time, COUNT(id) cnt
+                              FROM
+                                  appointments
+                              WHERE
+                                  deleted = 0
+                              GROUP BY date , time) a ON a.date = s.date AND a.time = s.time
+                              WHERE
+                                  s.date = ?
+                              GROUP BY date , time
+                              HAVING cnt IS NULL OR cnt < slots) js
+                              ORDER BY time";
+    */
+    var queryStatement = "SELECT DISTINCT time FROM (SELECT s.date, s.time, s.slots, a.cnt FROM appointment_slots s LEFT JOIN (SELECT date, time, COUNT(id) cnt FROM appointments WHERE deleted = 0 GROUP BY date , time) a ON a.date = s.date AND a.time = s.time WHERE s.date = ? GROUP BY date , time HAVING cnt IS NULL OR cnt < slots) js ORDER BY time";
+    //var queryStatement = "SELECT DISTINCT time FROM appointment_slots ORDER BY time";
+    
+    if (connection) {
+      
+      connection.query(queryStatement, [date], function (err, rows, fields) {
+        
+        if (err) { throw err; }
+        
+        
+        console.log(rows);
+        
+        callback(rows);
+      });
+      
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+    }
+  }
+
   ,
   
   getAppointmentSlotsById : function (slotId, callback) {

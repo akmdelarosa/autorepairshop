@@ -1,45 +1,134 @@
 angular.module("appointmentModule")
-.controller("scheduleAppointmentController", scheduleAppointmentController);
+.controller("scheduleAppointmentController", scheduleAppointmentController)
+.directive("myDirective", function(){
+    return {
+        restrict: "EA",
+        scope: {},
+        template: "<div>Your vehicle is : {{appointment.year}} {{appointment.make}} {{appointment.model}}</div>"
+    };
+});;
 
-scheduleAppointmentController.$inject = ['$scope', '$timeout', 'appointmentService'];
+scheduleAppointmentController.$inject = ['$scope', '$timeout', 'moment', '$filter', '$window', 'appointmentService'];
 
-function scheduleAppointmentController($scope, $timeout, appointmentService) {
-	$scope.appointment ={
-        first_name:'', 
-        last_name: '',
-        email: '',
-        phone: '',
-        year:'', 
+function scheduleAppointmentController($scope, $timeout, moment, $filter, $window, appointmentService) {
+	$scope.appointment ={};
+	/*year:'', 
         make: '', 
         model: '',
-        sesrvice: '',
+        services: [],
         date: '',
-        time: ''
-    };
+        time: ''*/
+
+  //console.log("scope.appointment below");
+  //console.log($scope.appointment);
+  /*
+  $scope.displayYearMakeModelNextButton = true;
+  $scope.displayDateTimeNextButton = false;
+  $scope.displayDateTimeBlock = false;
+  $scope.displayServiceBlock = false;
+  $scope.displayServiceNextButton = false;
+
+  $scope.step1isValid = false;
+  $scope.step2isValid = false;
+  $scope.step3isValid = false;
+  $scope.step4isValid = false;
+  $scope.scheduleFormisValid = false;
+
   $scope.vehicleLists = [];
-  $scope.displayNextButton = true;
-  $scope.displayShowPersonalInfoForm = false;
+  $scope.selectedServices = [];
+  */
+  $scope.steps = [
+    {
+        templateUrl: 'scheduleStep1',
+        hasForm: true,
+        nextAction: 'showDateTimeBlock()',
+        form_name: 'formSelectVehicle'
+    },
+    {
+        templateUrl: 'scheduleStep2',
+        hasForm: true,
+        nextAction: 'showServiceBlock()',
+        form_name: 'formSelectDateTime'
+    },
+    {
+        templateUrl: 'scheduleStep3',
+        hasForm: true,
+        nextAction: 'showOwnerInfoBlock()',
+        form_name: 'formSelectServices'
+    },
+    {
+        templateUrl: 'scheduleStep4',
+        hasForm: true,
+        nextAction: 'submitForm()',
+        form_name: 'formSchedule'
+    },
+    {
+        templateUrl: 'scheduleStep5'    }
+  ];
+
+  $scope.cancel = function () {
+    $window.location.href = '/';
+  };
+
+  $scope.finish = function () {
+    console.log('finish');
+    console.log($scope.appointment);
+    //createOwnerInformation();
+    
+    appointmentService.schedule($scope.appointment)
+    .success(function(data) {
+      if (data.status && data.status == 'success') {
+        console.log("data response below on schedule");
+        console.log(data);
+        window.location.href="/appointment/confirmation/"+data.appointment_id;
+        $scope.message = 'Appointment scheduled successfully';
+      }
+    });
+  };
 
   getYears();
-
-  $scope.selectDateTime = function () {
+  /*
+  $scope.showDateTimeBlock = function () {
   	console.log($scope.appointment);
   	getDates();
-  	$scope.displayNextButton = false;
+  	$scope.displayYearMakeModelNextButton = false;
+    $scope.displayDateTimeNextButton = true;
+    $scope.displayDateTimeBlock = true;
   }
 
-  $scope.getPersonalInfo = function () {
+  $scope.showServiceBlock = function () {
   	console.log($scope.appointment);
-  	$scope.displayShowPersonalInfoForm = true;
+    getAvailableServices();
+  	$scope.displayServiceBlock = true;
+    $scope.displayServiceNextButton = true;
+    $scope.displayDateTimeNextButton = false;
+    $scope.displayYearMakeModelNextButton = false;
   }
 
+  $scope.updateServices = function (services) {
+    console.log("updating services called");
+    console.log(services);
+    $scope.appointment.services = services;
+    console.log($scope.appointment);
+    nextStep();
+  }
+
+  function nextStep() {
+    appointmentService.scheduleAppointmentStep2($scope.appointment)
+    .success(function (data) {
+      if (data.status && data.status == 'successful') {
+        $scope.message = 'Profile updated successfully';
+      }
+    });
+  }
+  */
   function getYears() {
   	$scope.years = {};
   	appointmentService.getYears()
     .success(function (data) {
       if (data && data.years && data.years.length > 0) {
       	var years = [];
-        for (var i = data.years.length - 1; i >= 0; i--) {
+        for (var i = 0; i < data.years.length; i++) {
         	var temp = data.years[i];
         	years.push(temp.year);
         };
@@ -50,12 +139,12 @@ function scheduleAppointmentController($scope, $timeout, appointmentService) {
   }
 
   function getAllMakesByYear() {
-  	appointmentService.getAllMakesByYear($scope.year)
+  	appointmentService.getAllMakesByYear($scope.appointment.year)
     .success(function (data) {
       if (data && data.makes && data.makes.length > 0) {
       	var makes = [];
-        for (var i = data.makes.length - 1; i >= 0; i--) {
-        	var temp = data.makes[i];
+        for (var i = 0; i < data.makes.length; i++) {        	
+          var temp = data.makes[i];
         	makes.push(temp.make);
         };
         $scope.makes = makes;
@@ -65,11 +154,11 @@ function scheduleAppointmentController($scope, $timeout, appointmentService) {
   }
 
   function getAllModelsByYearAndMake() {
-  	appointmentService.getAllModelsByYearAndMake($scope.year, $scope.make)
+  	appointmentService.getAllModelsByYearAndMake($scope.appointment.year, $scope.appointment.make)
     .success(function (data) {
       if (data && data.models && data.models.length > 0) {
       	var models = [];
-        for (var i = data.models.length - 1; i >= 0; i--) {
+        for (var i = 0; i < data.models.length; i++) {
         	var temp = data.models[i];
         	models.push(temp.model);
         };
@@ -84,8 +173,9 @@ function scheduleAppointmentController($scope, $timeout, appointmentService) {
     .success(function (data) {
       if (data && data.available_dates && data.available_dates.length > 0) {
       	var dates = [];
-        for (var i = data.available_dates.length - 1; i >= 0; i--) {
+        for (var i = 0; i < data.available_dates.length; i++) {
         	var temp = data.available_dates[i];
+          temp.date = $filter('date')(temp.date, "yyyy-MM-dd")
         	dates.push(temp.date);
         };
         $scope.dates = dates;
@@ -94,43 +184,103 @@ function scheduleAppointmentController($scope, $timeout, appointmentService) {
     });
   }
 
-  function getAvailableTimeSlotsForDate() {
-  	appointmentService.getAvailableTimeSlotsForDate($scope.date)
+  function getSlotsForDate() {
+  	appointmentService.getAvailableTimeSlotsForDate($scope.appointment.date)
     .success(function (data) {
-      if (data && data.models && data.models.length > 0) {
-      	var models = [];
-        for (var i = data.models.length - 1; i >= 0; i--) {
-        	var temp = data.models[i];
-        	models.push(temp.model);
+      if (data && data.time_slots && data.time_slots.length > 0) {
+      	var times = [];
+        for (var i = 0; i < data.time_slots.length; i++) {
+        	var temp = data.time_slots[i];
+          temp.time = moment(temp.time,'HH:mm').format('LT');
+        	times.push(temp.time);
         };
-        $scope.models = models;
-        console.log($scope.models);
+        $scope.times = times;
       }
     });
   }
 
-  $scope.$watch('year', function (newVal) {
-  	getAllMakesByYear();
+  function getAvailableServices() {
+    appointmentService.getAvailableServices()
+    .success(function (data) {
+      if (data && data.services && data.services.length > 0) {
+        $scope.services = data.services;
+      }
+    });
+  }
+
+  function createOwnerInformation() {
+    appointmentService.createOwnerInformation($scope.appointment)
+    .success(function (data) {
+      if (data && data.user_id) {
+        $scope.appointment.user_id = data.user_id;
+      } else if (data && data.customer_id) {
+        $scope.appointment.cusomer_id = data.customer_id;
+      }
+      createAppointment();
+    });
+  }
+
+  function createAppointment() {
+    appointmentService.createAppointment($scope.appointment)
+    .success(function (data) {
+      if (data && data.appointment_id) {
+      $scope.appointment_id = data.appointment_id;
+      createServices();
+    }
+    });
+  }
+
+  function createServices() {
+    appointmentService.createServices($scope.appointment.services, $scope.appointment_id)
+    .success(function (data) {
+      if (data.status == 'success') {
+      finishSchedulingAppointment();
+    }
+    });
+  }
+
+  function finishSchedulingAppointment(id) {
+    appointmentService.appointmentConfirmation(id)
+    .success(function (data) {
+      if (data.status == 'success') {
+        $scope.message = "Appointment scheduled successfully.";
+      }
+    });
+  }
+
+  $scope.$watch('appointment.year', function (newVal) {
   	$scope.appointment.year = newVal;
+  	if ($scope.appointment.year) {
+  		getAllMakesByYear();
+  	}
   });
 
-  $scope.$watch('make', function (newVal) {
-  	getAllModelsByYearAndMake();
+  $scope.$watch('appointment.make', function (newVal) {
   	$scope.appointment.make = newVal;
+  	if ($scope.appointment.make) {
+  		getAllModelsByYearAndMake();
+  	}
   });
 
-  $scope.$watch('model', function (newVal) {
-  	//getAvailableAppointmentDates();
+  $scope.$watch('appointment.model', function (newVal) {
   	$scope.appointment.model = newVal;
+  	if ($scope.appointment.model) {
+  		getDates();
+  	}
   });
 
-  $scope.$watch('date', function (newVal) {
-  	//getAvailableTimeSlotsForDate();
-  	$scope.appointment.date = newVal;
+  $scope.$watch('appointment.date', function (newVal) {
+    $scope.appointment.date = newVal;
+    if ($scope.appointment.date) {
+  		getSlotsForDate();
+  	}
   });
 
-  $scope.$watch('time', function (newVal) {
-  	$scope.appointment.time = newVal;
+  $scope.$watch('appointment.time', function (newVal) {
+    //var temp = moment(newVal,'LT').format('HH:mm:ss');
+  	//$scope.appointment.time = temp;
+    if ($scope.appointment.time) {
+      getAvailableServices();
+    }
   });
-
 }

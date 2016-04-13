@@ -1,0 +1,20 @@
+<form class="navbar-form navbar-left" role="search"
+            method="POST"
+            name="formSelectDateTime">
+<div class="row">
+  <h3>Select Date and Time</h3>
+  <div class="form-group" data-ng-cloak>
+      Date:
+      <select id="date" data-ng-model="appointment.date" ng-options="date | date:'MM/dd/yyyy' for date in dates">
+          <option value=''>Select</option>
+      </select>
+  </div>
+  <div class="form-group" data-ng-cloak>
+      Time:
+      <select id="time" ng-disabled="!appointment.date" data-ng-model="appointment.time" ng-options="time | date:'hh:mm a' for time in times">
+          <option value=''>Select</option>
+      </select>
+  </div>
+</div><!-- end of date/time-->
+<br /><br />
+</form>

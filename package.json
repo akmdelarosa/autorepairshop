@@ -5,6 +5,8 @@
   "main": "server.js",
   "author": "Angel Dela Rosa <akmdelarosa@gmail.com>",
   "dependencies": {
+    "angular": "^1.5.3",
+    "angular-ui-router": "^1.0.0-alpha.4",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.0",
     "connect-flash": "^0.1.1",

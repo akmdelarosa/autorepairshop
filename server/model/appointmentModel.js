@@ -1,137 +1,129 @@
 
 var connectionProvider = require('../mysqlConnectionStringProvider.js');
+var moment = require('moment');
 
 var appointmentModel = {
-  
-  createAppointment : function (appointment, OnSuccessfulCallback) {
-    
-    var insertStatement = "INSERT INTO appointments SET?";
-    
-    var appointment = {   
-      user_id : appointment.customer_id,
-      visitor_id : appointment.visitor_id,
-      service_id : appointment.service_id,
-      date: appointment.date,
-      time: appointment.time,
-      created : new Date()
-    };
-    
-    console.log(appointment);
-    
-    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-    
-    if (connection) {
-      
-      connection.query(insertStatement, appointment, function (err, result) {
-        
-        if (err) { }
-        
-        OnSuccessfulCallback({ status : 'successful' });
-        console.log(result)
-      });
-      
-      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
-    }
-  }
-  
-  ,
-  
-  getAllAppointment : function (user, callback) {
-    
-    var user_query = user.visitor_id ? 'visitor_id' : 'user_id';
-    var user_id = user.visitor_id ? user.visitor_id : user.user_id;
-    
-    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-    var queryStatement = "SELECT * FROM appointments WHERE " + user_query + " = ? AND deleted - 0 ORDER BY ID DESC";
-    
-    if (connection) {
-      
-      connection.query(queryStatement, [user_id], function (err, rows, fields) {
-        
-        if (err) { throw err; }
-        
-        
-        console.log(rows);
-        
-        callback(rows);
-      });
-      
-      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
-    }
-  }
-  
-  ,
-  
-  getAppointmentById : function (appointmentId, callback) {
-    
-    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-    var queryStatement = "SELECT * FROM appointments WHERE id = ?";
-    
-    if (connection) {
-      
-      connection.query(queryStatement, [appointmentId] , function (err, rows, fields) {
-        
-        if (err) { throw err; }
-        
-        
-        console.log(rows);
-        
-        callback(rows);
-      });
-      
-      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
-    }
-  }
-  
-  
-  ,
-  
-  updateAppointment: function (date, time, service, appointmentId, callback) {
-    
-    
-    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-    var queryStatement = "UPDATE  appointments SET date = ? ,  time = ?, service = ?  WHERE id = ?";
-    
-    if (connection) {
-      
-      connection.query(queryStatement, [date, time, service, appointmentId] , function (err, rows, fields) {
-        if (err) { throw err; }
-        console.log(rows);
-        
-        if (rows) {
-          
-          
-          callback({ status : 'successful' });
-        }
-      });
-      
-      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
-    }
-  }
-  ,
-  
-  cancelAppointment : function (appointmentId, callback) {
-    
-    
-    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-    var queryStatement = "UPDATE appointments SET deleted = 1 WHERE id = ?";
-    
-    if (connection) {
-      
-      connection.query(queryStatement, [appointmentId] , function (err, rows, fields) {
-        if (err) { throw err; }
-        console.log(rows);
-        
-        if (rows) {
-          
-          callback({ status : 'successful' });
-        }
-      });
-      
-      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
-    }
-  }
+	createAppointment : function (appointment, callback) {
 
-}
+		var insertStatement = "INSERT INTO appointments SET?";
+		appointment.created = moment().format('YYYY-MM-DD HH:mm:ss');
+		
+
+		var appointment_data = {
+			date : moment(appointment.date, 'YYYY-MM-DD').format('YYYY-MM-DD'),
+			time : moment(appointment.time, 'LT').format('HH:mm:ss'),
+			year : appointment.year,
+			make : appointment.make,
+			model : appointment.model,
+			created : moment().format('YYYY-MM-DD HH:mm:ss')
+		};
+
+		if (appointment.user_id) {
+			appointment_data.user_id = appointment.user_id;
+		} else {
+			appointment_data.customer_id = appointment.customer_id;
+		}
+
+		console.log("appointment query below");
+		console.log(appointment_data);
+		var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+		if (connection) {
+
+			connection.query(insertStatement, appointment_data, function (err, result) {
+			  
+			  if (err) { throw err; }
+			  
+			  console.log(result);
+			  callback(result);
+			});
+			connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+		}
+
+	    console.log(moment().format('YYYY-MM-DD HH:mm:ss'));
+	}
+
+	,
+
+	getAppointment : function (id, callback) {
+	  var queryStatement = "SELECT a.year,a.make,a.model,IFNULL(c.first_name, u.first_name) AS first_name,IFNULL(c.last_name, u.last_name) AS last_name,IFNULL(c.email, u.email) AS email,IFNULL(c.phone_number, u.phone_number) AS phone_number,s.name AS service_name,s.description AS service_description,a.date,a.time FROM appointments a LEFT JOIN customers c ON c.id = a.customer_id LEFT JOIN users u ON u.id = a.user_id LEFT JOIN appointment_services s1 ON s1.appointment_id = a.id LEFT JOIN services s ON s.id = s1.service_id WHERE a.id = ?";
+	  var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+      if (connection) {
+        connection.query(queryStatement, [id], function (err, rows, fields) {
+        
+          if (err) { throw err; }
+          
+          console.log(rows);
+          callback(rows);
+
+        });
+      }
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+	}
+
+	,
+
+	createOwnerInformation : function (data, callback) {
+		data.created = moment().format('YYYY-MM-DD HH:mm:ss');
+		console.log(data);
+		var insertCustomerStatement = "INSERT INTO customers SET?";
+		var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+		if (connection) {
+
+			connection.query(insertCustomerStatement, data, function (err, result) {
+			  
+			  if (err) { throw err; }
+			  
+			  console.log(result);
+			  callback(result);
+			});
+			connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+		}
+	}/*
+	,
+
+	createAppointmentServices : function (services, appointment_id, callback) {
+		var servicesStatements = "INSERT INTO appointment_services (service_id, appointment_id, created) VALUES ";
+		for (var i in services) {
+	      var service = services[i];
+	      var currentDate = moment().format('YYYY-MM-DD HH:mm:ss');
+	      console.log(service);
+	      servicesStatements += "(" +service.id +","+ appointment_id+","currentDate+")";
+	      if (i < services.length - 1) {
+	      	servicesStatements += ",";
+	      }
+	    }
+	    console.log(servicesStatements);
+
+      var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+      if (connection) {
+        connection.query(servicesStatements, function (err, result) {
+        
+          if (err) { throw err; }
+          
+          console.log(result);
+          callback(result);
+
+        });
+      }
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+	}
+	,
+
+	getAppointment : function (id, callback) {
+	  var queryStatement = "SELECT a.year,a.make,a.model,IFNULL(c.first_name, u.first_name) AS first_name,IFNULL(c.last_name, u.last_name) AS last_name,IFNULL(c.email, u.email) AS email,IFNULL(c.phone_number, u.phone_number) AS phone_number,s.name AS service_name,s.description AS service_description,a.date,a.time FROM appointments a LEFT JOIN customers c ON c.id = a.customer_id LEFT JOIN users u ON u.id = a.user_id LEFT JOIN appointment_services s1 ON s1.appointment_id = a.id LEFT JOIN services s ON s.id = s1.service_id WHERE a.id = ?";
+	  var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+      if (connection) {
+        connection.query(queryStatement, [id], function (err, result) {
+        
+          if (err) { throw err; }
+          
+          console.log(result);
+          callback(result);
+
+        });
+      }
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+	}*/
+};
 
 module.exports.appointmentModel = appointmentModel; 

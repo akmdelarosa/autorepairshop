@@ -135,8 +135,19 @@ vehicleRouteConfig.prototype.addRoutes = function () {
         }
     });
 
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/vehicle/getAvailableServices',
+        callbackFunction : function (request, response) {
+            var vehicleServicesModel = require('../server/model/vehicleServicesModel.js');
+            vehicleServicesModel.vehicleServicesModel.getAvailableServices (
+                function (services) {
+                    response.json({ services : services });
+            });
 
-//getAllModelsByYearAndMake
+        }
+    });
     
     
 

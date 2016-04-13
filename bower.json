@@ -22,6 +22,8 @@
     "angular-bootstrap-show-errors": "^2.3.0",
     "angular": "^1.5.0",
     "angular-bootstrap-calendar": "^0.19.6",
-    "angular-bootstrap": "^1.2.5"
+    "angular-bootstrap": "^1.2.5",
+    "angular-animate": "^1.5.3",
+    "checklist-model": "^0.9.0"
   }
 }

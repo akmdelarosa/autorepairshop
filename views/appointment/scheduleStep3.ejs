@@ -1,0 +1,29 @@
+<form class="navbar-form navbar-left" role="search"
+            method="POST"
+            name="formSelectServices">
+  <div class="row">
+    <h3>Select Service</h3>
+    <div class="col-xs-12 col-sm-9 form-group" data-ng-show="services.length > 0">
+      <div style="height: 350px; overflow-y: scroll; padding: 2px; box-shadow: 1px 1px 5px #555 inset;">
+      <label class="ng-binding ng-scope" style="display: block; padding: 5px;" ng-repeat="service in services">
+        <input type="checkbox" checklist-model="appointment.services"
+          checklist-value="service" 
+          checklist-comparator=".id"> 
+        <p style="display: inline-block;">{{service.name}}</p>
+        <p>{{service.description}}</p>   
+        <br />
+      </label>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-3">
+    <div class="row" ng-show="appointment.services">
+      <p>Services selected:</p>
+      <ul>
+        <li ng-repeat="selectedService in appointment.services">{{selectedService.name}}</li>
+      </ul>
+      </div>
+    </div>
+  </div>
+</form>
+
+

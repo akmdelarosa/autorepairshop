@@ -70,9 +70,6 @@ app.get('/contact', routes.contact);
 var productCategoryRoute = require('./routes/productCategoryRouteConfig.js');
 new productCategoryRoute(app);
 
-var productCategoryRoute = require('./routes/productCategoryRouteConfig.js');
-new productCategoryRoute(app);
-
 var passportRoute = require('./routes/passportRouteConfig.js');
 new passportRoute(app,passport);
 

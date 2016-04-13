@@ -1,0 +1,29 @@
+<form class="navbar-form navbar-left" role="search"
+            method="POST"
+            name="formSelectVehicle">
+  <div class="row">    
+  <h3>Select Your Vehicle</h3>
+  <div class="form-group" data-ng-cloak>
+      Year:
+      <select id="year" data-ng-model="appointment.year" ng-options="year for year in years">
+          <option value=''>Select</option>
+      </select>
+      <p ng-show="formSelectVehicle.year.$invalid && !formSelectVehicle.year.$pristine" class="help-block">Select a year.</p>
+  </div>
+  <div class="form-group" data-ng-cloak>
+      Make:
+      <select id="make" ng-disabled="!appointment.year" data-ng-model="appointment.make" ng-options="make for make in makes">
+          <option value=''>Select</option>
+      </select>
+      <p ng-show="formSelectVehicle.make.$invalid && !formSelectVehicle.make.$pristine" class="help-block">Select a make.</p>
+  </div>
+  <div class="form-group" data-ng-cloak>
+      Model:
+      <select id="model" ng-disabled="!appointment.make" data-ng-model="appointment.model" ng-options="model for model in models">
+          <option value=''>Select</option>
+      </select>
+      <p ng-show="formSelectVehicle.model.$invalid && !formSelectVehicle.model.$pristine" class="help-block">Select a model.</p>
+  </div>
+</div><!-- end of year/make/model -->
+<br /><br />
+</form>

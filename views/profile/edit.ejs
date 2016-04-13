@@ -81,15 +81,13 @@
         </div>
         
         <div class="row">
-          <div class="form-group">
+          <div class="form-group" show-errors>
             
             <label for="phone_number">Phone</label>
             &nbsp;&nbsp;
 
             <input type="tel" 
                    class="form-control" 
-                   ng-minlength="10" 
-                   ng-maxlength="10"  
                    value= "<%= user.phone_number %>"
                    name="phone_number"
                    id="phone_number"

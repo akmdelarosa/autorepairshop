@@ -1,3 +1,6 @@
-.table-scrollable{
+.table-scrollable {
     overflow: auto;
+}
+.clear {
+	float: clear;
 }
