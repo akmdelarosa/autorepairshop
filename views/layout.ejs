@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Auto Repair Shop</title>
-	  <link href="../../stylesheets/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../stylesheets/bootstrap.min.css" rel="stylesheet" />
     <link href="../../stylesheets/app.css" rel="stylesheet" />
     
 	  <script src="../../javascripts/jquery-1.10.2.min.js"></script>
@@ -13,8 +13,6 @@
 
 </head>
 <body>
-  <div class="container-fluid">HELLO
-  </div>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -31,39 +29,54 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/login">Login <span class="sr-only"></span></a></li>
+		<li class="active"><a href="/">Home <span class="sr-only"></span></a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Product <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/viewProduct">View Product</a></li>
-            <li><a href="/createProduct">Create Product</a></li>
+            <li><a href="/viewServices">View Services</a></li>
           </ul>
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Appointment <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/appointment/viewAppointment">View Appointment</a></li>
+			  <% if (typeof user != "undefined") { %>
+               <li><a href="/appointment/viewAppointment">View Appointment</a></li>
+			  <% } %>
             <li><a href="/appointment/scheduleAppointment">Schedule Appointment</a></li>
-            <li><a href="/appointment/createAppointment">Schedule Appointment</a></li>
           </ul>
         </li>
-      </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li data-ng-hide="type of user == undefined"><a href="/profile/index">Profile</a></li>
+		<% if (typeof user != "undefined") { %>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Product Category <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehicles <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/createProductCategory">Create Product Category</a></li>
-            <li><a href="/viewProductCategory">View Product Category</a></li>
-            <li><a href="/login">Passport Login</a></li>
-          </ul>          
+            <li><a href="/serviceHistory">View Service History</a></li>
+            <li><a href="/viewVehicles">View Vehicles</a></li>
+          </ul>
         </li>
+		<% } %>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	    <% if (typeof user != "undefined") { %>
+	      <li><a href="/profile/index">Profile</a></li>
+          <li><a href="/logout">Logout <span class="sr-only"></span></a></li>
+		<% } else { %>
+		  <li><a href="/login">Login <span class="sr-only"></span></a></li>
+		<% } %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+			<li><a href="/hoursandmap">Hours and Map</a></li>
+			<li><a href="/meetthestaff">Meet the Staff</a></li>
+          </ul>
+        </li>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

@@ -66,6 +66,8 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/about', routes.about);
 app.get('/contact', routes.contact);
+app.get('/hoursandmap', routes.hoursandmap);
+app.get('/meetthestaff', routes.meetthestaff);
 
 var productCategoryRoute = require('./routes/productCategoryRouteConfig.js');
 new productCategoryRoute(app);
@@ -81,6 +83,9 @@ new appointmentRoute(app);
 
 var vehicleRoute = require('./routes/vehicleRouteConfig.js');
 new vehicleRoute(app);
+
+var serviceRoute = require('./routes/serviceRouteConfig.js');
+new serviceRoute(app);
 // login routes ======================================================================
 //require('./routes/loginRouteConfig.js')(app, passport); // load our routes and pass in our app and fully configured passport
 

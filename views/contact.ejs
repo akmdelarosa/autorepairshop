@@ -1,19 +1,32 @@
-extends layout
+<% include layout %>
 
-block content
-  h2 #{title}
-  h3 #{message}
-  address
-    | One Microsoft Way
-    br
-    | Redmond, WA 98052-6399
-    br
-    abbr(title='Phone') P: 
-    | 425.555.0100
+<div class="panel panel-info">
+	
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+  <% if (typeof user != "undefined") { %>
+    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+  <% } %>
+    <a href="/" class="btn btn-default btn-sm">Back To Home</a>
+  </div>
+  
+  <div class="clear"></div>
+  
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+  <div class="panel-body">
+	  
+    <div class="container">
 
-  address
-    strong Support: 
-    a(href='mailto:Support@example.com') Support@example.com
-    br
-    strong Marketing: 
-    a(href='mailto:Marketing@example.com') Marketing@example.com
+     <!-- show any messages that come back with authentication -->
+    <% if (typeof message != "undefined" && message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+
+  	</div>
+	
+  </div>
+  
+</div>
+<% include footer %>

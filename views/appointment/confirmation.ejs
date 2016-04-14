@@ -1,34 +1,44 @@
 <% include ../layout %>
 
-<div class="container">
-  <div class="row">
-    <h2>Appointment Confirmation</h2><br />
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+  <% if (typeof user != "undefined") { %>
+    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+  <% } %>
+    <a href="/" class="btn btn-default btn-sm">Back To Home</a>
+  </div>
+  <div class="clear"></div>
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+  <div class="panel-body">
+    <div class="container">
+
+     <!-- show any messages that come back with authentication -->
+    <% if (typeof message != "undefined" && message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>
 
     <div class="row">
       <div class="col-sm-12">
-        <p>Thank you for scheduling an appointment with Angel's Auto Repair Shop. Please confirm your appointment details below and click schedule when you're done.</p><br />
+        <p>Thank you for scheduling an appointment with Angel's Auto Repair Shop. Your appointment details are below.</p><br />
         <div class="well">
 
-          <p><strong>Name: </strong>{{appointment.first_name}} {{appointment.last_name}}</p>
-          <p><strong>Email: </strong>{{appointment.email}}</p>
-          <p><strong>Phone: </strong>{{appointment.phone_number}}</p>
+          <p><strong>Name: </strong><%= appointment[0].first_name %> <%= appointment[0].last_name %></p>
+          <p><strong>Email: </strong><%= appointment[0].email %></p>
+          <p><strong>Phone: </strong><%= appointment[0].phone_number %></p>
+          <p><strong>Vehicle: </strong><%= appointment[0].year %> <%= appointment[0].make %> <%= appointment[0].model %></p>
+          <p><strong>Date: </strong><%= moment(appointment[0].date).format('LL') %></p>
+          <p><strong>Time: </strong><%= moment(appointment[0].time, 'LT').format('LT') %></p>
 
           <br />
 
-          <p><strong>Year: </strong>{{appointment.year}}</p>
-          <p><strong>Make: </strong>{{appointment.make}}</p>
-          <p><strong>Model: </strong>{{appointment.model}}</p>
-
-          <br />
-
-          <p><strong>Date: </strong>{{appointment.date}}</p>
-          <p><strong>Time: </strong>{{appointment.time}}</p>
-
-          <br />
-
-          <p><strong>Requested services:</strong></p>
+          <p><strong>Requested Services:</strong></p>
           <ul>
-            <li ng-repeat="selectedService in appointment.services">{{selectedService.name}}</li>
+			<% appointment.forEach(function(service) { %>
+		        <li><%= service.service_name %></li>
+		    <% }); %>
           </ul>
 
         </div>
@@ -36,5 +46,5 @@
     </div>
 
   </div>
-
+ </div>
 </div><!-- end of appointment details-->

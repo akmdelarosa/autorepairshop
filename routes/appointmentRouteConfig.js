@@ -1,3 +1,4 @@
+var moment = require('moment');
 function appointmentRouteConfig(app) { 
 
     this.app = app;
@@ -12,7 +13,7 @@ appointmentRouteConfig.prototype.init = function () {
 
     this.addRoutes();
     this.processRoutes();
-
+	
 
 }
 
@@ -275,6 +276,20 @@ appointmentRouteConfig.prototype.addRoutes = function () {
             if (request.user) {
                 //if user found, save the user_id to the appointment
                 data.appointment.user_id = request.user.id;
+                console.log("appointment passed to createAppointment");
+                console.log(data.appointment);
+                appointmentModel.appointmentModel.createAppointment(data.appointment,
+                    function (appointmentStatus) {
+                        console.log("createappointment status below");
+                        console.log(appointmentStatus);
+                        //appointment_id = status.insertId;
+                        data.appointment.appointment_id = appointmentStatus.insertId;
+                        appointmentServicesModel.appointmentServicesModel.createAppointmentServices(data.appointment.services, appointmentStatus.insertId,
+                            function(serviceStatus) {
+                                response.json({status: 'success', appointment_id : data.appointment.appointment_id});
+                                //response.redirect('/appointment/confirmation/'+data.appointment.appointment_id);
+                        });
+                });
             } else {
                 //otherwise, create customer info
                 
@@ -364,20 +379,17 @@ appointmentRouteConfig.prototype.addRoutes = function () {
             }); 
         }
     });
-
-    self.routeTable.push({
-        
+    self.routeTable.push({   
         requestType : 'get',
         requestUrl : '/appointment/confirmation/:id',
         callbackFunction : function (request, response) {
+			
             console.log(request.params.id);
-
             var appointmentModel = require('../server/model/appointmentModel.js');
             appointmentModel.appointmentModel.getAppointment (request.params.id,
                 function (data) {
                     console.log(data);
-
-                    response.render('appointment/confirmation', {title: 'Confirmation', user: request.user, appointment : data});
+                    response.render('appointment/confirmation', {title: 'Confirmation', user: request.user, appointment : data, moment : moment});
                 }); 
             
         }

@@ -12,31 +12,7 @@ scheduleAppointmentController.$inject = ['$scope', '$timeout', 'moment', '$filte
 
 function scheduleAppointmentController($scope, $timeout, moment, $filter, $window, appointmentService) {
 	$scope.appointment ={};
-	/*year:'', 
-        make: '', 
-        model: '',
-        services: [],
-        date: '',
-        time: ''*/
 
-  //console.log("scope.appointment below");
-  //console.log($scope.appointment);
-  /*
-  $scope.displayYearMakeModelNextButton = true;
-  $scope.displayDateTimeNextButton = false;
-  $scope.displayDateTimeBlock = false;
-  $scope.displayServiceBlock = false;
-  $scope.displayServiceNextButton = false;
-
-  $scope.step1isValid = false;
-  $scope.step2isValid = false;
-  $scope.step3isValid = false;
-  $scope.step4isValid = false;
-  $scope.scheduleFormisValid = false;
-
-  $scope.vehicleLists = [];
-  $scope.selectedServices = [];
-  */
   $scope.steps = [
     {
         templateUrl: 'scheduleStep1',
@@ -87,41 +63,7 @@ function scheduleAppointmentController($scope, $timeout, moment, $filter, $windo
   };
 
   getYears();
-  /*
-  $scope.showDateTimeBlock = function () {
-  	console.log($scope.appointment);
-  	getDates();
-  	$scope.displayYearMakeModelNextButton = false;
-    $scope.displayDateTimeNextButton = true;
-    $scope.displayDateTimeBlock = true;
-  }
 
-  $scope.showServiceBlock = function () {
-  	console.log($scope.appointment);
-    getAvailableServices();
-  	$scope.displayServiceBlock = true;
-    $scope.displayServiceNextButton = true;
-    $scope.displayDateTimeNextButton = false;
-    $scope.displayYearMakeModelNextButton = false;
-  }
-
-  $scope.updateServices = function (services) {
-    console.log("updating services called");
-    console.log(services);
-    $scope.appointment.services = services;
-    console.log($scope.appointment);
-    nextStep();
-  }
-
-  function nextStep() {
-    appointmentService.scheduleAppointmentStep2($scope.appointment)
-    .success(function (data) {
-      if (data.status && data.status == 'successful') {
-        $scope.message = 'Profile updated successfully';
-      }
-    });
-  }
-  */
   function getYears() {
   	$scope.years = {};
   	appointmentService.getYears()

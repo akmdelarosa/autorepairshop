@@ -4,3 +4,60 @@
 .clear {
 	float: clear;
 }
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    width: 100%;
+    margin: auto;
+}
+.footer {
+	/*position: absolute;*/
+	bottom: 0;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 60px;
+  	background-color: #3a3f44;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+body {
+    background-image: url("../../images/background-thread.jpg");
+    background-repeat: repeat;
+}
+.col-fixed {
+    /* custom width */
+    width:320px;
+}
+.col-min {
+    /* custom min width */
+    min-width:320px;
+}
+.col-max {
+    /* custom max width */
+    max-width:320px;
+}
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+body > .container {
+  padding: 60px 15px 0;
+}
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.blue-bg-side-div {
+	background-color: blue;
+}
+.panel-body {
+	min-height: 600px;
+}
