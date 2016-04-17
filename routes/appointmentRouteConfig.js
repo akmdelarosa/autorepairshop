@@ -379,6 +379,7 @@ appointmentRouteConfig.prototype.addRoutes = function () {
             }); 
         }
     });
+	
     self.routeTable.push({   
         requestType : 'get',
         requestUrl : '/appointment/confirmation/:id',
@@ -389,12 +390,27 @@ appointmentRouteConfig.prototype.addRoutes = function () {
             appointmentModel.appointmentModel.getAppointment (request.params.id,
                 function (data) {
                     console.log(data);
-                    response.render('appointment/confirmation', {title: 'Confirmation', user: request.user, appointment : data, moment : moment});
+                    response.render('appointment/confirmation', {title: 'Confirmation', user: request.user, appointment : data, moment : moment, appointment_id : request.params.id});
                 }); 
             
         }
     });
-
+	
+    self.routeTable.push({   
+        requestType : 'post',
+        requestUrl : '/appointment/cancelAppointment',
+        callbackFunction : function (request, response) {
+			
+            console.log(request.body.id);
+            var appointmentModel = require('../server/model/appointmentModel.js');
+            appointmentModel.appointmentModel.cancelAppointment (request.body.id,
+                function (data) {
+                    console.log(data);
+					response.json(data);
+                }); 
+            
+        }
+    });
 
     self.routeTable.push({
         

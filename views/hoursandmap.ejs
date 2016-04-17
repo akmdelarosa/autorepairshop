@@ -1,32 +1,58 @@
 <% include layout %>
 
 <div class="panel panel-info">
-	
-  <div style="float: right; padding-top: 4px; padding-right: 15px;">
-  <% if (typeof user != "undefined") { %>
-    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-  <% } %>
-    <a href="/" class="btn btn-default btn-sm">Back To Home</a>
-  </div>
-  
-  <div class="clear"></div>
-  
-  <div class="panel-heading">
-    <h3 class="panel-title"><%=title %></h3>
-  </div>
-  
-  <div class="panel-body">
-	  
-    <div class="container">
 
-     <!-- show any messages that come back with authentication -->
-    <% if (typeof message != "undefined" && message.length > 0) { %>
-        <div class="alert alert-danger"><%= message %></div>
-    <% } %>
+	<div style="float: right; padding-top: 4px; padding-right: 15px;">
+		<% if (typeof user != "undefined") { %>
+			<a href="/logout" class="btn btn-default btn-sm">Logout</a>
+		<% } %>
+			<a href="/" class="btn btn-default btn-sm">Back To Home</a>
+	</div>
 
-  	</div>
+	<div class="clear"></div>
+
+	<div class="panel-heading">
+		<h3 class="panel-title"><%=title %></h3>
+	</div>
+
+	<div class="panel-body">
+
+		<div class="container">
+
+			<!-- show any messages that come back with authentication -->
+			<% if (typeof message != "undefined" && message.length > 0) { %>
+				<div class="alert alert-danger"><%= message %></div>
+			<% } %>
+
+			<div class="row">
+				<div class="col-md-6">
+					<h3>Contact Us</h3>
+					<br />
+					<label>Phone Number:</label>
+					<p>(410) 864-4731</p>
+					<br />
+					<label>Hours of Operation:</label>
+					<p>Monday: 8:00 am - 6:00 pm</p>
+					<p>Tuesday: 8:00 am - 6:00 pm</p> 
+					<p>Wednesday: 8:00 am - 6:00 pm</p>
+					<p>Thursday: 8:00 am - 6:00 pm</p>
+					<p>Friday: 8:00 am - 6:00 pm</p>
+					<p>Saturday: 8:00 am - 4:00 pm</p>
+					<p>Sunday: Closed</p>
+				</div>
+
+				<div class="col-md-6">
+					<h3>Maps</h3>
+					<br />
+					<iframe width="500" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJLX2exqIPyIkRXmWz1aR-K6I&key=AIzaSyCc-O4BAlkPlieOJYfB2ovpHxEMu27ajPA" allowfullscreen></iframe>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+	</div>
 	
-  </div>
-  
 </div>
+
 <% include footer %>

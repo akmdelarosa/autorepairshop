@@ -78,39 +78,11 @@ var appointmentModel = {
 			});
 			connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
 		}
-	}/*
-	,
-
-	createAppointmentServices : function (services, appointment_id, callback) {
-		var servicesStatements = "INSERT INTO appointment_services (service_id, appointment_id, created) VALUES ";
-		for (var i in services) {
-	      var service = services[i];
-	      var currentDate = moment().format('YYYY-MM-DD HH:mm:ss');
-	      console.log(service);
-	      servicesStatements += "(" +service.id +","+ appointment_id+","currentDate+")";
-	      if (i < services.length - 1) {
-	      	servicesStatements += ",";
-	      }
-	    }
-	    console.log(servicesStatements);
-
-      var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-      if (connection) {
-        connection.query(servicesStatements, function (err, result) {
-        
-          if (err) { throw err; }
-          
-          console.log(result);
-          callback(result);
-
-        });
-      }
-      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
 	}
 	,
 
-	getAppointment : function (id, callback) {
-	  var queryStatement = "SELECT a.year,a.make,a.model,IFNULL(c.first_name, u.first_name) AS first_name,IFNULL(c.last_name, u.last_name) AS last_name,IFNULL(c.email, u.email) AS email,IFNULL(c.phone_number, u.phone_number) AS phone_number,s.name AS service_name,s.description AS service_description,a.date,a.time FROM appointments a LEFT JOIN customers c ON c.id = a.customer_id LEFT JOIN users u ON u.id = a.user_id LEFT JOIN appointment_services s1 ON s1.appointment_id = a.id LEFT JOIN services s ON s.id = s1.service_id WHERE a.id = ?";
+	cancelAppointment : function (id, callback) {
+	  var queryStatement = "UPDATE appointments SET deleted = 1 WHERE id = ?";
 	  var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
       if (connection) {
         connection.query(queryStatement, [id], function (err, result) {
@@ -123,7 +95,7 @@ var appointmentModel = {
         });
       }
       connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
-	}*/
+	}
 };
 
 module.exports.appointmentModel = appointmentModel; 

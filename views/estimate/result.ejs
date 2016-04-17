@@ -1,0 +1,75 @@
+
+    <div class="row">
+		
+	    <div class="text-center">
+	        <h1><span class="fa fa-anchor"></span> Estimate for {{year}} {{make}} {{model}}</h1>
+	        <h3>{{service.name}}</h3>
+	    </div>
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-12">
+            <div class="well">
+                <h3><span class="fa fa-user"></span>Parts</h3>
+				<p>{{min_price | currency:"$"}} - {{max_price | currency:"$"}}*</p>
+				<ul>
+                    <li ng-repeat="part in parts">
+                        <strong>{{part.name}}</strong> {{part.description}}
+					</li>
+				</ul>
+				
+				<br />
+                <h3><span class="fa fa-user"></span>Labor</h3>
+				<p>{{min_rate | currency:"$"}} - {{max_rate | currency:"$"}}*</p>
+
+            </div>
+			
+			<br />
+			<div class="info">
+				<span class="btn" ng-click="showInfo()">* Taxes and disposal fees excluded from estimate</span>
+			</div>
+        </div>
+
+    </div>
+<script type="text/ng-template" id="dialogInfo">
+	<div class="ngdialog-message" style="padding-right: 10px;">
+	    <h3>Taxes &amp; Disposal Fees Excluded from Estimate</h3>
+	    <p>
+	        <strong>There are several types of fees which can vary by
+	            location and type of service. For example:</strong>
+	    </p>
+	    <ul class="standard-list">
+	        <li>
+	            <strong>Shop Fees</strong> -
+	            Some shops will add a fee to cover shop supplies like
+	            rags, cleaning supplies and items like nuts, bolts.
+	            These charges may be prohibited in some states.
+	        </li>
+	        <li>
+	            <strong>Disposal Fees</strong> -
+	            Depending on the material and the location, such
+	            things as tires, batteries, and lubricants can have a
+	            disposal or recycling fee.
+	        </li>
+	        <li>
+	            <strong>Additional Work</strong> -
+	            Some jobs require additional work or parts that may
+	            not be included in the estimate.
+	            Examples of these are:
+	            <ul class="standard-list">
+	                <li>
+	                    Head gasket or exhaust manifold gasket, when
+	                    replaced could require additional machine
+	                    work.
+	                </li>
+	                <li>
+	                    Radiator replacement on some cars requires
+	                    additional clips and clamps.
+	                </li>
+	            </ul>
+	        </li>
+	    </ul>
+	</div>
+	<div class="ngdialog-buttons mt">
+		<span href="" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">OK, Got It!</span>
+	</div>
+</script>

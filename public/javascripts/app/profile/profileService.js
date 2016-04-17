@@ -25,6 +25,15 @@ function profileService($http) {
           user: user
         }
        );
-    }
+    },
+	getVehicles: function() {
+		return $http.get('/profile/getCurrentUserVehicles');
+	},
+	getAppointments: function() {
+		return $http.get('/profile/getCurrentUserAppointments');
+	},
+	getServiceHistory: function() {
+		return $http.get('/profile/getCurrentUserServiceHistory');
+	}
   };
 }

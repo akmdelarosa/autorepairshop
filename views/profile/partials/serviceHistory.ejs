@@ -1,6 +1,26 @@
 <div class="col-sm-12">
     <div class="well">
         <h3><span class="fa fa-user"></span> Service History</h3>
+		<div class='table-scrollable' style="max-height: 250px;">
+			<table
+			       data-ng-show="services.length > 0"
+			       class="table table-striped table-hover">
+			  <tr class="success">
+			    <td>Service Name</td>
+			    <td>Date Completed</td>
+			    <td>Appointment Scheduled?</td>
+			    <td>Vehicle</td>
+			  </tr>
 
+			  <tr data-ng-repeat="service in services">
+			    <td>{{service.name}}</td>
+			    <td>{{service.date | date:'MM/dd/yyyy'}}</td>
+			    <td>{{service.scheduled | yesNo}}</td>
+			    <td>{{service.year}} {{service.make}} {{service.model}}</td>
+			  </tr>
+			</table>
+			<p ng-hide="services.length > 0"> No service history found.</p>
+		</div>
     </div>
 </div>
+

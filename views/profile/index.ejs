@@ -6,7 +6,7 @@
   </div>
   
   <div class="panel-body">
-    <div class="container">
+    <div class="container" data-ng-app="profileModule" data-ng-controller="profileController">
 
      <!-- show any messages that come back with authentication -->
     <% if (typeof message != "undefined" && message.length > 0) { %>
@@ -26,20 +26,37 @@
             <div class="well">
                 <h3><span class="fa fa-user"></span>User Info <a href="/profile/edit" class="btn btn-default btn-sm">Edit</a></h3>
                     <p>
-                        <strong>id</strong>: <%= user.id %><br>
-                        <strong>email</strong>: <%= user.email %><br>
-                        <strong>password</strong>: <%= user.password %>
+                        <strong>Name</strong>: <%= user.first_name %> <%= user.last_name %><br>
+                        <strong>Email</strong>: <%= user.email %><br>
+                        <strong>Phone</strong>: <%= user.phone_number %>
                     </p>
 
             </div>
         </div>
 
     </div>
+	
     <div class="row">
     <% include partials/serviceHistory %>
     </div>
     
+    <div class="row">
+    <% include partials/appointmentHistory %>
+    </div>
+	
+    <div class="row">
+    <% include partials/vehicles %>
+    </div>
+	
      </div>
    </div>
 
 </div>
+
+<% include ../footer %>
+
+<script src="../../bower_components/moment/min/moment.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../bower_components/angular/angular.min.js"></script>
+<script src="../../javascripts/app/profile/profileModule.js"></script>
+<script src="../../javascripts/app/profile/profileService.js"></script>
+<script src="../../javascripts/app/profile/profileController.js"></script>

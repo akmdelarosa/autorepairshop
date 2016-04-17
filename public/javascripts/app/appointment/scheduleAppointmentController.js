@@ -219,8 +219,6 @@ function scheduleAppointmentController($scope, $timeout, moment, $filter, $windo
   });
 
   $scope.$watch('appointment.time', function (newVal) {
-    //var temp = moment(newVal,'LT').format('HH:mm:ss');
-  	//$scope.appointment.time = temp;
     if ($scope.appointment.time) {
       getAvailableServices();
     }

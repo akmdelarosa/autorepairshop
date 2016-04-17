@@ -233,6 +233,65 @@ var userModel = {
  validPassword : function(password) {
     return bcrypt.compareSync(password, this.password);
   }
+  ,
+  
+  getVehicles : function(userId, callback) {
+      var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+      var queryStatement = "SELECT v.year, v.make, v.model, v.mileage_read, MAX(s.completed) last_serviced FROM vehicles v INNER JOIN users_vehicles uv ON uv.vehicle_id = v.id LEFT JOIN service_history s ON s.vehicle_id = v.id AND uv.user_id WHERE uv.user_id = ? GROUP BY v.id";
+    
+      if (connection) {
+      
+        connection.query(queryStatement, [userId] , function (err, rows, fields) {
+          if (err) { throw err; }
+          console.log(rows);
+        
+          if (rows) {
+          
+            callback(rows);
+          }
+        });
+      
+        connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+      }
+  },
+  
+  getAppointments: function(userId, callback) {
+      var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+	  var queryStatement = "SELECT a.date, a.time, a.year, a.make,a.model, s.name FROM appointments a INNER JOIN appointment_services aps ON aps.appointment_id = a.id INNER JOIN services s ON s.id = aps.service_id WHERE a.user_id = ? ORDER BY a.date DESC";
+      if (connection) {
+      
+        connection.query(queryStatement, [userId] , function (err, rows, fields) {
+          if (err) { throw err; }
+          console.log(rows);
+        
+          if (rows) {
+          
+            callback(rows);
+          }
+        });
+      
+        connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+      }
+  },
+  
+  getServiceHistory: function(userId, callback) {
+      var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+	  var queryStatement = "SELECT v.year, v.make, v.model, sh.mileage_read, sh.completed AS `date`, IFNULL(a.id, 0) scheduled, s.name FROM service_history sh INNER JOIN vehicles v ON v.id = sh.vehicle_id LEFT JOIN appointments a ON a.id = sh.appointment_id INNER JOIN services s ON s.id = sh.service_id WHERE sh.user_id = ? GROUP BY sh.id ORDER BY sh.completed DESC";
+      if (connection) {
+      
+        connection.query(queryStatement, [userId] , function (err, rows, fields) {
+          if (err) { throw err; }
+          console.log(rows);
+        
+          if (rows) {
+          
+            callback(rows);
+          }
+        });
+      
+        connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+      }
+  }
 
 }
 

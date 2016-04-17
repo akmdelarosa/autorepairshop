@@ -89,7 +89,62 @@ profileRouteConfig.prototype.addRoutes = function () {
         }
 
     });
+	
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/profile/getCurrentUserVehicles',
+        callbackFunction : function(request, response) {
+            
+            var userModel = require('../server/model/userModel.js');
+                        
+            userModel.userModel.getVehicles(request.user.id,
+                function (status) { 
+					console.log(status);
+                    response.json({vehicles: status}); 
 
+            });
+        }
+
+    });
+	
+	//getCurrentUserAppointments
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/profile/getCurrentUserAppointments',
+        callbackFunction : function(request, response) {
+            
+            var userModel = require('../server/model/userModel.js');
+                        
+            userModel.userModel.getAppointments(request.user.id,
+                function (status) { 
+					console.log(status);
+                    response.json({appointments: status}); 
+
+            });
+        }
+
+    });
+	
+	//getCurrentUserServiceHistory
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/profile/getCurrentUserServiceHistory',
+        callbackFunction : function(request, response) {
+            
+            var userModel = require('../server/model/userModel.js');
+                        
+            userModel.userModel.getServiceHistory(request.user.id,
+                function (status) { 
+					console.log(status);
+                    response.json({services: status}); 
+
+            });
+        }
+
+    });
 }
 
 // route middleware to make sure a user is logged in

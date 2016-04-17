@@ -1,0 +1,86 @@
+<% include ../layout %>
+
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <% if (user) { %>
+    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    <% } %>
+    <a href="/appointment/index" class="btn btn-default btn-sm">Back To Appointment</a>
+  </div>
+
+  <div class="clear"></div>
+
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+
+  <div class="panel-body" data-ng-app="estimatorToolModule" data-ng-controller="estimatorToolController">
+
+      <form class="navbar-form navbar" role="search"
+            method="POST"
+            name="formEstimatorTool">
+			
+        <div class="row"  style="margin-left: 0px;">    
+          <h3>Select Your Vehicle</h3>
+          <div class="form-group" data-ng-cloak>
+              Year:
+              <select id="year" data-ng-model="year" ng-options="year for year in years">
+                  <option value=''>Select</option>
+              </select>
+          </div>
+          <div class="form-group" data-ng-cloak>
+              Make:
+              <select id="make" ng-disabled="!makes" data-ng-model="make" ng-options="make for make in makes">
+                  <option value=''>Select</option>
+              </select>
+          </div>
+          <div class="form-group" data-ng-cloak>
+              Model:
+              <select id="model" ng-disabled="!models" data-ng-model="model" ng-options="model for model in models">
+                  <option value=''>Select</option>
+              </select>
+          </div>
+        </div><!-- end of year/make/model -->
+
+        <div class="row"  style="margin-left: 0px;">
+          <h3>Select Service</h3>
+          <div class="form-group" data-ng-cloak>
+              Service:
+              <select id="service" ng-disabled="!services" data-ng-model="service" ng-options="service.name for service in services track by service.id">
+                  <option value=''>Select</option>
+              </select>
+          </div>
+
+        <div class="row"  style="margin-left: 0px;">
+          <br />
+          <div class="form-group" style="padding-left40%">
+            <button type="button" class="btn btn-primary" ng-disabled="!service || !model || !make || !year" 
+                    ng-click="getEstimate()">
+              Submit
+            </button>
+          </div>
+          <br /><br />
+        </div><!-- end of services next btn-->
+        </div>
+      </form>
+	  <br />
+	  <div id="results" ng-show="submit">
+	  	<% include result %>
+	  </div>
+    <br />
+  </div>
+</div>
+
+<% include ../footer %>
+<link rel="stylesheet" href="../../bower_components/ng-dialog/css/ngDialog.min.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../bower_components/ng-dialog/css/ngDialog-theme-default.min.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../bower_components/ng-dialog/css/ngDialog-theme-plain.min.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../bower_components/ng-dialog/css/ngDialog-theme-default.min.css" type="text/css" media="screen">
+
+<script src="../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+<script src="../../bower_components/ng-dialog/js/ngDialog.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="../../javascripts/app/estimatorTool/estimatorToolModule.js" type="text/javascript"></script>
+<script src="../../javascripts/app/estimatorTool/estimatorToolService.js" type="text/javascript"></script>
+<script src="../../javascripts/app/estimatorTool/estimatorToolController.js" type="text/javascript"></script>

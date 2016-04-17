@@ -86,6 +86,9 @@ new vehicleRoute(app);
 
 var serviceRoute = require('./routes/serviceRouteConfig.js');
 new serviceRoute(app);
+
+var estimatorToolRoute = require('./routes/estimatorToolRouteConfig');
+new estimatorToolRoute(app);
 // login routes ======================================================================
 //require('./routes/loginRouteConfig.js')(app, passport); // load our routes and pass in our app and fully configured passport
 

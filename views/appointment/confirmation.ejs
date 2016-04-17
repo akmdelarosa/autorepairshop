@@ -19,11 +19,19 @@
     <% if (typeof message != "undefined" && message.length > 0) { %>
         <div class="alert alert-danger"><%= message %></div>
     <% } %>
-
+	
+	
+	
+    
+	
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12" data-ng-app="appointmentConfirmationModule"  data-ng-controller="appointmentConfirmationController">
         <p>Thank you for scheduling an appointment with Angel's Auto Repair Shop. Your appointment details are below.</p><br />
-        <div class="well">
+        
+	    <div class="alert alert-success" ng-show="message" ng-cloak>{{message}}</div>
+	    <div class="alert alert-danger" ng-show="error" ng-cloak>{{error}}</div>
+		<flash-message duration="5000"></flash-message>
+		<div class="well">
 
           <p><strong>Name: </strong><%= appointment[0].first_name %> <%= appointment[0].last_name %></p>
           <p><strong>Email: </strong><%= appointment[0].email %></p>
@@ -40,7 +48,9 @@
 		        <li><%= service.service_name %></li>
 		    <% }); %>
           </ul>
-
+		  
+		  <br />
+			  <button class="btn btn-default" ng-click="cancelAppointment(<%= appointment_id %>)"><center>Cancel Appointment</center></button>
         </div>
       </div>
     </div>
@@ -48,3 +58,12 @@
   </div>
  </div>
 </div><!-- end of appointment details-->
+
+<link rel="stylesheet" href="../../bower_components/angular-flash-alert/dist/angular-flash.min.css" type="text/css" media="screen">
+
+<script src="../../bower_components/angular/angular.min.js"></script>
+<script src="../../bower_components/angular-flash-alert/dist/angular-flash.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="../../javascripts/app/appointment/appointmentConfirmationModule.js"></script>
+<script src="../../javascripts/app/appointment/appointmentConfirmationService.js"></script>
+<script src="../../javascripts/app/appointment/appointmentConfirmationController.js"></script>

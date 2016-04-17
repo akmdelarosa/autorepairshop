@@ -71,6 +71,9 @@ function appointmentService($http) {
     },
     appointmentConfirmation: function(appointment_id) {
       return $http.get('/appointment/confirmation/'+appointment_id);
-    }
+    },
+	cancelAppointment: function(id) {
+	  return $http.post('/appointment/cancelAppointment',{id : id});
+	}
   };
 }

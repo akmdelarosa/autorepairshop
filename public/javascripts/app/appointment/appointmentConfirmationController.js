@@ -1,34 +1,40 @@
-angular.module("appointmentModule")
+angular.module("appointmentConfirmationModule")
 .controller("appointmentConfirmationController", appointmentConfirmationController);
 
-appointmentModule.directive('input', function ($parse) {
-  return {
-    restrict: 'E',
-    require: '?ngModel',
-    link: function (scope, element, attrs) {
-      if (attrs.ngModel && attrs.value) {
-        $parse(attrs.ngModel).assign(scope, attrs.value);
-      }
+
+appointmentConfirmationController.$inject = ['$scope','$timeout', 'appointmentConfirmationService'];
+
+function appointmentConfirmationController($scope, $timeout, appointmentConfirmationService) {
+	
+    function displayMessage() {
+        $scope.message = 'Appointment cancelled successfully.';
     }
-  };
-});
-
-appointmentConfirmationController.$inject = ['$scope','$timeout', 'appointmentService'];
-
-function appointmentConfirmationController($scope, $timeout, appointmentService) {
+  
+    function clearMessage() {
+        $scope.message = "";
+    }
   
   $scope.createAppointment = function (appointment) {
       console.log(appointment);
-    appointmentService.createAppointment(appointment)
+    appointmentConfirmationService.createAppointment(appointment)
     .success(function (data) {
       if (data.status && data.status == 'successful') {
           displayMessage();
           $timeout( function afterTimeOut() {
               clearMessage();
-              clearAppointment();
           }, 5000);
           
       }
     });
-  }
+  };
+  
+  $scope.cancelAppointment = function (id) {
+    appointmentConfirmationService.cancelAppointment(id)
+    .success(function (data) {
+      if (data) {
+          displayMessage();
+      }
+    });
+  };
+  
 }
