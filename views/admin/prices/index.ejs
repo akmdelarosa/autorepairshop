@@ -1,0 +1,73 @@
+<% include ../adminLayout %>
+
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <% if (user) { %>
+    <a href="/admin/logout" class="btn btn-default btn-sm">Logout</a>
+    <% } %>
+    <a href="/admin/index" class="btn btn-default btn-sm">Back To Home</a>
+  </div>
+
+  <div class="clear"></div>
+
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+
+  <div class="panel-body" data-ng-app="adminPriceModule" data-ng-controller="adminViewPriceController">
+
+      <div class="col-sm-12">
+        <div class="well">
+            <a href="/admin/prices/createPrice" class="btn btn-warning" style="float: right;">Create New Price</a>
+            <h3><span class="fa fa-user"></span> Prices</h3>
+            <div class="clear"></div>
+            
+            <div class='table-scrollable' style="min-height: 600px;">
+                <table ng-table="tableParams" class="table" show-filter="true">
+                    <tr ng-repeat="price in $data" class="animate">
+                        <td title="'Year'" filter="{ year: 'number'}" sortable="'year'">
+                            {{price.year}}</td>
+                        <td title="'Make'" filter="{ make: 'text'}" sortable="'make'">
+                            {{price.make}}</td>
+                        <td title="'Model'" filter="{ model: 'text'}" sortable="'model'">
+                            {{price.model}}</td>
+                        <td title="'Name'" filter="{ name: 'number'}" sortable="'name'">
+                            {{price.name}}</td>
+                        <td title="'Min Price'" sortable="'min_price'">
+                            {{price.min_price | currency:"$"}}</td>
+                        <td title="'Max Price'" sortable="'max_price'">
+                            {{price.max_price | currency:"$"}}</td>
+                        <td title="'&nbsp;'" show="true" class="info">
+                        <a href="/admin/prices/edit/{{price.id}}" class="btn btn-default" style="width: 100%;">
+                            Edit
+                        </a>
+                    </td>
+                    </tr>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+<% include ../../footer %>
+<link rel="stylesheet" href="../../../bower_components/ng-table/dist/ng-table.min.css" type="text/css" media="screen">
+<script src="../../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+<script src="../../../bower_components/ng-table/dist/ng-table.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../bower_components/angular-animate/angular-animate.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="../../../javascripts/app/admin/price/adminPriceModule.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/price/adminPriceService.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/price/adminViewPriceController.js" type="text/javascript" charset="utf-8"></script>
+
+
+<style>
+.myGrid {
+    width: 500px;
+    height: 250px;
+  }
+</style>

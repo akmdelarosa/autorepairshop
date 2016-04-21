@@ -1,0 +1,109 @@
+<% include ../adminLayout %>
+
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <a href="/admin/logout" class="btn btn-default btn-sm">Logout</a>
+    <a href="/admin/services/index" class="btn btn-default btn-sm">Back To Manage Services</a>
+  </div>
+  <div class="clear"></div>
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+
+  <div class="panel-body" data-ng-app="adminServiceModule" data-ng-controller="adminCreateServiceController">
+      
+      
+      <div class="container" data-ng-cloak style="width">
+          <!-- show any messages that come back with authentication -->
+        <% if (typeof message != "undefined" && message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+        <% } %>
+        <div class="alert alert-success" ng-show="message" ng-cloak>{{message}}</div>
+        <div class="alert alert-danger" ng-show="error" ng-cloak>{{error}}</div>
+
+      <form class="form-inline" role="search"
+            method="POST"
+            name="formService"
+            style="width:100%;">
+
+        <div class="row">
+          <fieldset class="form-group" show-errors>
+            <label for="name">Name</label>
+            &nbsp;&nbsp;
+
+            <input type="text"
+                   class="form-control"
+                   name="name"
+                   id="name"
+                   ng-model="service.name"
+                   style="width:100%"
+                   required />
+            <p ng-show="formService.name.$invalid && !formService.name.$pristine" class="help-block">Enter a valid name.</p>
+          </fieldset>
+        </div>
+        
+        <div class="row">
+          <fieldset class="form-inline">
+            <label for="description">Description</label>
+            &nbsp;&nbsp;
+
+            <textarea
+                      class="form-control"
+                      placeholder="Description"
+                      name="description"
+                      id="description"
+                      rows="5"
+                      cols="30"
+                      ng-model="service.description"
+                      style="width:100%"
+                      required></textarea>
+            <p ng-show="formService.description.$invalid && !formService.description.$pristine" class="help-block">Enter a valid description.</p>
+          </fieldset>
+        </div>
+        
+        <div class="row">
+          <fieldset class="form-group">
+            <label for="category">Category</label>
+            &nbsp;&nbsp;
+            <input type="category" 
+            class="form-control"
+                      name="category"
+                      id="category"
+                      ng-model="service.category"
+                      style="width:100%"
+                      required />
+              <p ng-show="formService.category.$invalid && !formService.category.$pristine" class="help-block">Enter a valid category.</p>
+
+
+          </fieldset>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div class="row">
+          <div class="form-group" style="padding-left40%">
+            <button type="button" class="btn btn-primary"
+                    ng-click="createService(service)" ng-disabled="formService.$invalid">
+              Save
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<% include ../../footer %>
+
+<script src="../../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+
+<script src="../../../javascripts/app/admin/service/adminServiceModule.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/service/adminServiceService.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/service/adminCreateServiceController.js" type="text/javascript" charset="utf-8"></script>

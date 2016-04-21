@@ -23,10 +23,12 @@
     "angular": "^1.5.4",
     "angular-bootstrap-calendar": "^0.19.6",
     "angular-bootstrap": "^1.2.5",
-    "angular-animate": "^1.5.3",
+    "angular-animate": "^1.5.5",
     "checklist-model": "^0.9.0",
+    "ng-dialog": "^0.6.0",
+    "ag-grid": "^4.0.6",
     "angular-flash-alert": "^2.2.7",
-    "ng-dialog": "^0.6.0"
+    "ng-table": "^0.8.3"
   },
   "resolutions": {
     "angular": "^1.5.4"

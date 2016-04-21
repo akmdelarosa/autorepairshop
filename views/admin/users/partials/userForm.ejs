@@ -1,0 +1,95 @@
+<h3><span class="fa fa-user"></span> User Information</h3>
+<form class="navbar-form" role="search"
+            method="POST"
+            name="formUser">
+
+        <div class="row">
+          <div class="form-group" show-errors>
+            <label for="first_name">First Name</label>
+            &nbsp;&nbsp;
+
+            <input type="text"
+                   class="form-control"
+                   value= "<%= userProfile.first_name %>"
+                   name="first_name"
+                   id="first_name"
+                   ng-model="userProfile.first_name"
+                   style="width:100%"
+                   required />
+            <p ng-show="formUser.first_name.$invalid && !formUser.first_name.$pristine" class="help-block">Enter a valid first name.</p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="form-group">
+            <label for="last_name">Last Name</label>
+            &nbsp;&nbsp;
+
+            <input type="text"
+                   class="form-control"
+                   value= "<%= userProfile.last_name %>"
+                   name="last_name"
+                   id="last_name"
+                   ng-model="userProfile.last_name"
+                   style="width:100%"
+                   required />
+            <p ng-show="formUser.last_name.$invalid && !formUser.last_name.$pristine" class="help-block">Enter a valid last name.</p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" 
+            class="form-control"
+                      name="email"
+                      id="email"
+                      value= "<%= userProfile.email %>"
+                      ng-model="userProfile.email"
+                      style="width:100%"
+                      required />
+              <p ng-show="formUser.email.$invalid && !formUser.email.$pristine" class="help-block">Enter a valid email.</p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="form-group" show-errors>
+            
+            <label for="phone_number">Phone</label>
+            &nbsp;&nbsp;
+
+            <input type="tel" 
+                   class="form-control" 
+                   value= "<%= userProfile.phone_number %>"
+                   name="phone_number"
+                   id="phone_number"
+                   ng-model="userProfile.phone_number"
+                   style="width:100%"
+                   ng-minlength="10" 
+                   ng-maxlength="10"
+                   required />
+             <p class="help-block" 
+                   ng-show="formUser.phone_number.$error.required || formUser.phone_number.$error.number">
+                Valid phone number is required
+            </p>
+            <p 
+                   class="help-block" 
+                   ng-show="(formUser.phone_number.$error.minlength || formUser.phone_number.$error.maxlength) 
+                                && formUser.phone_number.$dirty">
+                Phone number should be 10 digits
+            </p>
+          </div>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div class="row">
+          <div class="form-group">
+            <button type="button" class="btn btn-primary"
+                    ng-click="updateUser(<%= userProfile.id %>, userProfile)" ng-disabled="formUser.$invalid">
+              Save
+            </button>
+          </div>
+        </div>
+
+      </form>

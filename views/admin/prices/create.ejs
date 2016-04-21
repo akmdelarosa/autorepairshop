@@ -1,0 +1,121 @@
+<% include ../adminLayout %>
+
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <a href="/admin/logout" class="btn btn-default btn-sm">Logout</a>
+    <a href="/admin/vehicles/index" class="btn btn-default btn-sm">Back To Manage Vehicles</a>
+  </div>
+  <div class="clear"></div>
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+
+  <div class="panel-body" data-ng-app="adminVehicleModule" data-ng-controller="adminCreateVehicleController">
+      
+      
+      <div class="container" data-ng-cloak style="width">
+          <!-- show any messages that come back with authentication -->
+        <% if (typeof message != "undefined" && message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+        <% } %>
+        <div class="alert alert-success" ng-show="message" ng-cloak>{{message}}</div>
+        <div class="alert alert-danger" ng-show="error" ng-cloak>{{error}}</div>
+
+      <form class="form-inline" role="search"
+            method="POST"
+            name="formVehicle"
+            style="width:100%;">
+
+        <div class="row">
+          <fieldset class="form-group" show-errors>
+            <label for="year">Year</label>
+            &nbsp;&nbsp;
+
+            <input type="number"
+                   string-to-number
+                   class="form-control"
+                   placeholder="Year"
+                   min=1996
+                   ng-maxlength="4"
+                   ng-minlength="4"
+                   name="year"
+                   id="year"
+                   ng-model="vehicle.year"
+                   style="width:100%"
+                   required />
+            <p ng-show="formVehicle.year.$invalid && !formVehicle.year.$pristine" class="help-block">Enter a valid year.</p>
+            <p 
+                   class="help-block" 
+                   ng-show="(formVehicle.year.$error.minlength || formVehicle.year.$error.maxlength || formVehicle.year.$error.min) 
+                                && formVehicle.year.$dirty">
+               Year should be 4 digits and after the year 1996
+            </p>
+          </fieldset>
+        </div>
+        
+        <div class="row">
+          <fieldset class="form-inline">
+            <label for="make">Make</label>
+            &nbsp;&nbsp;
+
+            <input type="text"
+                   class="form-control"
+                   placeholder="Make"
+                   name="make"
+                   id="make"
+                   ng-model="vehicle.make"
+                   style="width:100%"
+                   required />
+            <p ng-show="formVehicle.make.$invalid && !formVehicle.make.$pristine" class="help-block">Enter a valid make.</p>
+          </fieldset>
+        </div>
+        
+        <div class="row">
+          <fieldset class="form-group">
+            <label for="model">Model</label>
+            &nbsp;&nbsp;
+            <input type="model" 
+            class="form-control"
+                      name="model"
+                      id="model"
+                      placeholder="Model"
+                      ng-model="vehicle.model"
+                      style="width:100%"
+                      required />
+              <p ng-show="formVehicle.model.$invalid && !formVehicle.model.$pristine" class="help-block">Enter a valid model.</p>
+
+
+          </fieldset>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div class="row">
+          <div class="form-group" style="padding-left40%">
+            <button type="button" class="btn btn-primary"
+                    ng-click="createVehicle(vehicle)" ng-disabled="formVehicle.$invalid">
+              Save
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<% include ../../footer %>
+
+<link rel="stylesheet" href="../../../bower_components/ng-table/dist/ng-table.min.css" type="text/css" media="screen">
+<script src="../../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+<script src="../../../bower_components/ng-table/dist/ng-table.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="../../../javascripts/app/admin/vehicle/adminVehicleModule.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/vehicle/adminVehicleService.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/vehicle/adminCreateVehicleController.js" type="text/javascript" charset="utf-8"></script>

@@ -1,0 +1,85 @@
+// Type definitions for ag-grid v4.0.6
+// Project: http://www.ag-grid.com/
+// Definitions by: Niall Crosby <https://github.com/ceolter/>
+// Definitions: https://github.com/borisyankov/DefinitelyTyped
+import { Column } from "../entities/column";
+import { RenderedRow } from "./renderedRow";
+export declare class RenderedCell {
+    private columnApi;
+    private gridApi;
+    private gridOptionsWrapper;
+    private expressionService;
+    private selectionRendererFactory;
+    private rowRenderer;
+    private $compile;
+    private templateService;
+    private valueService;
+    private eventService;
+    private columnController;
+    private rangeController;
+    private focusedCellController;
+    private contextMenuFactory;
+    private eGridCell;
+    private eSpanWithValue;
+    private eCellWrapper;
+    private eParentOfValue;
+    private eParentRow;
+    private column;
+    private data;
+    private node;
+    private rowIndex;
+    private editingCell;
+    private scope;
+    private cellRendererMap;
+    private eCheckbox;
+    private value;
+    private checkboxSelection;
+    private renderedRow;
+    private destroyMethods;
+    private firstRightPinned;
+    private lastLeftPinned;
+    constructor(column: any, cellRendererMap: {
+        [key: string]: any;
+    }, node: any, rowIndex: number, scope: any, renderedRow: RenderedRow);
+    checkPinnedClasses(): void;
+    private setPinnedClasses();
+    getParentRow(): HTMLElement;
+    setParentRow(eParentRow: HTMLElement): void;
+    init(): void;
+    destroy(): void;
+    calculateCheckboxSelection(): any;
+    getColumn(): Column;
+    private getValue();
+    getGui(): HTMLElement;
+    private getDataForRow();
+    private setLeftOnCell();
+    private addRangeSelectedListener();
+    private addHighlightListener();
+    private flashCellForClipboardInteraction();
+    private addCellFocusedListener();
+    private setWidthOnCell();
+    private setupComponents();
+    startEditing(key?: number): void;
+    focusCell(forceBrowserFocus: boolean): void;
+    private stopEditing(eInput, blurListener, reset?);
+    private createParams();
+    private createEvent(event, eventSource?);
+    isCellEditable(): boolean;
+    onMouseEvent(eventName: string, mouseEvent: MouseEvent, eventSource: HTMLElement): void;
+    private onContextMenu(mouseEvent);
+    private onCellDoubleClicked(mouseEvent, eventSource);
+    private onMouseDown();
+    private onCellClicked(mouseEvent);
+    private populateCell();
+    private addStylesFromCollDef();
+    private addClassesFromCollDef();
+    private addClassesFromRules();
+    private addCellNavigationHandler();
+    private isKeycodeForStartEditing(key);
+    private createParentOfValue();
+    isVolatile(): boolean;
+    refreshCell(): void;
+    private putDataIntoCell();
+    private useCellRenderer(cellRenderer);
+    private addClasses();
+}

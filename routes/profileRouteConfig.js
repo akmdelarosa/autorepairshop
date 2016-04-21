@@ -80,7 +80,7 @@ profileRouteConfig.prototype.addRoutes = function () {
         callbackFunction : function(request, response) {
             
             var userModel = require('../server/model/userModel.js');
-                        
+            console.log(request.body.user);
             userModel.userModel.updateUser(request.body.user, request.user.id,
                 function (status) { 
                     response.json(status); 

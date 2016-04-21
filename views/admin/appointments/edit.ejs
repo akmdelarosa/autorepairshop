@@ -1,0 +1,59 @@
+<% include ../adminLayout %>
+
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <% if (user) { %>
+    <a href="/admin/logout" class="btn btn-default btn-sm">Logout</a>
+    <% } %>
+    <a href="/admin/appointments/index" class="btn btn-default btn-sm">Back To Manage Appointments</a>
+  </div>
+
+  <div class="clear"></div>
+
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+
+  <div class="panel-body" data-ng-app="adminAppointmentModule" data-ng-controller="adminEditAppointmentController">
+      <div class="col-sm-12">
+        <div class="alert alert-success" ng-show="message" ng-cloak>{{message}}</div>
+	    <div class="alert alert-danger" ng-show="error" ng-cloak>{{error}}</div>
+      <flash-message duration="5000"></flash-message>
+        <div class="well">
+          
+          <div class="row" style="margin-left: 10px;">
+            <label>Name: </label> <%= appointment[0].first_name %> <%= appointment[0].last_name %><br />
+            <label>Email: </label> <%= appointment[0].email %><br />
+            <label>Phone: </label> <%= appointment[0].phone_number %><br />
+            <label>Vehicle: </label> <%= appointment[0].year %> <%= appointment[0].make %> <%= appointment[0].model %><br />
+            <label>Date: </label> <%= moment(appointment[0].date).format('L') %><br />
+            <label>Time: </label> <%= moment(appointment[0].time, 'LT').format('LT') %><br />
+            <label>Cancelled: </label> <%=  appointment[0].deleted ? 'Yes' : ' No' %><br />
+            <label>Services: </label>
+            <ul>
+              <% appointment.forEach(function(val) {%>
+              <li><%= val.service_name %></li>
+              <% }) %>
+            </ul>
+            <br />
+            <button class="btn btn-danger" ng-click="cancelAppointment(<%= appointment[0].id %>)"><center>Cancel Appointment</center></button>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+
+  </div>
+</div>
+
+<% include ../../footer %>
+
+<link rel="stylesheet" href="../../../bower_components/ng-table/dist/ng-table.min.css" type="text/css" media="screen">
+<script src="../../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+<script src="../../../bower_components/ng-table/dist/ng-table.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="../../../javascripts/app/admin/appointment/adminAppointmentModule.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/appointment/adminAppointmentService.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/appointment/adminEditAppointmentController.js" type="text/javascript" charset="utf-8"></script>

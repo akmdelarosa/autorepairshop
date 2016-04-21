@@ -1,0 +1,46 @@
+<form class="navbar-form navbar-left" role="search"
+            method="POST"
+            name="formProductCategory">
+
+        <div class="row">
+          <div class="form-group">
+            <label for="productCategory">Date</label>
+            &nbsp;&nbsp;
+
+            <input type="date"
+                   class="form-control"
+                   placeholder="Please Enter Product Category"
+                   name="productCategory"
+                   id="productCategory"
+                   ng-model="productCategory.categoryName"
+                   style="width:100%"
+                   required />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="categoryDetails">Time</label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Please Enter Product Category"
+                   name="productCategory"
+                   id="productCategory"
+                   ng-model="productCategory.categoryName"
+                   style="width:100%"
+                   required />
+          </div>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div class="row">
+          <div class="form-group" style="padding-left40%">
+            <button type="button" class="btn btn-primary"
+                    ng-click="createProductCategory(productCategory)">
+              Edit Product Category
+            </button>
+          </div>
+        </div>
+
+      </form>

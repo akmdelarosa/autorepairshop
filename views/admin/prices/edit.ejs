@@ -1,0 +1,109 @@
+<% include ../adminLayout %>
+
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <a href="/admin/logout" class="btn btn-default btn-sm">Logout</a>
+    <a href="/admin/prices/index" class="btn btn-default btn-sm">Back To Manage Prices</a>
+  </div>
+  <div class="clear"></div>
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+
+  <div class="panel-body" data-ng-app="adminPriceModule" data-ng-controller="adminEditPriceController">
+      
+      
+      <div class="container" data-ng-cloak style="width">
+          <!-- show any messages that come back with authentication -->
+        <% if (typeof message != "undefined" && message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+        <% } %>
+        <div class="alert alert-success" ng-show="message" ng-cloak>{{message}}</div>
+        <div class="alert alert-danger" ng-show="error" ng-cloak>{{error}}</div>
+        
+        <div class="row">
+          <div class="well">
+            <h3>Vehicle and Part Information</h3><br />
+          <label>Vehicle: </label> <%= price.year %> <%= price.make %> <%= price.model %> <br />
+          <label>Part: </label> <%= price.name %>
+          </div>
+        </div>
+
+      <form class="form-inline" role="search"
+            method="POST"
+            name="formPrice"
+            style="width:100%;">
+        
+        <div class="row">
+          <fieldset class="form-inline">
+            <label for="min_price">Min Price</label>
+            &nbsp;&nbsp;
+
+            <input type="number"
+                   string-to-number
+                   min=0
+                   class="form-control"
+                   value= "<%= price.min_price %>"
+                   placeholder="Minimum Price for this Part"
+                   name="min_price"
+                   id="min_price"
+                   ng-model="price.min_price"
+                   style="width:100%"
+                   required />
+            <p ng-show="(formPrice.min_price.$invalid && !formPrice.min_price.$pristine) || formPrice.min_price.$error.min" class="help-block">Enter a valid price.</p>
+          </fieldset>
+        </div>
+        
+        <div class="row">
+          <fieldset class="form-group">
+            <label for="max_price">Max Price</label>
+            &nbsp;&nbsp;
+            <input type="number"
+                  string-to-number 
+                  class="form-control"
+                  name="max_price"
+                  min=0
+                  id="max_price"
+                  placeholder="Maximum Price for this Part"
+                  value= "<%= price.max_price %>"
+                  ng-model="price.max_price"
+                  style="width:100%"
+                  required />
+              <p ng-show="(formPrice.max_price.$invalid && !formPrice.max_price.$pristine) || formPrice.max_price.$error.min" class="help-block">Enter a valid price.</p>
+
+
+          </fieldset>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div class="row">
+          <div class="form-group" style="padding-left40%">
+            <button type="button" class="btn btn-primary"
+                    ng-click="updatePrice(<%= price.id %>, price)" ng-disabled="formPrice.$invalid">
+              Save
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<% include ../../footer %>
+
+<link rel="stylesheet" href="../../../bower_components/ng-table/dist/ng-table.min.css" type="text/css" media="screen">
+<script src="../../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+<script src="../../../bower_components/ng-table/dist/ng-table.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../bower_components/angular-animate/angular-animate.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="../../../javascripts/app/admin/price/adminPriceModule.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/price/adminPriceService.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/price/adminEditPriceController.js" type="text/javascript" charset="utf-8"></script>

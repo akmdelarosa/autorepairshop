@@ -45,7 +45,7 @@ var appointmentModel = {
 	,
 
 	getAppointment : function (id, callback) {
-	  var queryStatement = "SELECT a.year,a.make,a.model,IFNULL(c.first_name, u.first_name) AS first_name,IFNULL(c.last_name, u.last_name) AS last_name,IFNULL(c.email, u.email) AS email,IFNULL(c.phone_number, u.phone_number) AS phone_number,s.name AS service_name,s.description AS service_description,a.date,a.time FROM appointments a LEFT JOIN customers c ON c.id = a.customer_id LEFT JOIN users u ON u.id = a.user_id LEFT JOIN appointment_services s1 ON s1.appointment_id = a.id LEFT JOIN services s ON s.id = s1.service_id WHERE a.id = ?";
+	  var queryStatement = "SELECT a.id,a.year,a.make,a.model,IFNULL(c.first_name, u.first_name) AS first_name,IFNULL(c.last_name, u.last_name) AS last_name,IFNULL(c.email, u.email) AS email,IFNULL(c.phone_number, u.phone_number) AS phone_number,s.name AS service_name,s.description AS service_description,a.date,a.time FROM appointments a LEFT JOIN customers c ON c.id = a.customer_id LEFT JOIN users u ON u.id = a.user_id LEFT JOIN appointment_services s1 ON s1.appointment_id = a.id LEFT JOIN services s ON s.id = s1.service_id WHERE a.id = ?";
 	  var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
       if (connection) {
         connection.query(queryStatement, [id], function (err, rows, fields) {
@@ -91,6 +91,57 @@ var appointmentModel = {
           
           console.log(result);
           callback(result);
+
+        });
+      }
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+	}
+	,
+	
+	getAllAppointments : function (callback) {
+		var queryStatement = "SELECT a.*, IFNULL(c.first_name, u.first_name) first_name, IFNULL(c.last_name, u.last_name) last_name FROM appointments a LEFT JOIN customers c ON c.id = a.customer_id LEFT JOIN users u ON u.id = a.user_id ORDER BY date DESC";
+	  var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+      if (connection) {
+        connection.query(queryStatement, function (err, rows, fields) {
+        
+          if (err) { throw err; }
+          
+          console.log(rows);
+          callback(rows);
+
+        });
+      }
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+	}
+	,
+	
+	getAllAppointmentsServices : function (callback) {
+		var queryStatement = "SELECT aps.appointment_id, s.name FROM appointment_services aps INNER JOIN services s ON s.id = aps.service_id";
+	  var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+      if (connection) {
+        connection.query(queryStatement, function (err, rows, fields) {
+        
+          if (err) { throw err; }
+          
+          console.log(rows);
+          callback(rows);
+
+        });
+      }
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+	}
+	,
+	
+	getAppointmentDetailsById : function (id, callback) {
+		var queryStatement = "SELECT a.year,a.make,a.model,IFNULL(c.first_name, u.first_name) AS first_name,IFNULL(c.last_name, u.last_name) AS last_name,IFNULL(c.email, u.email) AS email,IFNULL(c.phone_number, u.phone_number) AS phone_number,s.name AS service_name,s.description AS service_description,a.date,a.time FROM appointments a LEFT JOIN customers c ON c.id = a.customer_id LEFT JOIN users u ON u.id = a.user_id LEFT JOIN appointment_services s1 ON s1.appointment_id = a.id LEFT JOIN services s ON s.id = s1.service_id WHERE a.id =";
+	  var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+      if (connection) {
+        connection.query(queryStatement, function (err, rows, fields) {
+        
+          if (err) { throw err; }
+          
+          console.log(rows);
+          callback(rows);
 
         });
       }

@@ -13,8 +13,19 @@ var bodyParser   = require('body-parser');
 var session      = require('express-session');
 var validator = require('express-validator');
 var moment = require('moment');
-moment().format();
-require('./config/passport')(passport);
+var passportConfig = require('./config/passport');
+new passportConfig(passport);
+
+var nodemailer = require('nodemailer');
+var wellknown = require('nodemailer-wellknown');
+var config = wellknown('Gmail');
+var smtpTransport = nodemailer.createTransport('SMTP', {
+  service: 'Gmail',
+  auth: {
+    user: 'akmdelarosa@gmail.com',
+    pass: 'Jhel@ih0717'
+  }
+});
 
 //var passport = require('passport');
 
@@ -75,8 +86,14 @@ new productCategoryRoute(app);
 var passportRoute = require('./routes/passportRouteConfig.js');
 new passportRoute(app,passport);
 
+var adminPassportRoute = require('./routes/adminPassportRouteConfig.js');
+new adminPassportRoute(app,passport);
+
 var profileRoute = require('./routes/profileRouteConfig.js');
 new profileRoute(app);
+
+var adminRoute = require('./routes/adminRouteConfig.js');
+new adminRoute(app);
 
 var appointmentRoute = require('./routes/appointmentRouteConfig.js');
 new appointmentRoute(app);

@@ -1,0 +1,54 @@
+<% include ../adminLayout %>
+
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <% if (user) { %>
+    <a href="/admin/logout" class="btn btn-default btn-sm">Logout</a>
+    <% } %>
+    <a href="/admin/index" class="btn btn-default btn-sm">Back To Home</a>
+  </div>
+
+  <div class="clear"></div>
+
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+
+  <div class="panel-body" data-ng-app="adminUserModule" data-ng-controller="adminViewUserController">
+
+      <div class="col-sm-12">
+        <div class="well">
+            <h3><span class="fa fa-user"></span> Users</h3>
+            <div class='table-scrollable'  style="min-height: 600px;">
+                <table ng-table="tableParams" ng-hide="!$data" class="table" show-filter="true">
+                    <tr ng-repeat="user in $data">
+                        <td title="'First Name'" filter="{ first_name: 'text'}" sortable="'first_name'">
+                            {{user.first_name}}</td>
+                        <td title="'Last Name'" filter="{ last_name: 'text'}" sortable="'last_namemake'">
+                            {{user.last_name}}</td>
+                        <td title="'Email'" filter="{ email: 'text'}" sortable="'email'">
+                            {{user.email}}</td>
+                        <td title="'Phone'" filter="{ phone_number: 'number'}" sortable="'phone_number'">
+                            {{user.phone_number}}</td>
+                        <td title="'&nbsp;'" show="true" class="info">
+                            <a href="/admin/users/edit/{{user.id}}" class="btn btn-default" style="width: 100%;">
+                            Edit
+                        </a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<% include ../../footer %>
+
+<link rel="stylesheet" href="../../../bower_components/ng-table/dist/ng-table.min.css" type="text/css" media="screen">
+<script src="../../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+<script src="../../../bower_components/ng-table/dist/ng-table.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="../../../javascripts/app/admin/user/adminUserModule.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/user/adminUserService.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/user/adminViewUserController.js" type="text/javascript" charset="utf-8"></script>

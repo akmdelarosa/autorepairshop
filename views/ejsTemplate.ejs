@@ -23,6 +23,60 @@
     <% if (typeof message != "undefined" && message.length > 0) { %>
         <div class="alert alert-danger"><%= message %></div>
     <% } %>
+    
+        <!--<div class='table-scrollable' style="max-height: 600px;">
+                <table
+                    class="table table-striped table-hover">
+                <tr class="success">
+                    <td>Year</td>
+                    <td>Make</td>
+                    <td>Model</td>
+                    <td>&nbsp;</td>
+                </tr>
+                
+                <% vehicles.forEach(function(vehicle) { %>
+                <tr>
+                    <td><%=vehicle.year%></td>
+                    <td><%=vehicle.make%></td>
+                    <td><%=vehicle.model%></td>
+                    <td class="info">
+                        <a href="/admin/vehicles/edit/<%=vehicle.id%>" class="btn btn-default" style="width: 100%;">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+                <% }) %>
+                </table>
+                <% if (typeof vehicles == 'undefined') { %>
+                    <p> No vehicles found.</p>
+                <% } %>
+            </div>
+            
+            <div class='table-scrollable' style="max-height: 600px;">
+                <table
+                    class="table table-striped table-hover">
+                <tr class="success">
+                    <td>Year</td>
+                    <td>Make</td>
+                    <td>Model</td>
+                    <td>&nbsp;</td>
+                </tr>
+                
+                <tr ng-repeat="vehicle in vehicles">
+                    <td>{{vehicle.year}}</td>
+                    <td>{{vehicle.make}}</td>
+                    <td>{{vehicle.model}}</td>
+                    <td class="info">
+                        <a href="/admin/vehicles/edit/{{vehicle.id}}" class="btn btn-default" style="width: 100%;">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+                </table>
+                <% if (typeof vehicles == 'undefined') { %>
+                    <p> No vehicles found.</p>
+                <% } %>
+            </div>-->
 
   	</div>
 	
