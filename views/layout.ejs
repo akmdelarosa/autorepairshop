@@ -41,7 +41,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Appointment <span class="caret"></span></a>
           <ul class="dropdown-menu">
 			  <% if (typeof user != "undefined") { %>
-               <li><a href="/appointment/viewAppointment">View Appointment</a></li>
+               <li><a href="/profile/appointmentHistory">View Appointments</a></li>
 			  <% } %>
             <li><a href="/appointment/scheduleAppointment">Schedule an Appointment</a></li>
           </ul>
@@ -50,8 +50,8 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehicles <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/serviceHistory">View Service History</a></li>
-            <li><a href="/viewVehicles">View Vehicles</a></li>
+            <li><a href="/profile/serviceHistory">View Service History</a></li>
+            <li><a href="/profile/vehicles">View Vehicles</a></li>
           </ul>
         </li>
 		<% } %>

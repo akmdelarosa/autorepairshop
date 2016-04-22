@@ -145,6 +145,48 @@ profileRouteConfig.prototype.addRoutes = function () {
         }
 
     });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/profile/vehicles',
+        callbackFunction : function(request, response) {
+            
+            response.render('profile/vehicles.ejs', {
+                user : request.user, // get the user out of session and pass to template
+                title: 'View My Vehicles',
+            });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/profile/serviceHistory',
+        callbackFunction : function(request, response) {
+            
+            response.render('profile/serviceHistory.ejs', {
+                user : request.user, // get the user out of session and pass to template
+                title: 'View My Service History',
+            });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/profile/appointmentHistory',
+        callbackFunction : function(request, response) {
+            
+            response.render('profile/appointmentHistory.ejs', {
+                user : request.user, // get the user out of session and pass to template
+                title: 'View My Appointment History',
+            });
+        }
+
+    });
 }
 
 // route middleware to make sure a user is logged in

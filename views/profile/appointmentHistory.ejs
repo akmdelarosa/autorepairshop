@@ -1,0 +1,62 @@
+<% include ../layout %>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+  <div class="panel-body">
+    <div class="container" data-ng-app="profileModule" data-ng-controller="profileController">
+
+     <!-- show any messages that come back with authentication -->
+    <% if (typeof message != "undefined" && message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+    
+
+    <div class="row">
+
+<div class="col-sm-12">
+    <div class="well">
+        <h3><span class="fa fa-user"></span> Appointments</h3>
+		<div class='table-scrollable' style="max-height: 600px;">
+			<table
+			       data-ng-show="appointments.length > 0"
+			       class="table table-striped table-hover">
+			  <tr class="success">
+			    <td>Appointment Date</td>
+			    <td>Time</td>
+			    <td>Cancelled?</td>
+				<td>Vehicle</td>
+			    <td>Service</td>
+			  </tr>
+
+			  <tr data-ng-repeat="appointment in appointments">
+				<td>{{appointment.date | date:'MM/dd/yyyy'}}</td>
+			    <td>{{appointment.time | date:'hh:mm a'}}</td>
+			    <td>{{appointment.deleted | yesNo}}</td>
+			    <td>{{appointment.year}} {{appointment.make}} {{appointment.model}}</td>
+				<td>{{appointment.name}}</td>
+			  </tr>
+			</table>
+			<p ng-hide="appointments.length > 0"> No appointments found.</p>
+		</div>
+    </div>
+</div>
+
+    </div>
+	
+    
+	
+     </div>
+   </div>
+
+</div>
+
+<% include ../footer %>
+
+<script src="../../bower_components/moment/min/moment.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../bower_components/angular/angular.min.js"></script>
+<script src="../../javascripts/app/profile/profileModule.js"></script>
+<script src="../../javascripts/app/profile/profileService.js"></script>
+<script src="../../javascripts/app/profile/profileController.js"></script>
