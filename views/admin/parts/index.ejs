@@ -18,6 +18,10 @@
   <div class="panel-body">
 
       <div class="col-sm-12">
+      <!-- show any messages that come back with authentication -->
+        <% if (typeof message != "undefined" && message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+        <% } %>
         <div class="well">
             <a href="/admin/parts/createPart" class="btn btn-warning" style="float: right;">Create New part</a>
             <h3><span class="fa fa-user"></span> Parts</h3>

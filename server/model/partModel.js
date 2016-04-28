@@ -55,12 +55,8 @@ var partModel = {
       
       connection.query(queryStatement, function (err, rows, fields) {
         
-        if (err) { throw err; }
+        callback(err,rows);
         
-        
-        console.log(rows);
-        
-        callback(rows);
       });
       
       connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
@@ -186,6 +182,22 @@ var partModel = {
         if (rows) {
           callback({status : 'success'});
         }
+        
+      });
+      
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+    }
+  }
+  ,  
+  createVehiclePartPrice: function (vehiclePartPrice, callback) {
+    console.log(vehiclePartPrice);
+    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+    var queryStatement = "INSERT INTO vehicles_parts_prices (part_id, min_price, max_price, vehicle_id) SELECT ?, ?, ?, id FROM vehicles_list WHERE year = ? AND make = ? AND model = ? ON DUPLICATE KEY UPDATE min_price = VALUES(min_price), max_price = VALUES(max_price)";
+    if (connection) {
+      
+      connection.query(queryStatement, [vehiclePartPrice.part_id,vehiclePartPrice.min_price,vehiclePartPrice.max_price,vehiclePartPrice.year,vehiclePartPrice.make,vehiclePartPrice.model], function (err, result) {
+
+        callback(err,result);
         
       });
       

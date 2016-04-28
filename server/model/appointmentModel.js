@@ -147,6 +147,32 @@ var appointmentModel = {
       }
       connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
 	}
+	,
+	getAppointmentsByDate: function(date,callback) {
+		var queryStatement = "SELECT a.*, IFNULL(c.first_name, u.first_name) first_name, IFNULL(c.last_name, u.last_name) last_name FROM appointments a LEFT JOIN customers c ON c.id = a.customer_id LEFT JOIN users u ON u.id = a.user_id WHERE a.date = ? ORDER BY time ASC";
+	  var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+      if (connection) {
+        connection.query(queryStatement, [date], function (err, rows, fields) {
+        
+          callback(err,rows);
+
+        });
+      }
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+	}
+	,
+	getAppointmentsServicesByDate : function (date, callback) {
+		var queryStatement = "SELECT aps.appointment_id, s.name FROM appointment_services aps INNER JOIN services s ON s.id = aps.service_id INNER JOIN appointments a ON a.id = aps.appointment_id WHERE a.date = ?";
+	  var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+      if (connection) {
+        connection.query(queryStatement, [date], function (err, rows, fields) {
+        
+          callback(err, rows);
+
+        });
+      }
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+	}
 };
 
 module.exports.appointmentModel = appointmentModel; 

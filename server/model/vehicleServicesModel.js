@@ -180,6 +180,74 @@ var vehicleServicesModel = {
       connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
     }
   }
+  ,
+  getAllServicesRates: function (callback) {
+    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+    var queryStatement = "SELECT vsr.id, v.year, v.make, v.model, s.name, vsr.min_rate, vsr.max_rate FROM vehicles_service_rates vsr INNER JOIN vehicles_list v ON v.id = vsr.vehicle_id INNER JOIN services s ON s.id = vsr.service_id ORDER BY v.year DESC";
+    if (connection) {
+      
+      connection.query(queryStatement, function (err, result) {
+        
+        callback(err,result);
+        
+      });
+      
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+    }
+  }
+  ,
+  getServiceRateById: function (id, callback) {
+    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+    var queryStatement = "SELECT vsr.id, v.year, v.make, v.model, s.name, vsr.min_rate, vsr.max_rate FROM vehicles_service_rates vsr INNER JOIN vehicles_list v ON v.id = vsr.vehicle_id INNER JOIN services s ON s.id = vsr.service_id WHERE vsr.id = ?";
+    if (connection) {
+      
+      connection.query(queryStatement, id, function (err, result) {
+
+        callback(err,result[0]);
+        
+      });
+      
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+    }
+  }
+  ,
+  
+  updateServiceRateById: function (rate, id, callback) {
+    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+    var queryStatement = "UPDATE vehicles_service_rates SET ? WHERE id = ?";
+    if (connection) {
+      
+      connection.query(queryStatement, [rate,id], function (err, rows, fields) {
+        
+        if (err) { callback({error : err.code}); }
+        
+        
+        console.log(rows);
+        if (rows) {
+          callback({status : 'success'});
+        }
+        
+      });
+      
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+    }
+  }
+  ,
+  
+  createVehicleServiceRate: function (vehicleRate, callback) {
+    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+    var queryStatement = "INSERT INTO vehicles_service_rates (service_id, min_rate, max_rate, vehicle_id) SELECT ?, ?, ?, id FROM vehicles_list WHERE year = ? AND make = ? AND model = ? ON DUPLICATE KEY UPDATE min_rate = VALUES(min_rate), max_rate = VALUES(max_rate)";
+    if (connection) {
+      
+      connection.query(queryStatement, [vehicleRate.service_id,vehicleRate.min_rate,vehicleRate.max_rate,vehicleRate.year,vehicleRate.make,vehicleRate.model], function (err, result) {
+
+        callback(err,result);
+        
+      });
+      
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+    }
+  }
 }
 
 module.exports.vehicleServicesModel = vehicleServicesModel; 

@@ -1,9 +1,7 @@
-<div class="container">
-  <div class="row">
+  <div class="row" style="text-align: left;">
     <h2>Appointment Details</h2><br />
     <p class="alert alert-danger" ng-show="!appointment.year || !appointment.make || !appointment.model || !appointment.first_name || !appointment.last_name || !appointment.email || !appointment.services.length>0 || !appointment.phone_number || !appointment.date || !appointment.time" class="help-block">Please fill out all the required information.</p>
-    <div class="row">
-      <div class="col-sm-12">
+
         <p>Thank you for scheduling an appointment with Angel's Auto Repair Shop. Please confirm your appointment details below and click schedule when you're done.</p><br />
         <div class="well">
 
@@ -29,8 +27,7 @@
             <li ng-repeat="selectedService in appointment.services">{{selectedService.name}}</li>
           </ul>
 
-        </div>
-      </div>
+
     </div>
     <!--
     <div class="row">
@@ -67,4 +64,3 @@
     <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
     <button class="btn btn-succdess" ng-disabled="!appointment.year || !appointment.make || !appointment.model || !appointment.first_name || !appointment.last_name || !appointment.email || !appointment.services || !appointment.phone_number || !appointment.date || !appointment.time" ng-click="finish()">Schedule</button>
   </div>
-</div><!-- end of appointment details-->

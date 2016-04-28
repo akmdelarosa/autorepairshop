@@ -1,0 +1,71 @@
+<% include crmLayout %>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+  <div class="panel-body">
+    <div class="container">
+
+     <!-- show any messages that come back with authentication -->
+    <% if (typeof message != "undefined" && message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+    
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Welcome <%= user.first_name %></h1>
+        <p class="intro">Today is <%= today %></p>
+    </div>
+    <div class="row " style="min-height: 500px;">
+        
+        <div class="col-lg-12 text-center">
+            <div class="text-center">
+            <span style="padding:20px;"><a href="/crm/appointments/today" class="btn btn-sq-lg btn-warning">
+                    <i class="fa fa-user fa-5x"></i>
+                    <br/><br/>
+                Today's <br>Appointment
+            </a></span>
+            <span style="padding:20px;"><a href="#" class="btn btn-sq-lg btn-warning">
+              <i class="fa fa-user fa-5x"></i><br/><br/>
+              Process <br>
+              Walk In
+            </a></span>
+            <span style="padding:20px;"><a href="/appointment/scheduleAppointment" class="btn btn-sq-lg btn-warning">
+              <i class="fa fa-user fa-5x"></i><br/><br/>
+              Schedule <br>Appointment
+            </a></span>
+            <span style="padding:20px;"><a href="#" class="btn btn-sq-lg btn-warning">
+              <i class="fa fa-user fa-5x"></i><br/><br/>
+              Today's <br>Service Schedule
+            </a></span>
+            </div>
+            <br />
+          <div>
+            <span style="padding:20px;"><a href="#" class="btn btn-sq-lg btn-warning">
+                    <i class="fa fa-user fa-5x"></i>
+                    <br/><br/>
+                Customer <br>Lookup
+            </a></span>
+            <span style="padding:20px;"><a href="#" class="btn btn-sq-lg btn-warning">
+              <i class="fa fa-user fa-5x"></i><br/><br/>
+              Account <br>Lookup
+            </a></span>
+            <span style="padding:20px;"><a href="#" class="btn btn-sq-lg btn-warning">
+              <i class="fa fa-user fa-5x"></i><br/><br/>
+              Service Estimator<br>Tool
+            </a></span>
+            <span style="padding:20px;"><a href="/crm/profile/index" class="btn btn-sq-lg btn-warning">
+              <i class="fa fa-user fa-5x"></i><br/><br/>
+              View <br>Profile
+            </a></span>
+            </div>
+        </div>
+      </div>
+	
+</div>
+</div>
+
+</div>
+
+<% include ../footer %>

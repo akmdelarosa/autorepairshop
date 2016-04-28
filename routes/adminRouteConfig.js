@@ -48,13 +48,9 @@ adminRouteConfig.prototype.addRoutes = function () {
     self.routeTable.push({
         
         requestType : 'get',
-        requestUrl : '/admin/index',
+        requestUrl : '/admin',
         callbackFunction : function(request, response) {
-          response.render('admin/index.ejs', {
-            user : request.user, // get the user out of session and pass to template
-            message : request.flash('warning'),
-            title : 'Home'
-          });
+          response.redirect('/admin/index');
         }
     });
 
@@ -186,13 +182,22 @@ adminRouteConfig.prototype.addRoutes = function () {
             var partModel = require('../server/model/partModel.js');
                         
             partModel.partModel.getAllParts(
-                function (status) { 
-					console.log(status);
-                    response.render('admin/parts/index.ejs', {
-                    user : request.user, // get the user out of session and pass to template
-                    title: 'Manage Parts',
-                    parts : status
-                    });
+                function (err, status) { 
+                    if (err) {
+                        request.flash('error', "There was an error while processing your request");
+                        response.render('admin/parts/index.ejs', {
+                        user : request.user, // get the user out of session and pass to template
+                        title: 'Manage Parts',
+                        parts : [],
+                        message : request.flash('error')
+                        });
+                    } else {
+                       response.render('admin/parts/index.ejs', {
+                        user : request.user, // get the user out of session and pass to template
+                        title: 'Manage Parts',
+                        parts : status
+                        }); 
+                    }                    
 
                 });
         }
@@ -622,6 +627,157 @@ adminRouteConfig.prototype.addRoutes = function () {
             partModel.partModel.updatePriceById(request.body.price, request.params.id,
               function (status) {
                 response.json(status);
+             });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/admin/prices/createPrice',
+        callbackFunction : function(request, response) {
+           response.render('admin/prices/create.ejs', {
+                user : request.user, // get the user out of session and pass to template
+                title : 'Create Vehicle Part and Price'            
+            });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'post',
+        requestUrl : '/admin/prices/createPrice',
+        callbackFunction : function(request, response) {
+           var partModel = require('../server/model/partModel.js');
+            partModel.partModel.createVehiclePartPrice(request.body.vehiclePartPrice,
+              function (err, status) {
+                  if (err) {
+                      response.json({error: err.code});
+                  } else {
+                      response.json({status : 'success'});
+                  }
+             });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/admin/prices/getAllParts',
+        callbackFunction : function(request, response) {
+            var partModel = require('../server/model/partModel.js');
+            partModel.partModel.getAllParts(
+              function (err, status) {
+                  if (err) {
+                      response.json({error: err.code});
+                  } else {
+                      response.json({parts : status});
+                  }
+             });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/admin/rates/index',
+        callbackFunction : function(request, response) {
+            response.render('admin/rates/index.ejs', {
+                user : request.user, // get the user out of session and pass to template
+                title : 'Manage Service Rates'
+            });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/admin/rates/getAllServicesRates',
+        callbackFunction : function(request, response) {
+            var vehicleServicesModel = require('../server/model/vehicleServicesModel.js');
+            vehicleServicesModel.vehicleServicesModel.getAllServicesRates(
+              function (err, status) {
+                  if (err) {
+                      response.json({error: err.code});
+                  } else {
+                      response.json(status);
+                  }
+             });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/admin/rates/edit/:id',
+        callbackFunction : function(request, response) {
+            var vehicleServicesModel = require('../server/model/vehicleServicesModel.js');
+            vehicleServicesModel.vehicleServicesModel.getServiceRateById(request.params.id,
+              function (err, rate) {
+                  if (err) {
+                      response.flash('error', "An error has occured while processing your request.");
+                      response.redirect('/admin/rates/index');
+                  } else {
+                      console.log(rate);
+                      response.render('admin/rates/edit.ejs', {
+                        user : request.user, // get the user out of session and pass to template
+                        title : 'Edit Service Rate',
+                        rate : rate
+                      });
+                  }
+               
+             });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'post',
+        requestUrl : '/admin/rates/edit/:id',
+        callbackFunction : function(request, response) {
+            var vehicleServicesModel = require('../server/model/vehicleServicesModel.js');
+            vehicleServicesModel.vehicleServicesModel.updateServiceRateById(request.body.rate, request.params.id,
+              function (status) {
+                response.json(status);
+             });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/admin/rates/createRate',
+        callbackFunction : function(request, response) {
+           response.render('admin/rates/create.ejs', {
+                user : request.user, // get the user out of session and pass to template
+                title : 'Create Vehicle Service and Rate'            
+            });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'post',
+        requestUrl : '/admin/rates/createRate',
+        callbackFunction : function(request, response) {
+            var vehicleServicesModel = require('../server/model/vehicleServicesModel.js');
+            vehicleServicesModel.vehicleServicesModel.createVehicleServiceRate(request.body.vehicleServiceRate,
+              function (err,status) {
+                  if (err) {
+                      response.json({error: err.code});
+                  } else {
+                      response.json({status : 'success'});
+                  }
+                
              });
         }
 

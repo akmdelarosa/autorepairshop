@@ -1,0 +1,107 @@
+<% include ../adminLayout %>
+
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <a href="/admin/logout" class="btn btn-default btn-sm">Logout</a>
+    <a href="/admin/rates/index" class="btn btn-default btn-sm">Back To Manage Rates</a>
+  </div>
+  <div class="clear"></div>
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+
+  <div class="panel-body" data-ng-app="adminRateModule" data-ng-controller="adminEditRateController">
+      
+      
+      <div class="container" data-ng-cloak style="width">
+          <!-- show any messages that come back with authentication -->
+        <% if (typeof message != "undefined" && message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+        <% } %>
+        <div class="alert alert-success" ng-show="message" ng-cloak>{{message}}</div>
+        <div class="alert alert-danger" ng-show="error" ng-cloak>{{error}}</div>
+        
+        <div class="row">
+          <div class="well">
+            <h3>Vehicle and Service Information</h3><br />
+          <label>Vehicle: </label> <%= rate.year %> <%= rate.make %> <%= rate.model %> <br />
+          <label>Service: </label> <%= rate.name %>
+          </div>
+        </div>
+
+      <form class="form-inline" role="search"
+            method="POST"
+            name="formRate"
+            style="width:100%;">
+        
+        <div class="row">
+          <fieldset class="form-group">
+            <label for="min_rate">Min Rate</label>
+            &nbsp;&nbsp;
+            <input type="number"
+                   string-to-number
+                   min=0
+                   class="form-control"
+                   value= "<%= rate.min_rate %>"
+                   placeholder="Minimum Rate for this Service"
+                   name="min_rate"
+                   id="min_rate"
+                   ng-model="rate.min_rate"
+                   style="width:100%"
+                   required />
+            <p ng-show="(formRate.min_rate.$invalid && !formRate.min_rate.$pristine) || formRate.min_rate.$error.min" class="help-block">Enter a valid rate.</p>
+          </fieldset>
+        </div>
+        <div>&nbsp;</div>
+        
+        <div class="row">
+          <fieldset class="form-group">
+            <label for="max_rate">Max Rate</label>
+            &nbsp;&nbsp;
+            <input type="number"
+                  string-to-number 
+                  class="form-control"
+                  name="max_rate"
+                  min=0
+                  id="max_rate"
+                  placeholder="Maximum Rate for this Service"
+                  value= "<%= rate.max_rate %>"
+                  ng-model="rate.max_rate"
+                  style="width:100%"
+                  required />
+              <p ng-show="(formRate.max_rate.$invalid && !formRate.max_rate.$pristine) || formRate.max_rate.$error.min" class="help-block">Enter a valid rate.</p>
+          </fieldset>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div class="row">
+          <div class="form-group" style="padding-left40%">
+            <button type="button" class="btn btn-primary"
+                    ng-click="updateRate(<%= rate.id %>, rate)" ng-disabled="formRate.$invalid">
+              Save
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<% include ../../footer %>
+
+<link rel="stylesheet" href="../../../bower_components/ng-table/dist/ng-table.min.css" type="text/css" media="screen">
+<script src="../../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+<script src="../../../bower_components/ng-table/dist/ng-table.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../bower_components/angular-animate/angular-animate.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="../../../javascripts/app/admin/rate/adminRateModule.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/rate/adminRateService.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/admin/rate/adminEditRateController.js" type="text/javascript" charset="utf-8"></script>

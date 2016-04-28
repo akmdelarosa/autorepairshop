@@ -9,7 +9,7 @@
     <link href="../../stylesheets/app.css" rel="stylesheet" />
     
 	  <script src="../../javascripts/jquery-1.10.2.min.js"></script>
-	  <script src="../../javascripts/bootstrap.min.js"></script> 
+	  <script src="../../javascripts/bootstrap.min.js"></script>
 
 </head>
 <body>
@@ -40,13 +40,13 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Appointment <span class="caret"></span></a>
           <ul class="dropdown-menu">
-			  <% if (typeof user != "undefined") { %>
+			  <% if (typeof user != "undefined" && user.role == 'customer') { %>
                <li><a href="/profile/appointmentHistory">View Appointments</a></li>
 			  <% } %>
             <li><a href="/appointment/scheduleAppointment">Schedule an Appointment</a></li>
           </ul>
         </li>
-		<% if (typeof user != "undefined") { %>
+		<% if (typeof user != "undefined" && user.role == 'customer') { %>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vehicles <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -57,7 +57,7 @@
 		<% } %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-	    <% if (typeof user != "undefined") { %>
+	    <% if (typeof user != "undefined" && user.role == 'customer') { %>
 	      <li><a href="/profile/index">Profile</a></li>
           <li><a href="/logout">Logout <span class="sr-only"></span></a></li>
 		<% } else { %>
@@ -82,5 +82,17 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<script type="text/javascript">
+$(document).ready(function () {
+    $.each($('.navbar').find('li'), function() {
+      if ($(this).find('a').attr('href') == window.location.pathname) {
+        $(this).parent().parent().toggleClass('active',
+            $(this).find('a').attr('href') == window.location.pathname);
+      }
+        $(this).toggleClass('active',
+            $(this).find('a').attr('href') == window.location.pathname);
+    });
+});
+</script>
 </body>
 </html>

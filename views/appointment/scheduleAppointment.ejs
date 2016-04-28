@@ -5,7 +5,7 @@
     <% if (user) { %>
     <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     <% } %>
-    <a href="/appointment/index" class="btn btn-default btn-sm">Back To Appointment</a>
+    <a href="/" class="btn btn-default btn-sm">Back To Home</a>
   </div>
 
   <div class="clear"></div>
@@ -19,11 +19,11 @@
 
     <div class="container" data-ng-controller="scheduleAppointmentController">
       <div class="row">
+        <div class="col-md-3"></div>
         
-        
-        <center>
+        <div class="col-md-6">
+        <center width="100%">
         <multi-step-container steps="steps" class="simple-prev-next"  search-id="'step'" on-cancel="cancel()" on-finish="finish()">
-            <div class="col-xs-12 col-sm-6">
             <header>
               <div class="row">
                 <button style="float: left;" ng-disabled="$isFirst()" class="btn btn-default" ng-click="$previousStep()">
@@ -41,7 +41,6 @@
             </header>
             <main step-container></main>
             <br /><br />
-            </div>
             <!--
             <div class="col-xs-12 col-sm-6">
               <div class="row">
@@ -61,8 +60,8 @@
 
         </multi-step-container>
 	</center>
-
-        
+      </div>
+        <div class="col-md-3"></div>
       </div>
     </div>
     <br />

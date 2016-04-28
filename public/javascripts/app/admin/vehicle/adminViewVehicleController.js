@@ -32,23 +32,36 @@ adminViewVehicleController.$inject = ['$scope','$timeout', '$window', '$filter',
 
 function adminViewVehicleController($scope, $timeout, $window, $filter, NgTableParams, adminVehicleService) {
   
+  getVehiclesList();
+
+  function getVehiclesList() {
+    adminVehicleService.getVehiclesList()
+    .success(function (data) {
+      if (data) {
+        $scope.vehicles = data;
+        createTable(data);
+      }
+    });
+  }
+
+  function createTable(data) {
+
     $scope.tableParams = new NgTableParams(
       {count: 10}, 
       { counts: [], 
         getData: function($defer, params) {
-          adminVehicleService.getVehiclesList()
-          .success(function (data) {
-            if (data) {
-              console.log(data);
-              var filteredData = params.filter() ?
-                      $filter('filter')(data, params.filter()) :
-                         data;
-              var orderedData = params.sorting() ?
-                      $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
-              $scope.tableParams.total(data.length);
-              $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-            }
-        });
-    }});
+          var filteredData = params.filter() ?
+                  $filter('filter')(data, params.filter()) :
+                     data;
+          var orderedData = params.sorting() ?
+                  $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
+          $scope.tableParams.total(data.length);
+          $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        }
+    });
+
+  }
+  
+    
 
 }

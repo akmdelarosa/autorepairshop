@@ -55,18 +55,31 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Vehicles <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/admin/vehicles/index">View Vehicles</a></li>
+            <li><a href="/admin/vehicles/createVehicle">Create New Vehicle</a></li>
           </ul>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 	    <% if (typeof user != "undefined") { %>
-        <li><a href="/logout">Logout <span class="sr-only"></span></a></li>
+        <li><a href="/admin/logout">Logout <span class="sr-only"></span></a></li>
 		<% } else { %>
-		  <li><a href="/login">Login <span class="sr-only"></span></a></li>
+		  <li><a href="/admin/login">Login <span class="sr-only"></span></a></li>
 		<% } %>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<script type="text/javascript">
+$(document).ready(function () {
+    $.each($('.navbar').find('li'), function() {
+      if ($(this).find('a').attr('href') == window.location.pathname) {
+        $(this).parent().parent().toggleClass('active',
+            $(this).find('a').attr('href') == window.location.pathname);
+      }
+        $(this).toggleClass('active',
+            $(this).find('a').attr('href') == window.location.pathname);
+    });
+});
+</script>
 </body>
 </html>

@@ -32,23 +32,33 @@ adminViewPriceController.$inject = ['$scope','$timeout', '$window', '$filter', '
 
 function adminViewPriceController($scope, $timeout, $window, $filter, NgTableParams, adminPriceService) {
   
+  getAllPartsPrices();
+  
+  function getAllPartsPrices() {
+    adminPriceService.getAllPartsPrices()
+    .success(function (data) {
+      if (data) {
+        $scope.prices = data;
+        createTable(data);
+      }
+    });
+  }
+  
+  function createTable(data) {
     $scope.tableParams = new NgTableParams(
       {count: 10}, 
       { counts: [], 
         getData: function($defer, params) {
-          adminPriceService.getAllPartsPrices()
-          .success(function (data) {
-            if (data) {
-              console.log(data);
-              var filteredData = params.filter() ?
-                      $filter('filter')(data, params.filter()) :
-                         data;
-              var orderedData = params.sorting() ?
-                      $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
-              $scope.tableParams.total(data.length);
-              $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-            }
-        });
-    }});
+          console.log(data);
+          var filteredData = params.filter() ?
+                  $filter('filter')(data, params.filter()) :
+                      data;
+          var orderedData = params.sorting() ?
+                  $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
+          $scope.tableParams.total(data.length);
+          $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        }
+    });    
+  }
 
 }

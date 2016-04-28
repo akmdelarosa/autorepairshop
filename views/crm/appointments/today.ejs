@@ -1,0 +1,55 @@
+<% include ../crmLayout %>
+
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <% if (user) { %>
+    <a href="/crm/logout" class="btn btn-default btn-sm">Logout</a>
+    <% } %>
+    <a href="/crm/index" class="btn btn-default btn-sm">Back To Home</a>
+  </div>
+
+  <div class="clear"></div>
+
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+
+  <div class="panel-body" data-ng-app="crmAppointmentModule" data-ng-controller="crmViewAppointmentController">
+
+      <div class="col-sm-12">
+        <div class="well">
+            <h3><span class="fa fa-user"></span> Appointments</h3>
+            
+            <div class='table-scrollable'  style="min-height: 600px;">
+                <table ng-table="tableParams" ng-hide="!$data" class="table" show-filter="true">
+                    <tr ng-repeat="appointment in $data">
+                        <td title="'Date'" filter="{ date: 'text'}" sortable="'date'">{{appointment.date | date:'MM/dd/yyyy'}}</td>
+                        <td title="'Time'" filter="{ time: 'text'}" sortable="'time'">{{appointment.time | date :'hh:mm a'}}</td>
+                        <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">{{appointment.name}}</td>
+                        <td title="'Cancelled?'" filter="{ deleted: 'number'}" sortable="'deleted'">{{appointment.deleted | yesNo}}</td>
+                        <td title="'Vehicle'" filter="{ vehicle: 'number'}" sortable="'vehicle'">{{appointment.vehicle}}</td>
+                        <td title="'Service(s)'" filter="{ services: 'text'}" sortable="'services'">{{appointment.services}}</td>
+                        <td class="info">
+                            <a href="/crm/appointments/edit/{{appointment.id}}" class="btn btn-default" style="width: 100%;">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+  </div>
+</div>
+
+<% include ../../footer %>
+
+<link rel="stylesheet" href="../../../bower_components/ng-table/dist/ng-table.min.css" type="text/css" media="screen"/>
+<script src="../../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+<script src="../../../bower_components/ng-table/dist/ng-table.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="../../../javascripts/app/crm/appointment/crmAppointmentModule.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/crm/appointment/crmAppointmentService.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/crm/appointment/crmViewAppointmentController.js" type="text/javascript" charset="utf-8"></script>

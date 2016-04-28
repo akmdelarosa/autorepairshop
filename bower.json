@@ -28,7 +28,8 @@
     "ng-dialog": "^0.6.0",
     "ag-grid": "^4.0.6",
     "angular-flash-alert": "^2.2.7",
-    "ng-table": "^0.8.3"
+    "ng-table": "^0.8.3",
+    "moment": "^2.13.0"
   },
   "resolutions": {
     "angular": "^1.5.4"

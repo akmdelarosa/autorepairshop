@@ -38,7 +38,7 @@ function adminCreatePartController($scope, $timeout, $window, adminPartService) 
       if (data) {
          $scope.message = "Part added successfully";
          $timeout( function afterTimeOut() {
-             $window.location.href ='/admin/services/index'; 
+             $window.location.href ='/admin/parts/index'; 
           }, 5000);
       }
     });

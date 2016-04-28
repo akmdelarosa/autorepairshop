@@ -63,6 +63,7 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/bower_components', express.static(path.join(__dirname ,'bower_components')));
+app.use('/images', express.static(path.join(__dirname ,'public/images')));
 
 app.use(function(err, req, res, next) {
   console.error(err.stack);
@@ -89,11 +90,17 @@ new passportRoute(app,passport);
 var adminPassportRoute = require('./routes/adminPassportRouteConfig.js');
 new adminPassportRoute(app,passport);
 
+var crmPassportRoute = require('./routes/crmPassportRouteConfig.js');
+new crmPassportRoute(app,passport);
+
 var profileRoute = require('./routes/profileRouteConfig.js');
 new profileRoute(app);
 
 var adminRoute = require('./routes/adminRouteConfig.js');
 new adminRoute(app);
+
+var crmRoute = require('./routes/crmRouteConfig.js');
+new crmRoute(app);
 
 var appointmentRoute = require('./routes/appointmentRouteConfig.js');
 new appointmentRoute(app);

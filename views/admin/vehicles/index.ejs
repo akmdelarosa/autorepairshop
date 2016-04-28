@@ -26,7 +26,7 @@
             <div class='table-scrollable' style="min-height: 600px;">
                 <table ng-table="tableParams" class="table" show-filter="true">
                     <tr ng-repeat="vehicle in $data">
-                        <td title="'Year'" filter="{ year: 'number'}" sortable="'year'">
+                        <td title="'Year'" filter="{ year: 'text'}" sortable="'year'">
                             {{vehicle.year}}</td>
                         <td title="'Make'" filter="{ make: 'text'}" sortable="'make'">
                             {{vehicle.make}}</td>
@@ -40,7 +40,6 @@
                     </tr>
                 </table>
             </div>
-            
         </div>
     </div>
   </div>

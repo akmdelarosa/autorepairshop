@@ -61,7 +61,10 @@ adminPassportRouteConfig.prototype.addRoutes = function () {
         requestUrl : '/admin/index',
         callbackFunction : function (request, response) { 
         
-            response.render('admin/index.ejs', { title : "Home" , user : request.user}); // load the index.ejs file
+            response.render('admin/index.ejs', { 
+                title : "Home" , 
+                message : request.flash('warning'),
+                user : request.user}); // load the index.ejs file
         }
     });
     

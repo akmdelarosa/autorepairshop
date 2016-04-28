@@ -188,14 +188,16 @@ var vehicleModel = {
       
       connection.query(queryStatement, vehicle, function (err, result) {
         
-        if (err) { throw err; }
+        if (err) { 
+          callback({error: err.code});
+        }
         
         
         console.log(result);
         if (result) {
           callback({status : 'success'});
         }
-        
+
       });
       
       connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);

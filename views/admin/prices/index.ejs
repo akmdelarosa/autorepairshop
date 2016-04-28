@@ -26,13 +26,13 @@
             <div class='table-scrollable' style="min-height: 600px;">
                 <table ng-table="tableParams" class="table" show-filter="true">
                     <tr ng-repeat="price in $data" class="animate">
-                        <td title="'Year'" filter="{ year: 'number'}" sortable="'year'">
+                        <td title="'Year'" filter="{ year: 'text'}" sortable="'year'">
                             {{price.year}}</td>
                         <td title="'Make'" filter="{ make: 'text'}" sortable="'make'">
                             {{price.make}}</td>
                         <td title="'Model'" filter="{ model: 'text'}" sortable="'model'">
                             {{price.model}}</td>
-                        <td title="'Name'" filter="{ name: 'number'}" sortable="'name'">
+                        <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
                             {{price.name}}</td>
                         <td title="'Min Price'" sortable="'min_price'">
                             {{price.min_price | currency:"$"}}</td>

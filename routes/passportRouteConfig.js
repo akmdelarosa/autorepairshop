@@ -67,7 +67,7 @@ passportRouteConfig.prototype.addRoutes = function () {
         requestType : 'get',
         requestUrl : '/login',
         callbackFunction : function (request, response) {
-          if (request.isAuthenticated()) {
+          if (request.isAuthenticated() && request.user.role == 'customer') {
             request.flash('warning', 'You are already signed in.');
             response.redirect(request.get('referer'));
           }

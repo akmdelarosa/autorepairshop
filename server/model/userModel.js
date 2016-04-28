@@ -127,7 +127,7 @@ var userModel = {
   getUserByEmail : function (email, callback) {
     
     var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-    var queryStatement = "SELECT * FROM users WHERE email = ?";
+    var queryStatement = "SELECT * FROM users WHERE role = 'customer' AND email = ?";
     
     if (connection) {
       

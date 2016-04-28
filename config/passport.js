@@ -9,6 +9,9 @@ var userModel = require('../server/model/userModel.js');
 // load up the adminUser model
 var adminUserModel = require('../server/model/adminUserModel.js');
 
+// load up the staffUser model
+var staffUserModel = require('../server/model/staffUserModel.js');
+
 var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
 
 var bcrypt   = require('bcrypt-nodejs');
@@ -24,12 +27,16 @@ module.exports = function(passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
-		done(null, user.id);
+        var key = {
+            id : user.id,
+            role : user.role
+        };
+		done(null, key);
     });
 
     // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-		connection.query("select * from users where id = ?",[id],function(err,rows){	
+    passport.deserializeUser(function(key, done) {
+		connection.query("select * from users where id = ? and role = ?",[key.id, key.role],function(err,rows){	
 			done(err, rows[0]);
 		});
     });
@@ -180,6 +187,57 @@ module.exports = function(passport) {
                 
                 // if the user is found but the password is wrong
                 var thisPassword = adminUserModel.adminUserModel.generateHash(password);
+                if (!bcrypt.compareSync(password, rows[0].password)) {
+                    console.log('password given below');
+                    console.log(thisPassword);
+                    console.log('the password saved below');
+                    console.log(rows[0].password)
+                    // create the loginMessage and save it to session as flashdata
+                    return done(null, false, req.flash('warning', 'Oops! Wrong password.')); 
+                }
+
+                // all is well, return successful user
+                return done(null, rows[0]);	
+                            
+            });
+        }
+
+    }));
+    
+    // =========================================================================
+    // CRM LOGIN =============================================================
+    // =========================================================================
+    // we are using named strategies since we have one for login and one for signup
+    // by default, if there was no name, it would just be called 'local'
+
+    passport.use('crm-login', new LocalStrategy({
+        // by default, local strategy uses username and password, we will override with email
+        usernameField : 'email',
+        passwordField : 'password',
+        passReqToCallback : true // allows us to pass back the entire request to the callback
+    },
+    function(req, email, password, done) { // callback with email and password from our form
+        console.log("crm-login");
+        req.checkBody("email", "Enter a valid email address.").isEmail();
+        var errors = req.validationErrors();
+        if (errors) {
+            return done(null, false, req.flash('warning', errors[0].msg)); 
+        } else {
+            // normal processing here
+            
+            staffUserModel.staffUserModel.getUserByEmail (email, function (err, rows) {
+                if (err) {
+                    return done(err);
+                }
+                console.log('login rows below from admin-login');
+                console.log(rows);
+                if (!rows.length) {
+                    // req.flash is the way to set flashdata using connect-flash
+                    return done(null, false, req.flash('warning', 'No user found.')); 
+                }
+                
+                // if the user is found but the password is wrong
+                var thisPassword = staffUserModel.staffUserModel.generateHash(password);
                 if (!bcrypt.compareSync(password, rows[0].password)) {
                     console.log('password given below');
                     console.log(thisPassword);

@@ -25,15 +25,15 @@ profileRouteConfig.prototype.processRoutes = function () {
 
         if (route.requestType == 'get') {
             
-            self.app.get(route.requestUrl, isLoggedIn, route.callbackFunction);
+            self.app.get(route.requestUrl, isLoggedIn, hasPermission, route.callbackFunction);
         }
         else if (route.requestType == 'post') {
         
-            self.app.post(route.requestUrl, isLoggedIn, route.callbackFunction);
+            self.app.post(route.requestUrl, isLoggedIn, hasPermission, route.callbackFunction);
         }
         else if (route.requestType == 'delete') {
         
-            self.app.delete(route.requestUrl, isLoggedIn, route.callbackFunction);
+            self.app.delete(route.requestUrl, isLoggedIn, hasPermission, route.callbackFunction);
         }
     
     });
@@ -194,6 +194,16 @@ function isLoggedIn(req, res, next) {
 
     // if user is authenticated in the session, carry on 
     if (req.isAuthenticated()) {
+        return next();
+    }
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+}
+
+function hasPermission(req, res, next) {
+    // if user has permission, carry on
+    if (req.user.role == 'customer' || req.user.role == 'admin') {
         return next();
     }
 

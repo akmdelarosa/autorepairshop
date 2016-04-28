@@ -35,11 +35,15 @@ function adminCreateVehicleController($scope, $timeout, $window, adminVehicleSer
     $scope.createVehicle = function (vehicle) {
     adminVehicleService.createVehicle(vehicle)
     .success(function (data) {
-      if (data) {
+      console.log(data);
+      if (data.status) {
+        console.log(data);
          $scope.message = "Vehicle added successfully";
          $timeout( function afterTimeOut() {
              $window.location.href ='/admin/vehicles/index'; 
           }, 5000);
+      } else if (data.error) {
+        $scope.error = "An error was encountered while processing your request. Error code: " + data.error;
       }
     });
   };
