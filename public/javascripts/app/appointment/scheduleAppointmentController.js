@@ -6,7 +6,12 @@ angular.module("appointmentModule")
         scope: {},
         template: "<div>Your vehicle is : {{appointment.year}} {{appointment.make}} {{appointment.model}}</div>"
     };
-});;
+})
+.filter('time', function() {
+    return function(input) {
+        return moment(input,'LT').format('LT');
+    }
+});
 
 scheduleAppointmentController.$inject = ['$scope', '$timeout', 'moment', '$filter', '$window', 'appointmentService'];
 

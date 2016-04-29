@@ -1,1 +1,1 @@
-angular.module("crmAppointmentModule", ['ngTable']);
+angular.module("crmAppointmentModule", ['ngTable','checklist-model']);

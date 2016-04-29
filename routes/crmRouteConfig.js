@@ -109,7 +109,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         callbackFunction : function(request, response) {
             var appointmentModel = require('../server/model/appointmentModel.js');
             console.log('date: ' + request.params.date); 
-            appointmentModel.appointmentModel.getAllAppointmentsServices(request.params.date,
+            appointmentModel.appointmentModel.getAppointmentsServicesByDate(request.params.date,
                 function (err,status) {
                     
                     if (err) {
@@ -122,7 +122,6 @@ crmRouteConfig.prototype.addRoutes = function () {
 
     });
     
-    //getAllAppointmentsServices
     self.routeTable.push({
         
         requestType : 'get',
@@ -131,6 +130,18 @@ crmRouteConfig.prototype.addRoutes = function () {
             response.render('crm/appointments/today.ejs', {
                 user : request.user, // get the user out of session and pass to template
                 title: 'Today\'s Appointment'
+                }); 
+        }
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/crm/appointments/schedule',
+        callbackFunction : function(request, response) {
+            response.render('crm/appointments/schedule.ejs', {
+                user : request.user, // get the user out of session and pass to template
+                title: 'Schedule Appointment'
                 }); 
         }
 
@@ -148,6 +159,59 @@ crmRouteConfig.prototype.addRoutes = function () {
                     response.json(status); 
 
             });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'post',
+        requestUrl : '/crm/cancelAppointment',
+        callbackFunction : function(request, response) {
+            
+            var appointmentModel = require('../server/model/appointmentModel.js');
+            appointmentModel.appointmentModel.cancelAppointment(request.body.id,
+                function (status) { 
+                    response.json({status : 'success'});
+
+            });
+        }
+
+    });
+    //getAllAvailableAppointmentSlots
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/crm/getAllAvailableAppointmentSlots',
+        callbackFunction : function(request, response) {
+            
+            var appointmentSlotsModel = require('../server/model/appointmentSlotsModel.js');
+            appointmentSlotsModel.appointmentSlotsModel.getAllAvailableAppointmentSlots(
+                function (err,status) { 
+                    if (err) {
+                        response.json({error : err.code});
+                    } else {
+                        response.json({slots : status});
+                    }
+            });
+        }
+
+    });
+    //getVehiclesList
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/crm/getVehiclesList',
+        callbackFunction : function(request, response) {
+           var vehicleModel = require('../server/model/vehicleModel.js');
+           vehicleModel.vehicleModel.getAllVehicles(
+           function (err,vehicles) {
+               if (err) {
+                    response.json({error : err.code});
+                } else {
+                    response.json({list : vehicles});
+                }
+           });
         }
 
     });

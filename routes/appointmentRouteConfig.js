@@ -174,9 +174,7 @@ appointmentRouteConfig.prototype.addRoutes = function () {
         requestType : 'get',
         requestUrl : '/appointment/scheduleAppointment',
         callbackFunction : function (request, response) {
-            //console.log("scheduleAppointmentStep1 params below");
-            console.log(request.user);
-            
+
             response.render('appointment/scheduleAppointment', { title : "Schedule Appointment", user : request.user });
         }
     });

@@ -28,7 +28,6 @@ function appointmentService($http) {
     },
 
     getAvailableAppointmentDates: function () {
-      console.log("im called");
       return $http.get('/appointment/getAvailableAppointmentDates');
     },
 

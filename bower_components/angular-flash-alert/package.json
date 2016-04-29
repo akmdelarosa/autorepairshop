@@ -1,6 +1,6 @@
 {
   "name": "angular-flash-alert",
-  "version": "2.2.7",
+  "version": "2.3.0",
   "description": "Flash message for AngularJS and Bootstrap",
   "keywords": [
     "angular-flash",
@@ -25,6 +25,11 @@
       "name": "Roope Hakulinen",
       "email": "roope.hakulinen@gmail.com",
       "url": "https://github.com/RoopeHakulinen"
+    },
+    {
+      "name": "Nicolas Coden",
+      "email": "nicolas@ncoden.fr",
+      "url": "https://github.com/ncoden"
     }
   ],
   "repository": {

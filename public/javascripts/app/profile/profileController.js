@@ -4,7 +4,12 @@ profileModule.filter('yesNo', function() {
     return function(input) {
         return input ? 'Yes' : 'No';
     }
-});
+})
+.filter('time', function() {
+    return function(input) {
+        return moment(input,'LT').format('LT');
+    }
+});;
 
 profileModule.controller("profileController", profileController);
 profileModule.directive('input', function ($parse) {

@@ -12,7 +12,22 @@ function crmAppointmentService($http) {
 			return $http.get('/crm/getAppointmentsServicesByDate/'+date);
 		},
 		cancelAppointment: function(id) {
-	  	return $http.post('/appointment/cancelAppointment',{id : id});
+	  	return $http.post('/crm/cancelAppointment',{id : id});
 		}
+		,
+		startService: function(id) {
+		  return $http.post('/crm/appointment/startService',{id : id});
+		}
+		,
+		getAllAvailableAppointmentSlots: function() {
+			return $http.get('/crm/getAllAvailableAppointmentSlots');
+		}
+		,
+		getVehiclesList: function() {
+			return $http.get('/crm/getVehiclesList');
+		},
+		getAvailableServices: function() {
+      return $http.get('/vehicle/getAvailableServices');
+    },
   };
 }

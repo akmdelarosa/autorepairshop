@@ -148,10 +148,8 @@ var vehicleModel = {
       
       connection.query(queryStatement, function (err, rows, fields) {
         
-        if (err) { throw err; }
+        callback(err,rows);
         
-        console.log(rows);
-        callback(rows);
       });
       
       connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);

@@ -4,6 +4,11 @@ angular.module("crmAppointmentModule")
     return function(input) {
         return input ? 'Yes' : 'No';
     }
+})
+.filter('time', function() {
+    return function(input) {
+        return moment(input,'LT').format('LT');
+    }
 });
 
 crmEditAppointmentController.$inject = ['$scope','$timeout', 'crmAppointmentService'];

@@ -484,7 +484,7 @@ adminRouteConfig.prototype.addRoutes = function () {
         callbackFunction : function(request, response) {
             var vehicleModel = require('../server/model/vehicleModel.js');
             vehicleModel.vehicleModel.getAllVehicles(
-                function (vehicles) {
+                function (err, vehicles) {
                     
                     response.render('admin/vehicles/index.ejs', {
                     user : request.user, // get the user out of session and pass to template
@@ -537,7 +537,7 @@ adminRouteConfig.prototype.addRoutes = function () {
         callbackFunction : function(request, response) {
            var vehicleModel = require('../server/model/vehicleModel.js');
            vehicleModel.vehicleModel.getAllVehicles(
-           function (vehicles) {
+           function (err, vehicles) {
                response.json(vehicles);
            });
         }

@@ -29,38 +29,8 @@
 
 
     </div>
-    <!--
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="well">
-          <p><strong>Year: </strong>{{appointment.year}}</p>
-          <p><strong>Make: </strong>{{appointment.make}}</p>
-          <p><strong>Model: </strong>{{appointment.model}}</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="well">
-            <p><strong>Date: </strong>{{appointment.date}}</p>
-            <p><strong>Time: </strong>{{appointment.time}}</p>
-          </div>
-        </div>
-      </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="well">
-          <p><strong>Services selected:</strong></p>
-          <ul>
-            <li ng-repeat="selectedService in appointment.services">{{selectedService.name}}</li>
-          </ul>
-        </div>
-      </div>
-    </div>-->
-
   </div>
   <div class="row">
     <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
-    <button class="btn btn-succdess" ng-disabled="!appointment.year || !appointment.make || !appointment.model || !appointment.first_name || !appointment.last_name || !appointment.email || !appointment.services || !appointment.phone_number || !appointment.date || !appointment.time" ng-click="finish()">Schedule</button>
+    <button class="btn btn-success" ng-disabled="!appointment.year || !appointment.make || !appointment.model || !appointment.first_name || !appointment.last_name || !appointment.email || !appointment.services || !appointment.phone_number || !appointment.date || !appointment.time" ng-click="finish()">Schedule</button>
   </div>

@@ -4,18 +4,44 @@ angular.module("crmAppointmentModule")
     return function(input) {
         return input ? 'Yes' : 'No';
     }
+})
+.filter('time', function() {
+    return function(input) {
+        return moment(input,'LT').format('LT');
+    }
 });
 
-crmViewAppointmentController.$inject = ['$scope','moment', '$timeout', '$filter', 'NgTableParams', 'crmAppointmentService'];
+crmViewAppointmentController.$inject = ['$scope', '$timeout', '$filter', 'NgTableParams', 'crmAppointmentService'];
 
-function crmViewAppointmentController($scope, moment, $timeout, $filter, NgTableParams, crmAppointmentService) {
+function crmViewAppointmentController($scope, $timeout, $filter, NgTableParams, crmAppointmentService) {
     $scope.appointments = {};
-    //var date = moment().format('YYYY-MM-DD');
-      //  console.log(date);
-    /*getAppointmentsToday();
+    
+    $scope.startService = function(id) {
+        crmAppointmentService.startService(id)
+        .success(function(data){
+            if (data && data.status == 'success' ) {
+                $scope.message = "Service started."
+            } else {
+                $scope.error = "There was an error processing your request. Error code : "+data.error;
+            }
+        });
+    };
+    
+    $scope.cancelAppointment = function(id) {
+        crmAppointmentService.cancelAppointment(id)
+        .success(function(data){
+            if (data && data.status == 'success' ) {
+                $scope.message = "Appointment has been cancelled."
+            } else {
+                $scope.error = "There was an error processing your request. Error code : "+data.error;
+            }
+        });
+    };
+    
+    var date = moment().format('YYYY-MM-DD');
+
+    getAppointmentsToday();
     function getAppointmentsToday() {
-        var date = moment().format('YYYY-MM-DD');
-        console.log(date);
         crmAppointmentService.getAppointmentsByDate(date)
         .success(function(data){
             if (data && data.appointments && data.appointments.length > 0 ) {
@@ -28,8 +54,6 @@ function crmViewAppointmentController($scope, moment, $timeout, $filter, NgTable
     }
     
     function getAppointmentsServices() {
-        var date = moment().format('YYYY-MM-DD');
-        console.log(date);
         crmAppointmentService.getAppointmentsServicesByDate(date)
         .success(function(data){
             if (data && data.services && data.services.length > 0 ) {
@@ -70,5 +94,5 @@ function crmViewAppointmentController($scope, moment, $timeout, $filter, NgTable
             }
         });
     }
-    */
+    
 }

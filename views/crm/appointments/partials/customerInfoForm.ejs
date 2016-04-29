@@ -1,0 +1,76 @@
+
+  <div class="row" style="text-align:left;">
+  <div class="form-group" show-errors>
+    <label for="first_name">First Name</label>
+    &nbsp;&nbsp;
+
+    <input type="text"
+           class="form-control"
+           name="first_name"
+           id="first_name"
+           ng-model="appointment.first_name"
+           style="width:100%"
+           required />
+    <p ng-show="formSchedule.first_name.$invalid && !formSchedule.first_name.$pristine" class="help-block">Enter a valid first name.</p>
+  </div>
+  <br /><br />
+  <div class="form-group">
+    <label for="last_name">Last Name</label>
+    &nbsp;&nbsp;
+
+    <input type="text"
+           class="form-control"
+           name="last_name"
+           id="last_name"
+           ng-model="appointment.last_name"
+           style="width:100%"
+           required />
+    <p ng-show="formSchedule.last_name.$invalid && !formSchedule.last_name.$pristine" class="help-block">Enter a valid last name.</p>
+  </div>
+  <br /><br />
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" 
+    class="form-control"
+              name="email"
+              id="email"
+              ng-model="appointment.email"
+              style="width:100%"
+              required />
+      <p ng-show="formSchedule.email.$invalid && !formSchedule.email.$pristine" class="help-block">Enter a valid email.</p>
+
+
+  </div>
+  <br /><br />
+
+  <div class="form-group">
+    
+    <label for="phone_number">Phone</label>
+    &nbsp;&nbsp;
+
+    <input type="tel" 
+           class="form-control" 
+           name="phone_number"
+           id="phone_number"
+           ng-model="appointment.phone_number"
+           style="width:100%"
+           ng-minlength="10" 
+           ng-maxlength="10"
+           required />
+     <p class="help-block" 
+           ng-show="formSchedule.phone_number.$error.required || formSchedule.phone_number.$error.number">
+        Valid phone number is required
+    </p>
+    <p 
+           class="help-block" 
+           ng-show="(formSchedule.phone_number.$error.minlength || formSchedule.phone_number.$error.maxlength) 
+                        && formSchedule.phone_number.$dirty">
+        Phone number should be 10 digits
+    </p>
+  </div>
+  <br /><br />
+
+</div>
+
+<div>&nbsp;</div>
