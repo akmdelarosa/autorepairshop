@@ -1,5 +1,5 @@
 ﻿# Auto Repair Shop Using Angular, Express and MySql
-[![bitHound Code](https://www.bithound.io/github/akmdelarosa/autorepairshop/badges/code.svg)](https://www.bithound.io/github/akmdelarosa/autorepairshop)
+[![bitHound Code](https://www.bithound.io/github/akmdelarosa/autorepairshop/badges/code.svg)](https://www.bithound.io/github/akmdelarosa/autorepairshop)&nbsp;[![GitHub version](https://badge.fury.io/gh/akmdelarosa%2Fautorepairshop.svg)](https://badge.fury.io/gh/akmdelarosa%2Fautorepairshop)&nbsp;[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 ## THIS IS STILL IN DEVELOPMENT MODE
 
 This is a simple auto repair shop web application where users can schedule appointments, view service history information, and use the estimator tool to calculate the cost of a particular repair or maintenance service.
