@@ -85,3 +85,56 @@ body > .container {
 .intro {
     font-size: larger;
 }
+/*=========================================
+	Our Team Member
+==========================================*/
+
+.member-thumb {
+  width: 273px;
+  position: relative;
+}
+
+.member-thumb .overlay h5 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  margin: 10px 0;
+}
+
+.member-thumb .overlay {
+	font-size: 16px;
+	padding: 20px;
+	line-height: 24px;
+}
+
+.member-thumb:hover .overlay {
+	cursor: pointer;
+	opacity: 1;
+	filter: alpha(opacity=100);
+	
+	-webkit-transform: rotateY(0deg) scale(1,1);
+	   -moz-transform: rotateY(0deg) scale(1,1);
+		-ms-transform: rotateY(0deg) scale(1,1);
+		 -o-transform: rotateY(0deg) scale(1,1);
+		    transform: rotateY(0deg) scale(1,1);
+}
+
+.team-member:hover h4 {
+  color: #0eb493;
+}
+
+.team-member .social-links {
+  margin-top: 24%;
+  list-style: none;
+  display: inline-block;
+}
+
+.team-member .social-links li {
+  display: inline-block;
+}
+
+.team-member .social-links li a {
+  height: 42px;
+  padding: 10px 0 0;
+  width: 42px;
+}

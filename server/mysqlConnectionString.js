@@ -1,26 +1,26 @@
-﻿var mysqlConnectionString = {
+var mysqlConnectionString = {
   
   connection  : {
     
     dev : {
       host: 'localhost',
-      user: 'angel',
+      user: 'akmdelarosa',
       password : '',
-      database : 'product_test'
+      database : 'c9'
     },
     
     qa : {
       host: 'localhost',
-      user: 'root',
-      password : 'passsword',
-      database : 'product_test'
+      user: 'akmdelarosa',
+      password : '',
+      database : 'c9'
     },
     
     prod : {
       host: 'localhost',
-      user: 'root',
-      password : 'passsword',
-      database : 'product_test'
+      user: 'akmdelarosa',
+      password : '',
+      database : 'c9'
     }
     
   }
