@@ -19,7 +19,7 @@
 
       <div class="col-sm-12">
         <div class="well">
-            <h3><span class="fa fa-user"></span> Appointments</h3>
+            <h3><span class="fa fa-calendar"></span> Appointments</h3>
             
             <div class='table-scrollable'  style="min-height: 600px;">
                 <table ng-table="tableParams" ng-hide="!$data" class="table" show-filter="true">
@@ -31,7 +31,7 @@
                         <td title="'Vehicle'" filter="{ vehicle: 'number'}" sortable="'vehicle'">{{appointment.vehicle}}</td>
                         <td title="'Service(s)'" filter="{ services: 'text'}" sortable="'services'">{{appointment.services}}</td>
                         <td>
-                            <a href="#" ng-click="startService(appointment.id)" class="btn btn-default btn-info" style="width: 100%;">
+                            <a href="/crm/services/start/{{appointment.id}}" class="btn btn-default btn-info" style="width: 100%;">
                                 Start Service
                             </a>
                         </td>

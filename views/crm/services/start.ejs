@@ -1,0 +1,106 @@
+<% include ../crmLayout %>
+
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <% if (user) { %>
+    <a href="/crm/logout" class="btn btn-default btn-sm">Logout</a>
+    <% } %>
+    <a href="/crm/index" class="btn btn-default btn-sm">Back To Home</a>
+  </div>
+
+  <div class="clear"></div>
+
+  <div class="panel-heading">
+    <h3 class="panel-title"><span class="fa fa-road"> <%=title %></h3>
+  </div>
+  
+   <!-- show any messages that come back with authentication -->
+    <% if (typeof message != "undefined" && message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+     <div class="alert alert-success" ng-show="message" ng-cloak>{{message}}</div>
+     <div class="alert alert-danger" ng-show="error" ng-cloak>{{error}}</div>
+
+
+  <div class="panel-body" data-ng-app="crmServiceModule" data-ng-controller="crmStartServiceController" >
+
+      <div class="col-sm-12">
+        <div class="well">            
+          <form class="form-inline"
+            method="POST"
+            name="formService">
+          <div class="row" style="margin-left: 10px;">
+            <label>Name: </label> <%= appointment[0].first_name %> <%= appointment[0].last_name %><br />
+            <label>Email: </label> <%= appointment[0].email %><br />
+            <label>Phone: </label> <%= appointment[0].phone_number %><br />
+            <label>Vehicle: </label> <%= appointment[0].year %> <%= appointment[0].make %> <%= appointment[0].model %><br />
+            <label>Date: </label> <%= moment(appointment[0].date).format('L') %><br />
+            <label>Time: </label> <%= moment(appointment[0].time, 'LT').format('LT') %><br />
+            <label>Cancelled: </label> <%=  appointment[0].deleted ? 'Yes' : ' No' %><br />
+          </div>
+            <div class="row" style="margin-left: 10px;">
+                <div class="form-group" show-errors>
+                <label for="mileage_read">Odometer Reading: </label>&nbsp;&nbsp;
+                <input 
+                    class="form-control" 
+                    ng-model="mileage_read" 
+                    type="number" 
+                    minlength="1"
+                    min="0"
+                    placeholder="Mileage" 
+                    name="mileage_read"
+                    id="mileage_read"
+                    required />
+                <p ng-show="formService.mileage_read.$error.min || formService.mileage_read.$error.minlength || formService.mileage_read.$error.required || formService.mileage_read.$error.number" class="help-block">Enter a valid odometer reading.</p>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="margin-left: 10px;">
+                <div class="form-group" show-errors>
+                <label for="vin">VIN: </label>&nbsp;&nbsp;
+                <input 
+                    class="form-control" 
+                    ng-model="vin" 
+                    type="text" 
+                    minlength="17"
+                    maxlength="17"
+                    placeholder="VIN" 
+                    name="vin"
+                    id="vin"
+                    required />
+                <p ng-show="formService.vin.$error.maxlength || formService.vin.$error.minlength || formService.vin.$error.required || formService.vin.$error.pristine" class="help-block">Enter a valid vehicle identification number.</p>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="margin-left: 10px;">
+            <label>Services: </label>
+            <ul>
+              <% appointment.forEach(function(val) {%>
+              <li><%= val.service_name %></li>
+              <% }) %>
+            </ul>
+            <br />
+            </div>
+            <div class="row" style="margin-left: 10px;">
+            <div class="form-group" style="padding-left40%">
+                <a href="/crm/appointments/today" class="btn btn-primary"><center>Go Back</center></a>
+                <button class="btn btn-success" ng-disabled="formService.$invalid" ng-click="startService(<%=appointment[0].appointment_id%>,mileage_read, vin)"><center>Start Service</center></button>
+            </div>
+            </div>
+            </form>
+          </div>          
+        </div>
+    </div>
+  </div>
+</div>
+
+<% include ../../footer %>
+
+<link rel="stylesheet" href="../../../bower_components/ng-table/dist/ng-table.min.css" type="text/css" media="screen"/>
+<script src="../../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+<script src="../../../bower_components/ng-table/dist/ng-table.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../bower_components/moment/moment.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="../../../javascripts/app/crm/service/crmServiceModule.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/crm/service/crmServiceService.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/crm/service/crmStartServiceController.js" type="text/javascript" charset="utf-8"></script>

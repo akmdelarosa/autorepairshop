@@ -30,21 +30,21 @@
                     <label for="vehicle">Vehicle</label><br />
                     <div class="form-group" data-ng-cloak show-errors>
                         Year:
-                        <select id="year" data-ng-model="appointment.year" ng-options="year for year in years">
+                        <select class="form-control" id="year" data-ng-model="appointment.year" ng-options="year for year in years">
                             <option value=''>Select</option>
                         </select>
                         <p ng-show="formSchedule.year.$invalid && !formSchedule.year.$pristine" class="help-block">Select a year.</p>
                     </div>
                     <div class="form-group" data-ng-cloak>
                         Make:
-                        <select id="make" ng-disabled="!appointment.year" data-ng-model="appointment.make" ng-options="make for make in makes">
+                        <select class="form-control" id="make" ng-disabled="!appointment.year" data-ng-model="appointment.make" ng-options="make for make in makes">
                             <option value=''>Select</option>
                         </select>
                         <p ng-show="formSchedule.make.$invalid && !formSchedule.make.$pristine" class="help-block">Select a make.</p>
                     </div>
                     <div class="form-group" data-ng-cloak>
                         Model:
-                        <select id="model" ng-disabled="!appointment.make" data-ng-model="appointment.model" ng-options="model.model for model in models">
+                        <select class="form-control" id="model" ng-disabled="!appointment.make" data-ng-model="appointment.model" ng-options="model.model for model in models">
                             <option value=''>Select</option>
                         </select>
                         <p ng-show="formSchedule.model.$invalid && !formSchedule.model.$pristine" class="help-block">Select a model.</p>
@@ -56,14 +56,14 @@
                 <label for="date_time">Date and Time</label><br /><br />
                 <div class="form-group" data-ng-cloak show-errors>
                     Date:
-                    <select id="date" data-ng-model="appointment.date" ng-options="date | date:'fullDate' for date in dates">
+                    <select class="form-control" id="date" data-ng-model="appointment.date" ng-options="date | date:'fullDate' for date in dates">
                         <option value=''>Select</option>
                     </select>
                     <p ng-show="formSchedule.date.$invalid && !formSchedule.dateyear.$pristine" class="help-block">Select a date.</p>
                 </div>
                 <div class="form-group" data-ng-cloak>
                     Time:
-                    <select id="time" ng-disabled="!appointment.date" data-ng-model="appointment.time" ng-options="time.time | time for time in times | orderBy:'time'">
+                    <select class="form-control" id="time" ng-disabled="!appointment.date" data-ng-model="appointment.time" ng-options="time.time | time for time in times | orderBy:'time'">
                         <option value=''>Select</option>
                     </select>
                     <p ng-show="formSchedule.time.$invalid && !formSchedule.time.$pristine" class="help-block">Select a time.</p>

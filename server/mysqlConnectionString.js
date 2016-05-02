@@ -4,9 +4,9 @@ var mysqlConnectionString = {
     
     dev : {
       host: 'localhost',
-      user: 'akmdelarosa',
+      user: 'angel',
       password : '',
-      database : 'c9'
+      database : 'product_test'
     },
     
     qa : {

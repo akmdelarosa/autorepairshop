@@ -1,9 +1,9 @@
-angular.module("crmAppointmentModule")
-.factory("crmAppointmentService", crmAppointmentService);
+angular.module("crmServiceModule")
+.factory("crmServiceService", crmServiceService);
 
-crmAppointmentService.$inject = ['$http'];
+crmServiceService.$inject = ['$http'];
 
-function crmAppointmentService($http) {
+function crmServiceService($http) {
   return {
 		getAppointmentsByDate: function(date) {
 			return $http.get('/crm/getAppointmentsByDate/'+date);
@@ -13,6 +13,15 @@ function crmAppointmentService($http) {
 		},
 		cancelAppointment: function(id) {
 	  	return $http.post('/crm/cancelAppointment',{id : id});
+		}
+		,
+		startService: function(id,mileage_read,vin) {
+		  return $http.post('/crm/services/start',
+			{
+				id : id,
+				mileage_read : mileage_read,
+				vin : vin
+			});
 		}
 		,
 		getAllAvailableAppointmentSlots: function() {
@@ -27,6 +36,9 @@ function crmAppointmentService($http) {
     },
 		schedule: function(appointment) {
 			return $http.post('/crm/appointments/schedule', {appointment: appointment});
+		},
+		getServicesByDate: function(date) {
+			return $http.get('/crm/getServicesByDate/'+date);
 		}
   };
 }

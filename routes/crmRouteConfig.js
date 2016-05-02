@@ -1,4 +1,5 @@
 var staffUserModel = require('../server/model/staffUserModel.js');
+var moment = require('moment');
 function crmRouteConfig(app) {
 
     this.app = app;
@@ -54,6 +55,16 @@ crmRouteConfig.prototype.addRoutes = function () {
         }
 
     });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/crm/profile',
+        callbackFunction : function(request, response) {
+            response.redirect('/crm/profile/index');
+        }
+
+    });
 
     self.routeTable.push({
         
@@ -89,7 +100,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         callbackFunction : function(request, response) {
             console.log('date: ' + request.params.date); 
             var appointmentModel = require('../server/model/appointmentModel.js');
-            appointmentModel.appointmentModel.getAppointmentsByDate(request.params.date,
+            appointmentModel.appointmentModel.getAvailableAppointmentsByDate(request.params.date,
                 function (err, status) {
                     if (err) {
                         response.json({error : err.code});
@@ -109,7 +120,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         callbackFunction : function(request, response) {
             var appointmentModel = require('../server/model/appointmentModel.js');
             console.log('date: ' + request.params.date); 
-            appointmentModel.appointmentModel.getAppointmentsServicesByDate(request.params.date,
+            appointmentModel.appointmentModel.getAvailableAppointmentsServicesByDate(request.params.date,
                 function (err,status) {
                     
                     if (err) {
@@ -125,11 +136,21 @@ crmRouteConfig.prototype.addRoutes = function () {
     self.routeTable.push({
         
         requestType : 'get',
+        requestUrl : '/crm/appointments',
+        callbackFunction : function(request, response) {
+            response.redirect('/crm/appointments/today');
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
         requestUrl : '/crm/appointments/today',
         callbackFunction : function(request, response) {
             response.render('crm/appointments/today.ejs', {
                 user : request.user, // get the user out of session and pass to template
-                title: 'Today\'s Appointment'
+                title: 'Scheduled Appointments for Today'
                 }); 
         }
     });
@@ -150,7 +171,7 @@ crmRouteConfig.prototype.addRoutes = function () {
     self.routeTable.push({
         
         requestType : 'post',
-        requestUrl : '/crm/user/edit',
+        requestUrl : '/crm/profile/edit',
         callbackFunction : function(request, response) {
             
             var userModel = require('../server/model/userModel.js');
@@ -215,6 +236,166 @@ crmRouteConfig.prototype.addRoutes = function () {
         }
 
     });
+    
+    self.routeTable.push({
+        
+        requestType : 'post',
+        requestUrl : '/crm/appointments/schedule',
+        callbackFunction : function (request, response) {
+            var data = request.body;
+
+            console.log('appointment data velow');
+            console.log(data.appointment);
+
+            var appointmentModel = require('../server/model/appointmentModel.js');
+            var customerModel = require('../server/model/customerModel.js');
+            var appointmentServicesModel = require('../server/model/appointmentServicesModel.js');
+
+            customerModel.customerModel.createCustomer(
+                {
+                    first_name : data.appointment.first_name,
+                    last_name : data.appointment.last_name,
+                    email : data.appointment.email,
+                    phone_number : data.appointment.phone_number
+                }, function(customerStatus) {
+                    console.log("createCustomer data below");
+                    console.log(customerStatus);
+
+                    data.appointment.customer_id = customerStatus.insertId;
+                    console.log("appointment passed to createAppointment");
+                    console.log(data.appointment);
+                    appointmentModel.appointmentModel.createAppointment(data.appointment,
+                        function (appointmentStatus) {
+                            console.log("createappointment status below");
+                            console.log(appointmentStatus);
+                            //appointment_id = status.insertId;
+                            data.appointment.appointment_id = appointmentStatus.insertId;
+                            appointmentServicesModel.appointmentServicesModel.createAppointmentServices(data.appointment.services, appointmentStatus.insertId,
+                                function(serviceStatus) {
+                                    response.json({status: 'success', appointment_id : data.appointment.appointment_id});
+                                    //response.redirect('/appointment/confirmation/'+data.appointment.appointment_id);
+                            });
+                    });
+
+            });            
+        }
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/crm/services/start/:id',
+        callbackFunction : function(request, response) {
+           
+            var appointmentModel = require('../server/model/appointmentModel.js');
+                        
+            appointmentModel.appointmentModel.getAppointmentDataForServiceById(request.params.id,
+                function (status) { 
+                    response.render('crm/services/start.ejs', {
+                    user : request.user, // get the user out of session and pass to template
+                    title: 'Start Service',
+                    appointment: status,
+                    moment: moment
+                    }); 
+                });
+            
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'post',
+        requestUrl : '/crm/services/start',
+        callbackFunction : function(request, response) {
+           
+            var servicedVehicleModel = require('../server/model/servicedVehicleModel.js');
+            var serviceHistoryModel = require('../server/model/serviceHistoryModel.js');
+            console.log('post data',request.body);
+            servicedVehicleModel.servicedVehicleModel.createServicedVehicleByAppointmentId(
+                request.body.id, request.body.mileage_read, request.body.vin,
+                function (vehicle_status) { 
+                    serviceHistoryModel.serviceHistoryModel.createServiceHistory(request.body.id,
+                    function (status) {
+                        response.json({status: 'success'});
+                    });
+            });
+            
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/crm/services',
+        callbackFunction : function(request, response) {
+           
+           response.redirect('/crm/services/today');
+            
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/crm/getServicesByDate/:date',
+        callbackFunction : function(request, response) {
+           
+            var serviceHistoryModel = require('../server/model/serviceHistoryModel.js');
+                        
+            serviceHistoryModel.serviceHistoryModel.getServiceHistoryByDate(request.params.date,
+                function (status) { 
+                    response.json({services : status});
+                });
+        }
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/crm/services/today',
+        callbackFunction : function(request, response) {
+
+            response.render('crm/services/today.ejs', {
+            user : request.user, // get the user out of session and pass to template
+            title: 'Scheduled Services for Today',
+            moment: moment
+            });             
+        }
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/crm/services/updateStatus/:id/:status',
+        callbackFunction : function(request, response) {
+           
+            var serviceHistoryModel = require('../server/model/serviceHistoryModel.js');
+                        
+            serviceHistoryModel.serviceHistoryModel.updateStatus(request.params.id,request.params.status,
+                function (status) { 
+                   response.json(status);
+            });
+        }
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/crm/services/makCompleted/:id',
+        callbackFunction : function(request, response) {
+           
+            var serviceHistoryModel = require('../server/model/serviceHistoryModel.js');
+                        
+            serviceHistoryModel.serviceHistoryModel.markCompleted(request.params.id,
+                function (status) { 
+                    response.json(status);
+            });
+        }
+    });
+    
     /*
     self.routeTable.push({
         

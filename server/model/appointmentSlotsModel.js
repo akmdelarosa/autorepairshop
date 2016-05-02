@@ -51,7 +51,7 @@ var appointmentSlotsModel = {
                               HAVING cnt IS NULL OR cnt < slots) js
                               ORDER BY date";
                               */
-      var queryStatement = "SELECT DISTINCT date FROM (SELECT s.date, s.time, s.slots, a.cnt FROM appointment_slots s LEFT JOIN (SELECT date, time, COUNT(id) cnt FROM appointments WHERE deleted = 0 GROUP BY date , time) a ON a.date = s.date AND a.time = s.time WHERE s.date >= NOW() AND s.date < NOW() + INTERVAL 3 MONTH GROUP BY date , time HAVING cnt IS NULL OR cnt < slots) js ORDER BY date";
+      var queryStatement = "SELECT DISTINCT date FROM (SELECT s.date, s.time, s.slots, a.cnt FROM appointment_slots s LEFT JOIN (SELECT date, time, COUNT(id) cnt FROM appointments WHERE deleted = 0 GROUP BY date , time) a ON a.date = s.date AND a.time = s.time WHERE s.date >= DATE_FORMAT(NOW(), '%Y-%m-%d') AND s.date < NOW() + INTERVAL 3 MONTH GROUP BY date , time HAVING cnt IS NULL OR cnt < slots) js ORDER BY date";
     
     //var queryStatement = "SELECT DISTINCT date FROM appointment_slots ORDER BY date";
     
@@ -191,12 +191,12 @@ var appointmentSlotsModel = {
   getAllAvailableAppointmentSlots : function (callback) {
     
     var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-    var queryStatement = "SELECT * FROM (SELECT s.date, s.time, s.slots, a.cnt FROM appointment_slots s LEFT JOIN (SELECT date, time, COUNT(id) cnt FROM appointments WHERE deleted = 0 GROUP BY date , time) a ON a.date = s.date AND a.time = s.time WHERE s.date >= NOW() AND s.date < NOW() + INTERVAL 3 MONTH GROUP BY date , time HAVING cnt IS NULL OR cnt < slots) js ORDER BY date";
+    var queryStatement = "SELECT * FROM (SELECT s.date, s.time, s.slots, a.cnt FROM appointment_slots s LEFT JOIN (SELECT date, time, COUNT(id) cnt FROM appointments WHERE deleted = 0 GROUP BY date , time) a ON a.date = s.date AND a.time = s.time WHERE s.date >= DATE_FORMAT(NOW(), '%Y-%m-%d') AND s.date < NOW() + INTERVAL 3 MONTH GROUP BY date , time HAVING cnt IS NULL OR cnt < slots) js ORDER BY date";
     
     if (connection) {
       
       connection.query(queryStatement, function (err, rows, fields) {
-        
+        console.log(rows);
         callback(err, rows);
         
       });

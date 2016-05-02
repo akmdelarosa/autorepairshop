@@ -94,7 +94,7 @@ passportRouteConfig.prototype.addRoutes = function () {
         requestType : 'get',
         requestUrl : '/signup',
         callbackFunction : function (request, response) {
-          if (request.isAuthenticated()) { return; }
+          if (request.isAuthenticated()) { response.redirect('/'); }
           // render the page and pass in any flash data if it exists
           response.render('signup.ejs', { message: request.flash('warning') });
         }

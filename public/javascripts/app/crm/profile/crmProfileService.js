@@ -6,7 +6,7 @@ crmProfileService.$inject = ['$http'];
 function crmProfileService($http) {
   return {
 		updateUser: function (id, user) {
-      return $http.post('/crm/user/edit',
+      return $http.post('/crm/profile/edit',
         {
             user: {
                 id: id,

@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Auto Repair Shop</title>
-	<link href="../../../stylesheets/bootstrap.min.css" rel="stylesheet" />
+	  <link href="../../../stylesheets/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../../stylesheets/font-awesome-4.6.1/css/font-awesome.min.css" rel="stylesheet" />
     <link href="../../../stylesheets/app.css" rel="stylesheet" />
     
 	  <script src="../../../javascripts/jquery-1.10.2.min.js"></script>
@@ -30,37 +31,16 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
 		<li class="active"><a href="/crm/index">Home <span class="sr-only"></span></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Parts and Services <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/crm/services/index">Manage Services</a></li>
-            <li><a href="/crm/parts/index">Manage Parts</a></li>
-          </ul>
+        <li>
+          <a href="/crm/appointments/today">Today's Appointments <span class="sr-only"></span></a>
         </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Customer Module <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/crm/appointments/index">Manage Appointments</a></li>
-            <li><a href="/crm/users/index">Manage Users</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Prices and Rates <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/crm/prices/index">Manage Part Prices</a></li>
-            <li><a href="/crm/rates/index">Manage Service Rates</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Vehicles <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/crm/vehicles/index">View Vehicles</a></li>
-            <li><a href="/crm/vehicles/createVehicle">Create New Vehicle</a></li>
-          </ul>
+        <li>
+          <a href="/crm/appointments/schedule">Schedule Appointment <span class="sr-only"></span></a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 	    <% if (typeof user != "undefined") { %>
+        <li><a href="/crm/profile/">Profile <span class="sr-only"></span></a></li>
         <li><a href="/crm/logout">Logout <span class="sr-only"></span></a></li>
 		<% } else { %>
 		  <li><a href="/crm/login">Login <span class="sr-only"></span></a></li>

@@ -1,0 +1,73 @@
+<% include ../crmLayout %>
+
+<div class="panel panel-info">
+  <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <% if (user) { %>
+    <a href="/crm/logout" class="btn btn-default btn-sm">Logout</a>
+    <% } %>
+    <a href="/crm/index" class="btn btn-default btn-sm">Back To Home</a>
+  </div>
+
+  <div class="clear"></div>
+
+  <div class="panel-heading">
+    <h3 class="panel-title"><span class="fa fa-wrench"> <%=title %></h3>
+  </div>
+  
+   <!-- show any messages that come back with authentication -->
+    <% if (typeof message != "undefined" && message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+     <div class="alert alert-success" ng-show="message" ng-cloak>{{message}}</div>
+     <div class="alert alert-danger" ng-show="error" ng-cloak>{{error}}</div>
+
+
+  <div class="panel-body" data-ng-app="crmServiceModule" data-ng-controller="crmTodayServiceController" >
+
+      <div class="col-sm-12">
+        <div class="well">
+            <h3><span class="fa fa-wrench"></span> Services and Repairs</h3>
+            <form class="form"
+            method="POST"
+            name="formService">
+            <div class='table-scrollable'  style="min-height: 600px;">
+                <table ng-table="tableParams" ng-hide="!$data" class="table" show-filter="true">
+                    <tr ng-repeat="service in $data">
+                        <td title="'First Name'" filter="{ first_name: 'text'}" sortable="'first_name'">{{service.first_name }}</td>
+                        <td title="'Last Name'" filter="{ last_name: 'text'}" sortable="'last_name'">{{service.last_name}}</td>
+                        <td title="'Service Name'" filter="{ service_name: 'text'}" sortable="'service_name'">{{service.service_name}}</td>
+                        <td style="text-align: center;" title="'Year'" filter="{ yaer: 'text'}" sortable="'year'">{{service.year}}</td>
+                        <td style="text-align: center;" title="'Make'" filter="{ make: 'text'}" sortable="'make'">{{service.make}}</td>
+                        <td style="text-align: center;" title="'Model'" filter="{ model: 'text'}" sortable="'model'">{{service.model}}</td>
+                        <td title="'VIN'" filter="{ vin: 'text'}" sortable="'vin'">{{service.vin}}</td>
+                        <td style="text-align: center;" title="'Has Account?'" sortable="'user_id'">{{service.user_id | yesNo}}</td>
+                        <td style="text-align: center;" title="'By Appointment'" sortable="'appointment_id'">{{service.appointment_id | yesNo}}</td>
+                        <td style="text-align: center;" title="'Last Modified'" sortable="'modified'">{{service.modified |  date:'MM/dd/yyyy'}}</td>
+                        <td>
+                            <input>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="cancelAppointment(appointment.id)" class="btn btn-default btn-danger" style="width: 100%;">
+                                Update
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            </form>       
+        </div>
+    </div>
+  </div>
+</div>
+
+<% include ../../footer %>
+
+<link rel="stylesheet" href="../../../bower_components/ng-table/dist/ng-table.min.css" type="text/css" media="screen"/>
+<script src="../../../bower_components/angular/angular.min.js" type="text/javascript"></script>
+<script src="../../../bower_components/ng-table/dist/ng-table.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../bower_components/moment/moment.js" type="text/javascript" charset="utf-8"></script>
+<script src='../../../bower_components/checklist-model/checklist-model.js'></script>
+
+<script src="../../../javascripts/app/crm/service/crmServiceModule.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/crm/service/crmServiceService.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../javascripts/app/crm/service/crmTodayServiceController.js" type="text/javascript" charset="utf-8"></script>
