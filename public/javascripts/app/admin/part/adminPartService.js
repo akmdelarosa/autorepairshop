@@ -19,6 +19,9 @@ function adminPartService($http) {
     },
     createPart : function (part) {
       return $http.post('/admin/parts/createPart', {part : part});
+    },
+    markDeleted : function(id) {
+      return $http.post('/admin/parts/markDeleted', {id : id});
     }
   };
 }

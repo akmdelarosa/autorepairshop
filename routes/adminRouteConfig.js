@@ -54,7 +54,6 @@ adminRouteConfig.prototype.addRoutes = function () {
         }
     });
 
-
     self.routeTable.push({
         
         requestType : 'get',
@@ -274,7 +273,24 @@ adminRouteConfig.prototype.addRoutes = function () {
         }
 
     });
-	
+    //markDeleted
+	self.routeTable.push({
+        
+        requestType : 'post',
+        requestUrl : '/admin/parts/markDeleted',
+        callbackFunction : function(request, response, next) {
+            var partModel = require('../server/model/partModel.js');
+                        
+            partModel.partModel.markDeleted(request.body.id,
+                function (err, status) {
+                    if(err) { return next(err); }
+                    response.json({status: 'success'});
+                });
+            
+        }
+
+    });
+    
     self.routeTable.push({
         
         requestType : 'get',

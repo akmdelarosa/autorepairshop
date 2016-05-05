@@ -51,7 +51,7 @@ var appointmentSlotsModel = {
                               HAVING cnt IS NULL OR cnt < slots) js
                               ORDER BY date";
                               */
-      var queryStatement = "SELECT DISTINCT date FROM (SELECT s.date, s.time, s.slots, a.cnt FROM appointment_slots s LEFT JOIN (SELECT date, time, COUNT(id) cnt FROM appointments WHERE deleted = 0 GROUP BY date , time) a ON a.date = s.date AND a.time = s.time WHERE s.date >= DATE_FORMAT(NOW(), '%Y-%m-%d') AND s.date < NOW() + INTERVAL 3 MONTH GROUP BY date , time HAVING cnt IS NULL OR cnt < slots) js ORDER BY date";
+      var queryStatement = "SELECT DISTINCT date FROM (SELECT s.date, s.time, s.slots, a.cnt FROM appointment_slots s LEFT JOIN (SELECT date, time, COUNT(id) cnt FROM appointments WHERE deleted = 0 GROUP BY date , time) a ON a.date = s.date AND a.time = s.time WHERE s.date >= DATE_FORMAT(NOW(), '%Y-%m-%d') AND s.date < DATE_FORMAT(NOW() + INTERVAL 3 MONTH, '%Y-%m-%d') GROUP BY date , time HAVING cnt IS NULL OR cnt < slots) js ORDER BY date";
     
     //var queryStatement = "SELECT DISTINCT date FROM appointment_slots ORDER BY date";
     

@@ -30,8 +30,8 @@
                         <td title="'Date'" filter="{ date: 'text'}" sortable="'date'">{{appointment.date | date:'MM/dd/yyyy'}}</td>
                         <td title="'Time'" filter="{ time: 'text'}" sortable="'time'">{{appointment.time | time}}</td>
                         <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">{{appointment.name}}</td>
-                        <td title="'Cancelled?'" filter="{ deleted: 'number'}" sortable="'deleted'">{{appointment.deleted | yesNo}}</td>
-                        <td title="'Vehicle'" filter="{ vehicle: 'number'}" sortable="'vehicle'">{{appointment.vehicle}}</td>
+                        <td title="'Cancelled?'" filter="{ deleted: 'text'}" sortable="'deleted'">{{appointment.deleted | yesNo}}</td>
+                        <td title="'Vehicle'" filter="{ vehicle: 'text'}" sortable="'vehicle'">{{appointment.vehicle}}</td>
                         <td title="'Service(s)'" filter="{ services: 'text'}" sortable="'services'">{{appointment.services}}</td>
                         <td>
                             <a href="/crm/services/start/{{appointment.id}}" class="btn btn-default btn-info" style="width: 100%;">

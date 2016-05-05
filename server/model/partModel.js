@@ -204,6 +204,21 @@ var partModel = {
       connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
     }
   }
+  ,
+  markDeleted : function(id, callback) {
+    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+    var queryStatement = "DELETE p.*, sp.*, vpp.* FROM parts p left join services_parts sp on sp.part_id = p.id left join vehicles_parts_prices vpp on vpp.part_id = p.id where p.id = ?";
+    if (connection) {
+      
+      connection.query(queryStatement, [id], function (err, result) {
+        
+        callback(err, result);
+               
+      });
+      
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+    }
+  }
 }
 
 module.exports.partModel = partModel; 
