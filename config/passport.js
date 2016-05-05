@@ -27,16 +27,12 @@ module.exports = function(passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
-        var key = {
-            id : user.id,
-            role : user.role
-        };
-		done(null, key);
+		done(null, user.id);
     });
 
     // used to deserialize the user
-    passport.deserializeUser(function(key, done) {
-		connection.query("select * from users where id = ? and role = ?",[key.id, key.role],function(err,rows){	
+    passport.deserializeUser(function(id, done) {
+		connection.query("select * from users where id = ?",[id],function(err,rows){	
 			done(err, rows[0]);
 		});
     });
@@ -89,7 +85,10 @@ module.exports = function(passport) {
                 
                 var newUser = new Object();
                 
-                userModel.userModel.signUpUser (signupParams, function (rows) {
+                userModel.userModel.signUpUser (signupParams, function (err, rows) {
+                    if (err) {
+                        return done(err);
+                    }
                     newUser.id = rows.insertId;
                     return done(null, newUser);
                 });

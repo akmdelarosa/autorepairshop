@@ -17,6 +17,7 @@ var userModel = {
         password : this.generateHash(user.password),
         phone_number : "",
         deleted : 0,
+        role: 'customer',
         created : new Date()
     };
     
@@ -27,13 +28,9 @@ var userModel = {
     if (connection) {
       
       connection.query(insertStatement, new_user, function (err, result) {
-        
-        if (err) { throw err }
-        
-        callback(result);
-        console.log('signUpUser result below');
-        console.log(result)
-        console.log('model below for ' + result.insertId);
+
+        callback(err, result);
+
       });
       
       connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
@@ -133,12 +130,6 @@ var userModel = {
       
       connection.query(queryStatement, [email] , function (err, rows, fields) {
         
-        if (err) { throw err; }
-        
-        
-        console.log(rows);
-        console.log('getUserByEmail rows above')
-        
         callback(err, rows);
       });
       
@@ -161,8 +152,6 @@ var userModel = {
         if (err) { throw err; }
         
         if (rows) {
-          
-          
           callback({ status : 'successful'});
         }
       });
@@ -228,18 +217,12 @@ var userModel = {
   
   getVehicles : function(userId, callback) {
       var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-      var queryStatement = "SELECT v.year, v.make, v.model, v.mileage_read, MAX(s.completed) last_serviced FROM serviced_vehicles v INNER JOIN users_vehicles uv ON uv.vehicle_id = v.id LEFT JOIN service_history s ON s.vehicle_id = v.id AND uv.user_id WHERE uv.user_id = ? GROUP BY v.id";
+      var queryStatement = "SELECT v.year, v.make, v.model, v.mileage_read, MAX(s.completed_date) last_serviced FROM serviced_vehicles v INNER JOIN users_vehicles uv ON uv.vehicle_id = v.id LEFT JOIN service_history s ON s.vehicle_id = v.id AND uv.user_id WHERE uv.user_id = ? GROUP BY v.id";
     
       if (connection) {
       
         connection.query(queryStatement, [userId] , function (err, rows, fields) {
-          if (err) { throw err; }
-          console.log(rows);
-        
-          if (rows) {
-          
-            callback(rows);
-          }
+            callback(err,rows);
         });
       
         connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
@@ -248,17 +231,13 @@ var userModel = {
   
   getAppointments: function(userId, callback) {
       var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-	  var queryStatement = "SELECT a.date, a.time, a.year, a.make,a.model, s.name FROM appointments a INNER JOIN appointment_services aps ON aps.appointment_id = a.id INNER JOIN services s ON s.id = aps.service_id WHERE a.user_id = ? ORDER BY a.date DESC";
+	    var queryStatement = "SELECT a.date, a.time, a.year, a.make,a.model, s.name FROM appointments a INNER JOIN appointment_services aps ON aps.appointment_id = a.id INNER JOIN services s ON s.id = aps.service_id WHERE a.user_id = ? ORDER BY a.date DESC";
       if (connection) {
       
         connection.query(queryStatement, [userId] , function (err, rows, fields) {
-          if (err) { throw err; }
-          console.log(rows);
-        
-          if (rows) {
           
-            callback(rows);
-          }
+            callback(err, rows);
+
         });
       
         connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
@@ -267,7 +246,7 @@ var userModel = {
   
   getServiceHistory: function(userId, callback) {
       var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-	  var queryStatement = "SELECT v.year, v.make, v.model, sh.mileage_read, sh.completed AS `date`, IFNULL(a.id, 0) scheduled, s.name FROM service_history sh INNER JOIN serviced_vehicles v ON v.id = sh.vehicle_id LEFT JOIN appointments a ON a.id = sh.appointment_id INNER JOIN services s ON s.id = sh.service_id WHERE sh.user_id = ? GROUP BY sh.id ORDER BY sh.completed DESC";
+	  var queryStatement = "SELECT sh.id, v.year, v.make, v.model, sh.mileage_read, sh.completed_date AS `date`, IFNULL(a.id, 0) scheduled, s.name FROM service_history sh INNER JOIN serviced_vehicles v ON v.id = sh.vehicle_id LEFT JOIN appointments a ON a.id = sh.appointment_id INNER JOIN services s ON s.id = sh.service_id WHERE sh.user_id = ? GROUP BY sh.id ORDER BY sh.completed_date DESC";
       if (connection) {
       
         connection.query(queryStatement, [userId] , function (err, rows, fields) {

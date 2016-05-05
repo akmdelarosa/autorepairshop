@@ -15,7 +15,7 @@
 
 			  <tr data-ng-repeat="appointment in appointments">
 				<td>{{appointment.date | date:'MM/dd/yyyy'}}</td>
-			    <td>{{appointment.time | date:'hh:mm a'}}</td>
+			    <td>{{appointment.time | time }}</td>
 			    <td>{{appointment.deleted | yesNo}}</td>
 			    <td>{{appointment.year}} {{appointment.make}} {{appointment.model}}</td>
 				<td>{{appointment.name}}</td>

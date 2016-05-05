@@ -1,6 +1,11 @@
 <% include ../layout %>
 
 <div class="panel panel-info">
+	<div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    <a href="/profile/index" class="btn btn-default btn-sm">Back To Profile</a>
+  </div>
+  <div class="clear"></div>
   <div class="panel-heading">
     <h3 class="panel-title"><%=title %></h3>
   </div>
@@ -32,7 +37,7 @@
 
 			  <tr data-ng-repeat="service in services">
 			    <td>{{service.name}}</td>
-			    <td>{{service.date | date:'MM/dd/yyyy'}}</td>
+			    <td>{{service.date | date:'MM/dd/yyyy'}}<span ng-show="!service.date"><a class="btn btn-sm btn-warning" href="/profile/trackRepairStatus/{{service.id}}"> View Status</a></span></td>
 			    <td>{{service.scheduled | yesNo}}</td>
 			    <td>{{service.year}} {{service.make}} {{service.model}}</td>
 			  </tr>

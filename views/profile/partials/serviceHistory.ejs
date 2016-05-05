@@ -14,7 +14,7 @@
 
 			  <tr data-ng-repeat="service in services">
 			    <td>{{service.name}}</td>
-			    <td>{{service.date | date:'MM/dd/yyyy'}}</td>
+			    <td>{{service.date | date:'MM/dd/yyyy'}}<span ng-show="!service.date"><a class="btn btn-sm btn-warning" href="/profile/trackRepairStatus/{{service.id}}"> View Status</a></span></td>
 			    <td>{{service.scheduled | yesNo}}</td>
 			    <td>{{service.year}} {{service.make}} {{service.model}}</td>
 			  </tr>

@@ -32,8 +32,10 @@ function crmViewAppointmentController($scope, $timeout, $filter, NgTableParams, 
         .success(function(data){
             if (data && data.status == 'success' ) {
                 $scope.message = "Appointment has been cancelled."
-            } else {
+            } else if (data.error) {
                 $scope.error = "There was an error processing your request. Error code : "+data.error;
+            } else {
+                $scope.message = "No appointment canceled.";
             }
         });
     };
@@ -47,8 +49,10 @@ function crmViewAppointmentController($scope, $timeout, $filter, NgTableParams, 
             if (data && data.appointments && data.appointments.length > 0 ) {
                 $scope.appointments = data.appointments;
                 getAppointmentsServices();
-            } else {
+            } else if (data.error) {
                 $scope.error = "There was an error processing your request. Error code : "+data.error;
+            } else {
+                $scope.message = "No appointments found.";
             }
         });
     }

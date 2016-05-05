@@ -8,11 +8,18 @@ var mysqlConnectionStringProvider = {
     
     var connection = mysql.createConnection(mysqlConnectionString.mysqlConnectionString.connection.dev);
     
-    connection.connect(function (err) {
-      
-      if (err) { console.log(err) ; throw err; }
-      
-      console.log('Connected Successfully');
+    connection.connect(function(err) {
+        if (err) {
+            console.log("SQL CONNECT ERROR: " + err);
+        } else {
+            console.log("SQL CONNECT SUCCESSFUL.");
+        }
+    });
+    connection.on("close", function (err) {
+        console.log("SQL CONNECTION CLOSED.");
+    });
+    connection.on("error", function (err) {
+        console.log("SQL CONNECTION ERROR: " + err);
     });
     return connection;
   },
@@ -23,9 +30,9 @@ var mysqlConnectionStringProvider = {
       
       currentConnection.end(function (err) {
         
-        if (err) { throw err; }
+        if (err) { console.log("CONNECTION ERROR ON END: " + err); }
         
-        console.log('connection closed successfully.')
+        console.log('CONNECTION CLOSED SUCCESSFULLY.')
       })
     }
     

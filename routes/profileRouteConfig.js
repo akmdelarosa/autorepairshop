@@ -1,3 +1,4 @@
+var moment = require('moment');
 function profileRouteConfig(app) { 
 
     this.app = app;
@@ -94,12 +95,13 @@ profileRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'get',
         requestUrl : '/profile/getCurrentUserVehicles',
-        callbackFunction : function(request, response) {
+        callbackFunction : function(request, response, next) {
             
             var userModel = require('../server/model/userModel.js');
                         
             userModel.userModel.getVehicles(request.user.id,
-                function (status) { 
+                function (err, status) { 
+                    if (err) { console.log(err) ; return next(err); }
 					console.log(status);
                     response.json({vehicles: status}); 
 
@@ -113,12 +115,13 @@ profileRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'get',
         requestUrl : '/profile/getCurrentUserAppointments',
-        callbackFunction : function(request, response) {
+        callbackFunction : function(request, response ,next) {
             
             var userModel = require('../server/model/userModel.js');
                         
             userModel.userModel.getAppointments(request.user.id,
-                function (status) { 
+                function (err, status) { 
+                    if (err) { return next(err); }
 					console.log(status);
                     response.json({appointments: status}); 
 
@@ -187,6 +190,30 @@ profileRouteConfig.prototype.addRoutes = function () {
         }
 
     });
+    
+    //trackRepairStatus
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/profile/trackRepairStatus/:id',
+        callbackFunction : function(request, response, next) {
+            
+            var serviceHistoryModel = require('../server/model/serviceHistoryModel.js');
+                        
+            serviceHistoryModel.serviceHistoryModel.getServiceHistoryById(request.params.id,
+                function(err, result) {
+                    if (err) { return next(err); }
+                    response.render('profile/repairStatus.ejs', {
+                        user : request.user, // get the user out of session and pass to template
+                        title : 'Vehicle Repair Status',
+                        repair : result,
+                        moment : moment
+                    });                
+            });
+        }
+
+    });
+    
 }
 
 // route middleware to make sure a user is logged in

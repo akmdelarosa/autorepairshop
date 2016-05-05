@@ -1,4 +1,4 @@
-<% include ../crmLayout %>
+<% include ../../crmLayout %>
 
 <div class="panel panel-info">
   <div style="float: right; padding-top: 4px; padding-right: 15px;">
@@ -15,14 +15,13 @@
   </div>
   
    <!-- show any messages that come back with authentication -->
-    <% if (typeof message != "undefined" && message.length > 0) { %>
-        <div class="alert alert-danger"><%= message %></div>
+    <% if (typeof error != "undefined" && error.message) { %>
+        <div class="alert alert-danger"><%= error.message %></div>
     <% } %>
-     <div class="alert alert-success" ng-show="message" ng-cloak>{{message}}</div>
-     <div class="alert alert-danger" ng-show="error" ng-cloak>{{error}}</div>
-
-
   <div class="panel-body" data-ng-app="crmServiceModule" data-ng-controller="crmTodayServiceController" >
+      
+      <div class="alert alert-success" ng-show="message" ng-cloak>{{message}}</div>
+      <div class="alert alert-danger" ng-show="error" ng-cloak>{{error}}</div>
 
       <div class="col-sm-12">
         <div class="well">
@@ -44,11 +43,17 @@
                         <td style="text-align: center;" title="'By Appointment'" sortable="'appointment_id'">{{service.appointment_id | yesNo}}</td>
                         <td style="text-align: center;" title="'Last Modified'" sortable="'modified'">{{service.modified |  date:'MM/dd/yyyy'}}</td>
                         <td>
-                            <input>
+                            <select name="status" ng-model="service.status_id" ng-options="s.id as s.name for s in repair_status">
+                            </select>
                         </td>
                         <td>
-                            <a href="#" ng-click="cancelAppointment(appointment.id)" class="btn btn-default btn-danger" style="width: 100%;">
+                            <a href="#" ng-click="updateStatus(service.id, service.status_id)" class="btn btn-default btn-info" style="width: 100%;">
                                 Update
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="markCompleted(service.id)" class="btn btn-default btn-success" style="width: 100%;">
+                                Mark Completed
                             </a>
                         </td>
                     </tr>

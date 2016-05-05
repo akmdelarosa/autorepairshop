@@ -1,0 +1,16 @@
+<% if (typeof user != "undefined") { %>
+   <% if (user.role == 'admin') { %>
+       <% include adminLayout %>
+   <% } else if (user.role == 'staff') { %>
+       <% include crmLayout %>
+   <% } else { %>
+       <% include layout %>
+   <% } %>
+<% } else { %>
+<% include layout %>
+<% } %>
+
+<h1><%=message%><h1>
+<div class="alert alert-danger"><%- JSON.stringify(error) %></div>
+
+<% include footer %>

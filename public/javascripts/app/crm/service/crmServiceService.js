@@ -39,6 +39,15 @@ function crmServiceService($http) {
 		},
 		getServicesByDate: function(date) {
 			return $http.get('/crm/getServicesByDate/'+date);
+		},
+		getAllRepairStatus: function() {
+			return $http.get('/crm/getAllRepairStatus');
+		},
+		updateStatus: function(id,status_id) {
+			return $http.post('/crm/services/updateStatus', {id: id, status_id : status_id});
+		},
+		markCompleted: function(id) {
+			return $http.post('/crm/services/markCompleted', {id: id});
 		}
   };
 }

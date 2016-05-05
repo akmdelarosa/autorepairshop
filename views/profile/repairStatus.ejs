@@ -1,0 +1,55 @@
+<% include ../layout %>
+
+<div class="panel panel-info">
+    <div style="float: right; padding-top: 4px; padding-right: 15px;">
+    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    <a href="/profile/index" class="btn btn-default btn-sm">Back To Profile</a>
+  </div>
+  <div class="clear"></div>
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+  <div class="panel-body">
+    <div class="container" data-ng-app="profileModule" data-ng-controller="profileController">
+
+     <!-- show any messages that come back with authentication -->
+    <% if (typeof message != "undefined" && message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+      
+    <div class="alert alert-success" ng-show="message" ng-cloak>{{message}}</div>
+     <div class="alert alert-danger" ng-show="error" ng-cloak>{{error}}</div>
+
+      <div class="col-sm-12">
+        <div class="well">   
+          <h3><span class="fa fa-car"></span> Vehicle Info</h3>         
+          <div class="row" style="margin-left: 10px;">
+            <label>Vehicle: </label> <%= repair.year %> <%= repair.make %> <%= repair.model %><br />
+            <label>Started: </label> <%= moment(repair.date).format('L') %><br />
+            <label>Mileage: </label> <%= repair.mileage_read %><br />
+            <label>VIN: </label> <%=  repair.vin %><br />
+          </div>
+          <h3><span class="fa fa-wrench"></span> Service Info</h3> 
+          <div class="row" style="margin-left: 10px;">
+            <label>Service Name: </label> <%= repair.service_name %><br />
+            <label>Service Description: </label> <%= repair.service_description %><br />
+          </div>
+          <h3><span class="fa fa-info-circle"></span> Other Info</h3> 
+          <div class="row" style="margin-left: 10px;">
+            <label>Status: </label> <%=  repair.status_name %><br />
+            <label>By Appointment?: </label> <%=  repair.appointment_id ? 'Yes' : ' No' %><br />
+          </div>
+        </div>          
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include ../footer %>
+
+<script src="../../bower_components/moment/min/moment.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../bower_components/angular/angular.min.js"></script>
+<script src="../../javascripts/app/profile/profileModule.js"></script>
+<script src="../../javascripts/app/profile/profileService.js"></script>
+<script src="../../javascripts/app/profile/profileController.js"></script>

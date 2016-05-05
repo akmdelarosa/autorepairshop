@@ -14,13 +14,7 @@ var adminUserModel = {
     if (connection) {
       
       connection.query(queryStatement, [email] , function (err, rows, fields) {
-        
-        if (err) { throw err; }
-        
-        
-        console.log(rows);
-        console.log('getUserByEmail rows above admin')
-        
+       
         callback(err, rows);
       });
       

@@ -18,7 +18,7 @@
     "express-session": "^1.13.0",
     "express-validator": "^2.20.3",
     "moment": "^2.13.0",
-    "mysql": "^2.10.2",
+    "mysql": "github:felixge/node-mysql",
     "mysql-model": "git://github.com/michalkow/node-mysql-model.git",
     "nodemailer": "^2.3.2",
     "nodemailer-wellknown": "^0.1.8",

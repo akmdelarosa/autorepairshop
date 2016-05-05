@@ -97,7 +97,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'get',
         requestUrl : '/crm/getAppointmentsByDate/:date',
-        callbackFunction : function(request, response) {
+        callbackFunction : function(request, response, next) {
             console.log('date: ' + request.params.date); 
             var appointmentModel = require('../server/model/appointmentModel.js');
             appointmentModel.appointmentModel.getAvailableAppointmentsByDate(request.params.date,
@@ -117,7 +117,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'get',
         requestUrl : '/crm/getAppointmentsServicesByDate/:date',
-        callbackFunction : function(request, response) {
+        callbackFunction : function(request, response, next) {
             var appointmentModel = require('../server/model/appointmentModel.js');
             console.log('date: ' + request.params.date); 
             appointmentModel.appointmentModel.getAvailableAppointmentsServicesByDate(request.params.date,
@@ -172,7 +172,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'post',
         requestUrl : '/crm/profile/edit',
-        callbackFunction : function(request, response) {
+        callbackFunction : function(request, response, next) {
             
             var userModel = require('../server/model/userModel.js');
             userModel.userModel.updateUser(request.body.user, request.body.user.id,
@@ -188,7 +188,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'post',
         requestUrl : '/crm/cancelAppointment',
-        callbackFunction : function(request, response) {
+        callbackFunction : function(request, response, next) {
             
             var appointmentModel = require('../server/model/appointmentModel.js');
             appointmentModel.appointmentModel.cancelAppointment(request.body.id,
@@ -204,7 +204,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'get',
         requestUrl : '/crm/getAllAvailableAppointmentSlots',
-        callbackFunction : function(request, response) {
+        callbackFunction : function(request, response, next) {
             
             var appointmentSlotsModel = require('../server/model/appointmentSlotsModel.js');
             appointmentSlotsModel.appointmentSlotsModel.getAllAvailableAppointmentSlots(
@@ -223,7 +223,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'get',
         requestUrl : '/crm/getVehiclesList',
-        callbackFunction : function(request, response) {
+        callbackFunction : function(request, response, next) {
            var vehicleModel = require('../server/model/vehicleModel.js');
            vehicleModel.vehicleModel.getAllVehicles(
            function (err,vehicles) {
@@ -241,7 +241,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'post',
         requestUrl : '/crm/appointments/schedule',
-        callbackFunction : function (request, response) {
+        callbackFunction : function (request, response, next) {
             var data = request.body;
 
             console.log('appointment data velow');
@@ -285,7 +285,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'get',
         requestUrl : '/crm/services/start/:id',
-        callbackFunction : function(request, response) {
+        callbackFunction : function(request, response, next) {
            
             var appointmentModel = require('../server/model/appointmentModel.js');
                         
@@ -307,7 +307,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'post',
         requestUrl : '/crm/services/start',
-        callbackFunction : function(request, response) {
+        callbackFunction : function(request, response, next) {
            
             var servicedVehicleModel = require('../server/model/servicedVehicleModel.js');
             var serviceHistoryModel = require('../server/model/serviceHistoryModel.js');
@@ -329,7 +329,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'get',
         requestUrl : '/crm/services',
-        callbackFunction : function(request, response) {
+        callbackFunction : function(request, response, next) {
            
            response.redirect('/crm/services/today');
             
@@ -341,7 +341,7 @@ crmRouteConfig.prototype.addRoutes = function () {
         
         requestType : 'get',
         requestUrl : '/crm/getServicesByDate/:date',
-        callbackFunction : function(request, response) {
+        callbackFunction : function(request, response, next) {
            
             var serviceHistoryModel = require('../server/model/serviceHistoryModel.js');
                         
@@ -368,34 +368,76 @@ crmRouteConfig.prototype.addRoutes = function () {
     
     self.routeTable.push({
         
-        requestType : 'get',
-        requestUrl : '/crm/services/updateStatus/:id/:status',
-        callbackFunction : function(request, response) {
+        requestType : 'post',
+        requestUrl : '/crm/services/updateStatus',
+        callbackFunction : function(request, response, next) {
            
             var serviceHistoryModel = require('../server/model/serviceHistoryModel.js');
                         
-            serviceHistoryModel.serviceHistoryModel.updateStatus(request.params.id,request.params.status,
-                function (status) { 
-                   response.json(status);
+            serviceHistoryModel.serviceHistoryModel.updateStatus(request.body.id,request.body.status_id,
+                function (err,status) {
+                    if (err) { return next(err); } 
+                    
+                    response.json({status : 'success'});
             });
         }
     });
     
     self.routeTable.push({
         
-        requestType : 'get',
-        requestUrl : '/crm/services/makCompleted/:id',
-        callbackFunction : function(request, response) {
+        requestType : 'post',
+        requestUrl : '/crm/services/markCompleted',
+        callbackFunction : function(request, response, next) {
            
             var serviceHistoryModel = require('../server/model/serviceHistoryModel.js');
                         
-            serviceHistoryModel.serviceHistoryModel.markCompleted(request.params.id,
-                function (status) { 
-                    response.json(status);
+            serviceHistoryModel.serviceHistoryModel.markCompleted(request.body.id,
+                function (err,status) {
+                    if (err) { return next(err); } 
+                    
+                    response.json({status : 'success'});
+            });
+        }
+    });
+    //getAllRepairStatus
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/crm/getAllRepairStatus',
+        callbackFunction : function(request, response, next) {
+           
+            var repairStatusModel = require('../server/model/repairStatusModel.js');
+                        
+            repairStatusModel.repairStatusModel.getAllRepairStatus(
+                function (err,status) {
+                    if (err) { console.error('err', err); return next(err); } 
+                    
+                    response.json({repair_status : status});
+
+                    
             });
         }
     });
     
+    
+    //updateStatus
+    self.routeTable.push({
+        
+        requestType : 'post',
+        requestUrl : '/crm/services/updateStatus',
+        callbackFunction : function(request, response, next) {
+           
+            var serviceHistoryModel = require('../server/model/serviceHistoryModel.js');
+                        
+            serviceHistoryModel.serviceHistoryModel.updateStatus(request.body.id, request.body.status,
+                function (err,status) {
+                    if (err) { console.error('err', err); return next(err); } else {
+                        response.json(status);
+                    }
+                    
+            });
+        }
+    });
     /*
     self.routeTable.push({
         
