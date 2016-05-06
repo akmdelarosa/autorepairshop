@@ -6,7 +6,7 @@ var mysqlConnectionStringProvider = {
   
   getMySqlConnection : function () {
     
-    var connection = mysql.createConnection(mysqlConnectionString.mysqlConnectionString.connection.dev);
+    var connection = mysql.createConnection(mysqlConnectionString.mysqlConnectionString.connection.prod);
     
     connection.connect(function(err) {
         if (err) {
