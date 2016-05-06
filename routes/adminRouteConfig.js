@@ -139,6 +139,24 @@ adminRouteConfig.prototype.addRoutes = function () {
 
     });
     
+    //markDeleted
+	self.routeTable.push({
+        
+        requestType : 'post',
+        requestUrl : '/admin/services/markDeleted',
+        callbackFunction : function(request, response, next) {
+            var vehicleServicesModel = require('../server/model/vehicleServicesModel.js');
+                        
+            vehicleServicesModel.vehicleServicesModel.markDeleted(request.body.id,
+                function (err, status) {
+                    if(err) { return next(err); }
+                    response.json({status: 'success'});
+                });
+            
+        }
+
+    });
+    
     self.routeTable.push({
         
         requestType : 'get',

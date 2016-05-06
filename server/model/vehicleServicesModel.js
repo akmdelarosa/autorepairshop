@@ -248,6 +248,21 @@ var vehicleServicesModel = {
       connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
     }
   }
+  ,
+  markDeleted : function(id, callback) {
+    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+    var queryStatement = "DELETE s.*, sp.*, vsr.* FROM services s left join services_parts sp on sp.service_id = s.id left join vehicles_service_rates vsr on vsr.service_id = s.id where s.id = ?";
+    if (connection) {
+      
+      connection.query(queryStatement, [id], function (err, result) {
+        
+        callback(err, result);
+               
+      });
+      
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+    }
+  }
 }
 
 module.exports.vehicleServicesModel = vehicleServicesModel; 

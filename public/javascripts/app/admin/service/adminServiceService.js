@@ -22,6 +22,9 @@ function adminServiceService($http) {
     },
     removeServicePart : function (servicePartId) {
       return $http.post('/admin/services/removeServicePart', {servicePartId : servicePartId});
+    },
+    markDeleted : function(id) {
+      return $http.post('/admin/services/markDeleted', {id : id});
     }
   };
 }

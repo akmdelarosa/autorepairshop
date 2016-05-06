@@ -36,9 +36,9 @@ function adminRemoveServiceController($scope, $timeout, $window, adminServiceSer
     adminServiceService.markDeleted(id)
     .success(function (data) {
       if (data) {
-         $scope.message = "Part removed successfully";
+         $scope.message = "Service removed successfully";
          $timeout( function afterTimeOut() {
-             $window.location.href ='/admin/parts/index'; 
+             $window.location.href ='/admin/services/index'; 
           }, 5000);
       }
     });
