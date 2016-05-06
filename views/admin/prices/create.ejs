@@ -31,21 +31,21 @@
           <h3>Select the Vehicle</h3>
           <div class="form-group" data-ng-cloak>
               <label for="year">Year: </label>
-              <select required id="year" data-ng-model="price.year" ng-options="year for year in years">
+              <select class="form-control input-sm" required id="year" data-ng-model="price.year" ng-options="year for year in years">
                   <option value=''>Select</option>
               </select>
               <p ng-show="formPrice.year.$invalid && !formPrice.year.$pristine" class="help-block">Select a year.</p>
           </div>
           <div class="form-group" data-ng-cloak>
               <label for="make">Make: </label>
-              <select required id="make" ng-disabled="!price.year" data-ng-model="price.make" ng-options="make for make in makes">
+              <select class="form-control input-sm" required id="make" ng-disabled="!price.year" data-ng-model="price.make" ng-options="make for make in makes">
                   <option value=''>Select</option>
               </select>
               <p ng-show="formPrice.make.$invalid && !formPrice.make.$pristine" class="help-block">Select a make.</p>
           </div>
           <div class="form-group" data-ng-cloak>
               <label for="model">Model: </label>
-              <select required id="model" ng-disabled="!price.make" data-ng-model="price.model" ng-options="model for model in models">
+              <select class="form-control input-sm" required id="model" ng-disabled="!price.make" data-ng-model="price.model" ng-options="model for model in models">
                   <option value=''>Select</option>
               </select>
               <p ng-show="formPrice.model.$invalid && !formPrice.model.$pristine" class="help-block">Select a model.</p>
@@ -56,7 +56,7 @@
           <h3>Select the Part</h3>
           <div class="form-group" data-ng-cloak>
               <label for="part">Part: </label>
-              <select required id="model" ng-disabled="!price.model" data-ng-model="price.part" ng-options="part.name for part in parts track by part.id">
+              <select class="form-control input-sm" required id="model" ng-disabled="!price.model" data-ng-model="price.part" ng-options="part.name for part in parts track by part.id">
                   <option value=''>Select</option>
               </select>
               <p ng-show="formPrice.part.$invalid && !formPrice.part.$pristine" class="help-block">Select a part.</p>

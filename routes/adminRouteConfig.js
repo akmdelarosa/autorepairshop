@@ -482,6 +482,29 @@ adminRouteConfig.prototype.addRoutes = function () {
     self.routeTable.push({
         
         requestType : 'get',
+        requestUrl : '/admin/profile',
+        callbackFunction : function(request, response) {
+            response.redirect('/admin/profile/index');
+        }
+
+    });
+
+    self.routeTable.push({
+        
+        requestType : 'get',
+        requestUrl : '/admin/profile/index',
+        callbackFunction : function(request, response) {
+            response.render('admin/profile/index.ejs', {
+                user : request.user, // get the user out of session and pass to template
+                title: 'My Profile'
+            });
+        }
+
+    });
+    
+    self.routeTable.push({
+        
+        requestType : 'get',
         requestUrl : '/admin/profile/edit',
         callbackFunction : function(request, response) {
             

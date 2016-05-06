@@ -15,7 +15,7 @@
   </div>
   
 
-  <div class="panel-body">
+  <div class="panel-body" data-ng-app="adminServiceModule" data-ng-controller="adminRemoveServiceController">
 
       <div class="col-sm-12">
         <div class="well">
@@ -29,7 +29,6 @@
                     <td>Service Name</td>
                     <td>Description</td>
                     <td>Category</td>
-                    <td>Inactive</td>
                     <td>&nbsp;</td>
                 </tr>
                 
@@ -38,11 +37,15 @@
                     <td><%=service.name%></td>
                     <td><%=service.description%></td>
                     <td><%=service.category%></td>
-                    <td><%=service.deleted ? 'Yes' : 'No'%></td>
                     <td class="info">
                         <a href="/admin/services/edit/<%=service.id%>" class="btn btn-default" style="width: 100%;">
                             Edit
                         </a>
+                    </td>
+                    <td>
+                        <button ng-click="markDeleted(<%=service.id%>)" class="btn btn-danger" style="width: 100%;">
+                            Remove
+                        </button>
                     </td>
                 </tr>
                 <% }) %>

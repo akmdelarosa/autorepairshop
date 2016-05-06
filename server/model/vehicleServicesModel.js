@@ -183,7 +183,7 @@ var vehicleServicesModel = {
   ,
   getAllServicesRates: function (callback) {
     var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-    var queryStatement = "SELECT vsr.id, v.year, v.make, v.model, s.name, vsr.min_rate, vsr.max_rate FROM vehicles_service_rates vsr INNER JOIN vehicles_list v ON v.id = vsr.vehicle_id INNER JOIN services s ON s.id = vsr.service_id ORDER BY v.year DESC";
+    var queryStatement = "SELECT vsr.id, v.year, v.make, v.model, s.name, vsr.min_rate, vsr.max_rate FROM vehicles_service_rates vsr INNER JOIN vehicles_list v ON v.id = vsr.vehicle_id INNER JOIN services s ON s.id = vsr.service_id ORDER BY v.year DESC, v.make ASC, v.model ASC";
     if (connection) {
       
       connection.query(queryStatement, function (err, result) {

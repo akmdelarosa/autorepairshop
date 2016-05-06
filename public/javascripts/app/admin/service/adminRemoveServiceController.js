@@ -1,5 +1,5 @@
-angular.module("adminPartModule")
-.controller("adminRemovePartController", adminRemovePartController)
+angular.module("adminServiceModule")
+.controller("adminRemoveServiceController", adminRemoveServiceController)
 .filter('yesNo', function() {
     return function(input) {
         return input ? 'Yes' : 'No';
@@ -28,12 +28,12 @@ angular.module("adminPartModule")
   };
 });
 
-adminRemovePartController.$inject = ['$scope','$timeout', '$window', 'adminPartService'];
+adminRemoveServiceController.$inject = ['$scope','$timeout', '$window', 'adminServiceService'];
 
-function adminRemovePartController($scope, $timeout, $window, adminPartService) {
+function adminRemoveServiceController($scope, $timeout, $window, adminServiceService) {
     
     $scope.markDeleted = function (id) {
-    adminPartService.markDeleted(id)
+    adminServiceService.markDeleted(id)
     .success(function (data) {
       if (data) {
          $scope.message = "Part removed successfully";

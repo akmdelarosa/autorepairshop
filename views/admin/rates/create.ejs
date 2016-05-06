@@ -31,21 +31,21 @@
               <h3>Select the Vehicle</h3>
               <div class="form-group" data-ng-cloak>
                   <label for="year">Year: </label>
-                  <select required id="year" data-ng-model="rate.year" ng-options="year for year in years">
+                  <select class="form-control input-sm" required id="year" data-ng-model="rate.year" ng-options="year for year in years">
                       <option value=''>Select</option>
                   </select>
                   <p ng-show="formRate.year.$invalid && !formRate.year.$pristine" class="help-block">Select a year.</p>
               </div>
               <div class="form-group" data-ng-cloak>
                   <label for="make">Make: </label>
-                  <select required id="make" ng-disabled="!rate.year" data-ng-model="rate.make" ng-options="make for make in makes">
+                  <select class="form-control input-sm" required id="make" ng-disabled="!rate.year" data-ng-model="rate.make" ng-options="make for make in makes">
                       <option value=''>Select</option>
                   </select>
                   <p ng-show="formRate.make.$invalid && !formRate.make.$pristine" class="help-block">Select a make.</p>
               </div>
               <div class="form-group" data-ng-cloak>
                   <label for="model">Model: </label>
-                  <select required id="model" ng-disabled="!rate.make" data-ng-model="rate.model" ng-options="model for model in models">
+                  <select class="form-control input-sm" required id="model" ng-disabled="!rate.make" data-ng-model="rate.model" ng-options="model for model in models">
                       <option value=''>Select</option>
                   </select>
                   <p ng-show="formRate.model.$invalid && !formRate.model.$pristine" class="help-block">Select a model.</p>
@@ -120,7 +120,7 @@
           <h3>Select the Service</h3>
           <div class="form-group" data-ng-cloak>
               <label for="service">Service: </label>
-              <select required id="model" ng-disabled="!rate.model" data-ng-model="rate.service" ng-options="service.name for service in services track by service.id">
+              <select class="form-control input-sm" required id="model" ng-disabled="!rate.model" data-ng-model="rate.service" ng-options="service.name for service in services track by service.id">
                   <option value=''>Select</option>
               </select>
               <p ng-show="formRate.service.$invalid && !formRate.service.$pristine" class="help-block">Select a service.</p>

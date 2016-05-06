@@ -131,7 +131,7 @@ var partModel = {
   
   getAllPartsPrices: function (callback) {
     var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-    var queryStatement = "SELECT vpp.id, v.year, v.make, v.model, p.name, vpp.min_price, vpp.max_price FROM vehicles_parts_prices vpp INNER JOIN vehicles_list v ON v.id = vpp.vehicle_id INNER JOIN parts p ON p.id = vpp.part_id";
+    var queryStatement = "SELECT vpp.id, v.year, v.make, v.model, p.name, vpp.min_price, vpp.max_price FROM vehicles_parts_prices vpp INNER JOIN vehicles_list v ON v.id = vpp.vehicle_id INNER JOIN parts p ON p.id = vpp.part_id ORDER BY v.year DESC, v.make ASC, v.model ASC";
     if (connection) {
       
       connection.query(queryStatement, function (err, rows, fields) {

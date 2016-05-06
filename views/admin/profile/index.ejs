@@ -1,0 +1,42 @@
+<% include ../../adminLayout %>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=title %></h3>
+  </div>
+  
+  <div class="panel-body">
+    <div class="container">
+
+     <!-- show any messages that come back with authentication -->
+    <% if (typeof message != "undefined" && message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+    
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Welcome <%= user.first_name %></h1>
+    </div>
+
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-12">
+            <div class="well">
+                <h3><span class="fa fa-user"></span>User Info <a href="/admin/profile/edit" class="btn btn-default btn-sm">Edit</a></h3>
+                    <p>
+                        <strong>Name</strong>: <%= user.first_name %> <%= user.last_name %><br>
+                        <strong>Email</strong>: <%= user.email %><br>
+                        <strong>Phone</strong>: <%= user.phone_number %>
+                    </p>
+
+            </div>
+        </div>
+
+    </div>
+	
+</div>
+</div>
+
+</div>
+
+<% include ../../footer %>

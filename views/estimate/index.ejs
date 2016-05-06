@@ -25,19 +25,19 @@
           <h3>Select Your Vehicle</h3>
           <div class="form-group" data-ng-cloak>
               Year:
-              <select id="year" data-ng-model="year" ng-options="year for year in years">
+              <select class="form-control input-sm" id="year" data-ng-model="year" ng-options="year for year in years">
                   <option value=''>Select</option>
               </select>
           </div>
           <div class="form-group" data-ng-cloak>
               Make:
-              <select id="make" ng-disabled="!makes" data-ng-model="make" ng-options="make for make in makes">
+              <select class="form-control input-sm" id="make" ng-disabled="!makes" data-ng-model="make" ng-options="make for make in makes">
                   <option value=''>Select</option>
               </select>
           </div>
           <div class="form-group" data-ng-cloak>
               Model:
-              <select id="model" ng-disabled="!models" data-ng-model="model" ng-options="model for model in models">
+              <select class="form-control input-sm" id="model" ng-disabled="!models" data-ng-model="model" ng-options="model for model in models">
                   <option value=''>Select</option>
               </select>
           </div>
@@ -47,7 +47,7 @@
           <h3>Select Service</h3>
           <div class="form-group" data-ng-cloak>
               Service:
-              <select id="service" ng-disabled="!services" data-ng-model="service" ng-options="service.name for service in services track by service.id">
+              <select class="form-control input-sm" id="service" ng-disabled="!services" data-ng-model="service" ng-options="service.name for service in services track by service.id">
                   <option value=''>Select</option>
               </select>
           </div>
@@ -55,7 +55,7 @@
         <div class="row"  style="margin-left: 0px;">
           <br />
           <div class="form-group" style="padding-left40%">
-            <button type="button" class="btn btn-primary" ng-disabled="!service || !model || !make || !year" 
+            <button class="form-control input-sm" type="button" class="btn btn-primary" ng-disabled="!service || !model || !make || !year" 
                     ng-click="getEstimate()">
               Submit
             </button>

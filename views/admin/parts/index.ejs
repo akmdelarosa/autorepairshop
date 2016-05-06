@@ -32,8 +32,6 @@
                 <tr class="success">
                     <td>Part Name</td>
                     <td>Description</td>
-                    <td>Category</td>
-                    <td>Inactive</td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
@@ -42,8 +40,6 @@
                 <tr>
                     <td><%=part.name%></td>
                     <td><%=part.description%></td>
-                    <td><%=part.category%></td>
-                    <td><%=part.deleted ? 'Yes' : 'No'%></td>
                     <td>
                         <a href="/admin/parts/edit/<%=part.id%>" class="btn btn-info" style="width: 100%;">
                             Edit
