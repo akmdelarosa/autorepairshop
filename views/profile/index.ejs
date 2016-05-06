@@ -14,7 +14,7 @@
     <% } %>
     
     <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Welcome <%= user.first_name %></h1>
+        <h1><span class="fa fa-home"></span> Welcome <%= user.first_name %></h1>
         <a href="/profile/edit" class="btn btn-default btn-sm">Edit</a>
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
@@ -24,7 +24,7 @@
         <!-- LOCAL INFORMATION -->
         <div class="col-sm-12">
             <div class="well">
-                <h3><span class="fa fa-user"></span>User Info <a href="/profile/edit" class="btn btn-default btn-sm">Edit</a></h3>
+                <h3><span class="fa fa-user"></span> User Info <a href="/profile/edit" class="btn btn-default btn-sm">Edit</a></h3>
                     <p>
                         <strong>Name</strong>: <%= user.first_name %> <%= user.last_name %><br>
                         <strong>Email</strong>: <%= user.email %><br>

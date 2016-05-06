@@ -6,9 +6,9 @@ angular.module("adminUserModule")
     }
 });
 
-adminViewUserController.$inject = ['$scope','$timeout', '$filter', 'NgTableParams', 'adminUserService'];
+adminViewUserController.$inject = ['$scope','$timeout', '$filter', '$window', 'NgTableParams', 'adminUserService'];
 
-function adminViewUserController($scope, $timeout, $filter, NgTableParams, adminUserService) {
+function adminViewUserController($scope, $timeout, $filter, $window, NgTableParams, adminUserService) {
     
     $scope.tableParams = new NgTableParams(
       {count: 10}, 
@@ -28,4 +28,15 @@ function adminViewUserController($scope, $timeout, $filter, NgTableParams, admin
             }
           });
         }});
+    $scope.markDeleted = function (id) {
+      adminUserService.markDeleted(id)
+      .success(function (data) {
+        if (data) {
+          $scope.message = "User removed successfully";
+          $timeout( function afterTimeOut() {
+              $window.location.href ='/admin/users/index'; 
+            }, 1000);
+        }
+      });
+    };
 }

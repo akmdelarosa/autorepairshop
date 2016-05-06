@@ -77,7 +77,7 @@ var userModel = {
   getAllUsers : function (callback) {
     
     var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
-    var queryStatement = "SELECT * FROM users WHERE role != 'admin' ORDER BY ID DESC";
+    var queryStatement = "SELECT * FROM users WHERE role != 'admin' AND deleted = 0 ORDER BY ID DESC";
     
     if (connection) {
       
@@ -261,6 +261,21 @@ var userModel = {
       
         connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
       }
+  }
+  ,
+  markDeleted : function(id, callback) {
+    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+    var queryStatement = "UPDATE users SET deleted = 1 WHERE id = ?";
+    if (connection) {
+      
+      connection.query(queryStatement, [id], function (err, result) {
+        
+        callback(err, result);
+               
+      });
+      
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+    }
   }
 
 }

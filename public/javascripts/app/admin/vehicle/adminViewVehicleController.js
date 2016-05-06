@@ -59,6 +59,18 @@ function adminViewVehicleController($scope, $timeout, $window, $filter, NgTableP
           $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         }
     });
+    
+    $scope.markDeleted = function (id) {
+      adminVehicleService.markDeleted(id)
+      .success(function (data) {
+        if (data) {
+          $scope.message = "Vehicle removed successfully";
+          $timeout( function afterTimeOut() {
+              $window.location.href ='/admin/vehicles/index'; 
+            }, 1000);
+        }
+      });
+    };
 
   }
   

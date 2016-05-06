@@ -19,12 +19,14 @@
     "express-validator": "^2.20.3",
     "moment": "^2.13.0",
     "mysql": "github:felixge/node-mysql",
-    "mysql-model": "git://github.com/michalkow/node-mysql-model.git",
     "nodemailer": "^2.3.2",
     "nodemailer-wellknown": "^0.1.8",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "stylus": "^0.54.2"
+  },
+  "engines": {
+    "node": "4.2.6"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -32,7 +34,8 @@
     "grunt-contrib-watch": "^1.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

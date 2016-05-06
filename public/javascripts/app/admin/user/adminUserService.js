@@ -24,5 +24,9 @@ function adminUserService($http) {
 		deleteUserVehicle: function(userId, vehicleId) {
 	  	return $http.post('/admin/users/deleteUserVehicle',{userId : userId, vehicleId : vehicleId});
 		}
+    ,
+    markDeleted : function(id) {
+      return $http.post('/admin/users/markDeleted', {id : id});
+    }
   };
 }

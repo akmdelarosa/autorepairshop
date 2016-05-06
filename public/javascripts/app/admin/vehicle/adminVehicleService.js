@@ -21,6 +21,9 @@ function adminVehicleService($http) {
     },
     getVehiclesList : function () {
       return $http.get('/admin/vehicles/getVehiclesList');
+    },
+    markDeleted : function(id) {
+      return $http.post('/admin/vehicles/markDeleted', {id : id});
     }
   };
 }

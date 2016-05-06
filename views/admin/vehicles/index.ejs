@@ -32,11 +32,16 @@
                             {{vehicle.make}}</td>
                         <td title="'Model'" filter="{ model: 'text'}" sortable="'model'">
                             {{vehicle.model}}</td>
-                        <td title="'&nbsp;'" show="true" class="info">
-                        <a href="/admin/vehicles/edit/{{vehicle.id}}" class="btn btn-default" style="width: 100%;">
-                            Edit
-                        </a>
-                    </td>
+                        <td>
+                            <a href="/admin/vehicles/edit/{{vehicle.id}}" class="btn btn-info" style="width: 100%;">
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <button ng-click="markDeleted(vehicle.id)" class="btn btn-danger" style="width: 100%;">
+                                Remove
+                            </button>
+                        </td>
                     </tr>
                 </table>
             </div>

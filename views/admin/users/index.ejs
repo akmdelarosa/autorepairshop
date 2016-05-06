@@ -31,10 +31,16 @@
                             {{user.email}}</td>
                         <td title="'Phone'" filter="{ phone_number: 'text'}" sortable="'phone_number'">
                             {{user.phone_number}}</td>
-                        <td title="'&nbsp;'" show="true" class="info">
-                            <a href="/admin/users/edit/{{user.id}}" class="btn btn-default" style="width: 100%;">
+                        <td>
+                            <a href="/admin/users/edit/{{user.id}}" class="btn btn-info" style="width: 100%;">
                             Edit
-                        </a></td>
+                            </a>
+                        </td>
+                        <td>
+                            <button ng-click="markDeleted(user.id)" class="btn btn-danger" style="width: 100%;">
+                                Remove
+                            </button>
+                        </td>
                     </tr>
                 </table>
             </div>

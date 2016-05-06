@@ -223,6 +223,21 @@ var vehicleModel = {
       connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
     }
   }
+  ,
+  markDeleted : function(id, callback) {
+    var connection = connectionProvider.mysqlConnectionStringProvider.getMySqlConnection();
+    var queryStatement = "DELETE FROM vehicles_list WHERE id = ?";
+    if (connection) {
+      
+      connection.query(queryStatement, [id], function (err, result) {
+        
+        callback(err, result);
+               
+      });
+      
+      connectionProvider.mysqlConnectionStringProvider.closeMySqlConnection(connection);
+    }
+  }
 
 }
 

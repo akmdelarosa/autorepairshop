@@ -39,7 +39,7 @@ function adminRemovePartController($scope, $timeout, $window, adminPartService) 
          $scope.message = "Part removed successfully";
          $timeout( function afterTimeOut() {
              $window.location.href ='/admin/parts/index'; 
-          }, 5000);
+          }, 000);
       }
     });
   };

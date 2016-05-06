@@ -21,11 +21,7 @@ var nodemailer = require('nodemailer');
 var wellknown = require('nodemailer-wellknown');
 var config = wellknown('Gmail');
 var smtpTransport = nodemailer.createTransport('SMTP', {
-  service: 'Gmail',
-  auth: {
-    user: 'akmdelarosa@gmail.com',
-    pass: 'Jhel@ih0717'
-  }
+  service: 'Gmail'
 });
 
 //var passport = require('passport');

@@ -416,6 +416,24 @@ adminRouteConfig.prototype.addRoutes = function () {
 
     });
     
+    //markDeleted
+	self.routeTable.push({
+        
+        requestType : 'post',
+        requestUrl : '/admin/users/markDeleted',
+        callbackFunction : function(request, response, next) {
+            var userModel = require('../server/model/userModel.js');
+                        
+            userModel.userModel.markDeleted(request.body.id,
+                function (err, status) {
+                    if(err) { return next(err); }
+                    response.json({status: 'success'});
+                });
+            
+        }
+
+    });
+    
     self.routeTable.push({
         
         requestType : 'get',
@@ -624,6 +642,24 @@ adminRouteConfig.prototype.addRoutes = function () {
                 user : request.user, // get the user out of session and pass to template
                 title : 'Create Vehicle'            
             });
+        }
+
+    });
+    
+    //markDeleted
+	self.routeTable.push({
+        
+        requestType : 'post',
+        requestUrl : '/admin/vehicles/markDeleted',
+        callbackFunction : function(request, response, next) {
+            var vehicleModel = require('../server/model/vehicleModel.js');
+                        
+            vehicleModel.vehicleModel.markDeleted(request.body.id,
+                function (err, status) {
+                    if(err) { return next(err); }
+                    response.json({status: 'success'});
+                });
+            
         }
 
     });

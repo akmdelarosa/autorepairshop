@@ -33,15 +33,15 @@ adminRemoveServiceController.$inject = ['$scope','$timeout', '$window', 'adminSe
 function adminRemoveServiceController($scope, $timeout, $window, adminServiceService) {
     
     $scope.markDeleted = function (id) {
-    adminServiceService.markDeleted(id)
-    .success(function (data) {
-      if (data) {
-         $scope.message = "Service removed successfully";
-         $timeout( function afterTimeOut() {
-             $window.location.href ='/admin/services/index'; 
-          }, 5000);
-      }
-    });
-  };
+      adminServiceService.markDeleted(id)
+      .success(function (data) {
+        if (data) {
+          $scope.message = "Service removed successfully";
+          $timeout( function afterTimeOut() {
+              $window.location.href ='/admin/services/index'; 
+            }, 1000);
+        }
+      });
+    };
     
 }

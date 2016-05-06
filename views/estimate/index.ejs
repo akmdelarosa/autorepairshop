@@ -1,11 +1,21 @@
-<% include ../layout %>
+<% if (user && user.role == 'staff' || user.role == 'admin') { %>
+    <% include ../crmLayout %>
+ <% } else { %>
+    <% include ../layout %>
+<% } %>
 
 <div class="panel panel-info">
   <div style="float: right; padding-top: 4px; padding-right: 15px;">
     <% if (user) { %>
-    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        <% if (user.role == 'customer') { %>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        <a href="/profile/index" class="btn btn-default btn-sm">Back To Home</a>
+        <% } else { %>
+            <a href="/crm/logout" class="btn btn-default btn-sm">Logout</a>
+            <a href="/crm/index" class="btn btn-default btn-sm">Back To Home</a>
+        <% } %>
     <% } %>
-    <a href="/appointment/index" class="btn btn-default btn-sm">Back To Appointment</a>
+    
   </div>
 
   <div class="clear"></div>

@@ -2,14 +2,14 @@
     <div class="row">
 		
 	    <div class="text-center">
-	        <h1><span class="fa fa-anchor"></span> Estimate for {{year}} {{make}} {{model}}</h1>
+	        <h1><span class="fa fa-calculator"></span> Estimate for {{year}} {{make}} {{model}}</h1>
 	        <h3>{{service.name}}</h3>
 	    </div>
 
         <!-- LOCAL INFORMATION -->
         <div class="col-sm-12">
             <div class="well">
-                <h3><span class="fa fa-user"></span>Parts</h3>
+                <h3><span class="fa fa-gears"></span> Parts</h3>
 				<p>{{min_price | currency:"$"}} - {{max_price | currency:"$"}}*</p>
 				<ul>
                     <li ng-repeat="part in parts">
@@ -18,7 +18,7 @@
 				</ul>
 				
 				<br />
-                <h3><span class="fa fa-user"></span>Labor</h3>
+                <h3><span class="fa fa-wrench"></span> Labor</h3>
 				<p>{{min_rate | currency:"$"}} - {{max_rate | currency:"$"}}*</p>
 
             </div>
