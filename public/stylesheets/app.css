@@ -304,3 +304,30 @@ div.span4 {
 .map {
 padding-bottom: 2em;
 }
+#___gcse_0 {
+width: 300px;
+border-radius: 25px;
+}
+input.gsc-input {
+border-radius: 25px;
+}
+#___gcse_0 div form table tbody tr {
+border-radius: 25px;
+}
+#___gcse_0.div.form.table.tbody {
+background-color: transparent;
+}
+/* Search form */
+.cse form.gsc-search-box,
+form.gsc-search-box {
+  padding: 10px 5px 0 5px  !important;
+  margin-bottom: 0 !important;
+
+}
+.gsc-search-box {
+  background-color: transparent !important;	
+}
+.cse .gsc-branding-text,
+.gsc-branding-text {
+  color: #000000;
+}

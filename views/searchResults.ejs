@@ -1,0 +1,25 @@
+<% if (typeof user != "undefined") { %>
+   <% if (user.role == 'admin') { %>
+       <% include adminLayout %>
+   <% } else if (user.role == 'staff') { %>
+       <% include crmLayout %>
+   <% } else { %>
+       <% include layout %>
+   <% } %>
+<% } else { %>
+<% include layout %>
+<% } %>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title"><%=title %></h3>
+    </div>
+    
+    <div class="panel-body">
+        
+        <div class="container">
+        <gcse:searchresults-only></gcse:searchresults-only>
+    </div>
+  </div>
+</div>
+
+<% include footer %>

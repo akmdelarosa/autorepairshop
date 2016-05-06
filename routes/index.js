@@ -22,3 +22,7 @@ exports.hoursandmap = function (req, res) {
 exports.meetthestaff = function (req, res) {
     res.render('meetthestaff', { title: 'Meet The Staff', user : req.user });
 };
+
+exports.searchResults = function (req, res) {
+    res.render('searchResults', { title: 'Search Results', user : req.user });
+};

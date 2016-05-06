@@ -67,6 +67,7 @@ app.get('/about', routes.about);
 app.get('/contact', routes.contact);
 app.get('/hoursandmap', routes.hoursandmap);
 app.get('/meetthestaff', routes.meetthestaff);
+app.get('/searchResults', routes.searchResults);
 
 var productCategoryRoute = require('./routes/productCategoryRouteConfig.js');
 new productCategoryRoute(app);
