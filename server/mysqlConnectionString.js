@@ -6,7 +6,7 @@ var mysqlConnectionString = {
       host: 'localhost',
       user: 'angel',
       password : '',
-      database : 'product_test'
+      database : 'autoshop'
     },
     
     qa : {
