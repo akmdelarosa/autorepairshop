@@ -17,10 +17,10 @@ var mysqlConnectionString = {
     },
     
     prod : {
-      host: 'us-cdbr-iron-east-03.cleardb.net',
-      user: 'b48c8a0d0f1b10',
-      password : 'ad01b514',
-      database : 'heroku_6cecfd8d370547f'
+      host: 'us-cdbr-iron-east-04.cleardb.net',
+      user: 'b4966a8708dd49',
+      password : 'efbe9ad0',
+      database : 'heroku_3a39c43265af859'
     }
     
   }
