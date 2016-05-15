@@ -1,4 +1,4 @@
-<% if (typeof user != 'undefined' && user.role == 'staff' || user.role == 'admin') { %>
+<% if (typeof user != 'undefined' && (user.role == 'staff' || user.role == 'admin') ) { %>
     <% include ../crmLayout %>
  <% } else { %>
     <% include ../layout %>
