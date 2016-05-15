@@ -12,7 +12,7 @@
   <div class="clear"></div>
   
   <div class="panel-heading">
-    <h3 class="panel-title"><span class="fa fa-wrench"> <%=title %></h3>
+    <h3 class="panel-title"><span class="fa fa-wrench"></span> <%=title %></h3>
   </div>
   
   <div class="panel-body" data-ng-app="serviceModule">
@@ -24,6 +24,7 @@
         <div class="alert alert-danger"><%= message %></div>
     <% } %>
 	<div class="row">
+      <div></div>
       <div class="well" ng-repeat="service in services">
       	<label>{{service.name}}</label>
 		<label>{{service.description}}</label>

@@ -2,7 +2,7 @@
 
 <div class="panel panel-info" style="min-height: 600px;">
   <div style="float: right; padding-top: 4px; padding-right: 15px;">
-    <% if (user) { %>
+    <% if (typeof user != 'undefined') { %>
     <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     <% } %>
     <a href="/" class="btn btn-default btn-sm">Back To Home</a>
@@ -11,7 +11,7 @@
   <div class="clear"></div>
 
   <div class="panel-heading">
-    <h3 class="panel-title"><span class="fa fa-calendar"> <%=title %></h3>
+    <h3 class="panel-title"><span class="fa fa-calendar"></span> <%=title %></h3>
   </div>
   
 

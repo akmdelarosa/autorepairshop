@@ -1,4 +1,4 @@
-<% if (user && user.role == 'staff' || user.role == 'admin') { %>
+<% if (typeof user != 'undefined' && user.role == 'staff' || user.role == 'admin') { %>
     <% include ../crmLayout %>
  <% } else { %>
     <% include ../layout %>
@@ -6,7 +6,7 @@
 
 <div class="panel panel-info">
   <div style="float: right; padding-top: 4px; padding-right: 15px;">
-    <% if (user) { %>
+    <% if (typeof user != 'undefined') { %>
         <% if (user.role == 'customer') { %>
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
         <a href="/profile/index" class="btn btn-default btn-sm">Back To Home</a>
