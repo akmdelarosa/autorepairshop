@@ -1,0 +1,219 @@
+CREATE TABLE appointment_services
+(
+id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+service_id INT(11) UNSIGNED NOT NULL,
+appointment_id INT(11) UNSIGNED NOT NULL,
+deleted INT(1) NOT NULL DEFAULT 0,
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE appointment_slots
+(
+id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+date DATE NOT NULL,
+time TIME NOT NULL,
+slots TINYINT(3) NOT NULL,
+duration TINYINT(3),
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE appointments
+(
+id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+user_id INT(10) UNSIGNED NOT NULL DEFAULT 0,
+customer_id INT(10) UNSIGNED NOT NULL DEFAULT 0,
+date DATE NOT NULL,
+time TIME NOT NULL,
+year INT(4) NOT NULL,
+make VARCHAR(150) NOT NULL,
+model VARCHAR(150) NOT NULL,
+deleted INT(1) DEFAULT 0,
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE customers
+(
+id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+first_name VARCHAR(50) NOT NULL,
+last_name VARCHAR(50) NOT NULL,
+email VARCHAR(127) NOT NULL,
+phone_number VARCHAR(15),
+deleted INT(1),
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE parts
+(
+id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+name VARCHAR(50) NOT NULL,
+description TEXT,
+min_price DECIMAL(10,2),
+max_price DECIMAL(10,2),
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE repair_status
+(
+id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+status VARCHAR(45) NOT NULL UNIQUE,
+name VARCHAR(250) NOT NULL,
+deleted TINYINT(1) NOT NULL DEFAULT 0,
+modified DATETIME NOT NULL DEFAULT 'CURRENT_TIMESTAMP',
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE service_history
+(
+id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+service_id INT(11) UNSIGNED NOT NULL,
+completed_date DATE,
+start_date DATE,
+appointment_id INT(11) UNSIGNED DEFAULT 0,
+user_id INT(11) UNSIGNED DEFAULT 0,
+customer_id INT(11) UNSIGNED DEFAULT 0,
+mileage_read INT(11),
+vehicle_id INT(11) UNSIGNED NOT NULL DEFAULT 0,
+status_id INT(11) UNSIGNED NOT NULL DEFAULT 0,
+deleted INT(1) DEFAULT 0,
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE serviced_vehicles
+(
+id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+year INT(4) UNSIGNED NOT NULL,
+make VARCHAR(50),
+model VARCHAR(50) NOT NULL,
+vin VARCHAR(250) NOT NULL UNIQUE,
+mileage_read INT(11),
+deleted INT(1) DEFAULT 0,
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE services
+(
+id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+name VARCHAR(50) NOT NULL,
+description TEXT,
+labor_hours FLOAT,
+min_rate DECIMAL(10,2),
+max_rate DECIMAL(10,2),
+category VARCHAR(150),
+deleted INT(1) NOT NULL DEFAULT 0,
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE services_parts
+(
+id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+part_id INT(10) UNSIGNED NOT NULL,
+service_id INT(10) UNSIGNED NOT NULL,
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE users
+(
+id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+first_name VARCHAR(50) NOT NULL,
+last_name VARCHAR(50) NOT NULL,
+address_id INT(10) UNSIGNED NOT NULL,
+email VARCHAR(127) NOT NULL,
+password VARCHAR(255) NOT NULL,
+phone_number VARCHAR(15),
+role VARCHAR(50),
+deleted INT(1) DEFAULT 0,
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE users_vehicles
+(
+id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+user_id INT(11) UNSIGNED NOT NULL,
+vehicle_id INT(11) UNSIGNED NOT NULL,
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE vehicle_backup
+(
+id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+year INT(4) UNSIGNED NOT NULL,
+make VARCHAR(50),
+model VARCHAR(50) NOT NULL,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE vehicles_list
+(
+id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+year INT(4) UNSIGNED NOT NULL,
+make VARCHAR(50),
+model VARCHAR(50) NOT NULL,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE vehicles_parts_prices
+(
+id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+vehicle_id INT(11) UNSIGNED NOT NULL,
+part_id INT(11) UNSIGNED NOT NULL,
+min_price DECIMAL(10,2) NOT NULL,
+max_price DECIMAL(10,2) NOT NULL,
+deleted INT(1) DEFAULT 0,
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE vehicles_service_rates
+(
+id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+vehicle_id INT(11) UNSIGNED NOT NULL,
+service_id INT(11) UNSIGNED NOT NULL,
+min_rate DECIMAL(10,2) NOT NULL,
+max_rate DECIMAL(10,2) NOT NULL,
+deleted INT(1) DEFAULT 0,
+created DATETIME,
+modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE INDEX year_idx ON serviced_vehicles (year);
+CREATE INDEX make_idx ON serviced_vehicles (make);
+CREATE INDEX model_idx ON serviced_vehicles (model);
+CREATE UNIQUE INDEX U_VehicleModelYear_year_make_model ON vehicle_backup (year,make,model);
+
+CREATE INDEX year_idx ON vehicle_backup (year);
+CREATE INDEX make_idx ON vehicle_backup (make);
+CREATE INDEX model_idx ON vehicle_backup (model);
+CREATE UNIQUE INDEX U_VehicleModelYear_year_make_model ON vehicles_list (year,make,model);
+
+CREATE INDEX year_idx ON vehicles_list (year);
+CREATE INDEX make_idx ON vehicles_list (make);
+CREATE INDEX model_idx ON vehicles_list (model);
+CREATE UNIQUE INDEX uk_vehprtsprcs_vehiclepart ON vehicles_parts_prices (vehicle_id,part_id);
+
+CREATE INDEX k_vpp_vehiclepart ON vehicles_parts_prices (vehicle_id,part_id);
+
+CREATE UNIQUE INDEX uk_vehservrate_vehicleservice ON vehicles_service_rates (vehicle_id,service_id);
