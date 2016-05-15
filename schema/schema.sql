@@ -68,7 +68,7 @@ id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 status VARCHAR(45) NOT NULL UNIQUE,
 name VARCHAR(250) NOT NULL,
 deleted TINYINT(1) NOT NULL DEFAULT 0,
-modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+modified DATETIME NOT NULL DEFAULT 'CURRENT_TIMESTAMP',
 PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -155,15 +155,6 @@ modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE vehicle_backup
-(
-id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-year INT(4) UNSIGNED NOT NULL,
-make VARCHAR(50),
-model VARCHAR(50) NOT NULL,
-PRIMARY KEY (id)
-) ENGINE=InnoDB;
-
 CREATE TABLE vehicles_list
 (
 id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -202,11 +193,6 @@ PRIMARY KEY (id)
 CREATE INDEX year_idx ON serviced_vehicles (year);
 CREATE INDEX make_idx ON serviced_vehicles (make);
 CREATE INDEX model_idx ON serviced_vehicles (model);
-CREATE UNIQUE INDEX U_VehicleModelYear_year_make_model ON vehicle_backup (year,make,model);
-
-CREATE INDEX year_idx ON vehicle_backup (year);
-CREATE INDEX make_idx ON vehicle_backup (make);
-CREATE INDEX model_idx ON vehicle_backup (model);
 CREATE UNIQUE INDEX U_VehicleModelYear_year_make_model ON vehicles_list (year,make,model);
 
 CREATE INDEX year_idx ON vehicles_list (year);
